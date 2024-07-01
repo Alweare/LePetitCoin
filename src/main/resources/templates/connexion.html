@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" data-th-href="@{/css/general.css}">
+
+<title>Le Petit Coin</title>
+</head>
+<body>
+		<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
+	
+
+		<form  method="POST" >
+			<h1>Connexion</h1>
+			<div th:if="${param.error}">Erreur : login ou mot de passe incorrect</div>
+			<ul class="flex-outer">			
+				<li>
+					<label for="InputUsername">Identifiant</label>
+					<input id="InputUsername" type="text" name="username" />					
+				</li>
+				<li>
+						<label for="inputPassword">Mot de passe</label>							
+						<input id="inputPassword" type="password" name="password">
+					</li>
+				<li>
+					<button type="submit">Connexion</button>
+					<input type="checkbox" name="Se souvenir de moi"  />
+					<a href="">Mot de passe oublié</a>
+				</li>
+			</ul>
+		</form>
+		
+		<a href="">Créer un compte</a>
+
+
+
+
+
+		 <div class="footer" th:replace="~{/fragments/fragment-piedpage :: fragment-piedpage}"></div> 
+	
+</body>
+</html>
