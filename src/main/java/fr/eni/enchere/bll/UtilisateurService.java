@@ -9,9 +9,10 @@ public interface UtilisateurService {
 	List<Utilisateur> consulterUtilisateur();
 	
 	Utilisateur consulterUtilisateurParId(int id);
-	
-	void creerUtilisateur();
+
 	
 	boolean verifierPseudoEtMotPasse(String pseudo, String motDePasse);
 	
+	void creerUtilisateur(Utilisateur utilisateur);
+
 }
