@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" data-th-href="@{/css/general.css}">
+
 <title>Le Petit Coin</title>
 </head>
 <body>
@@ -19,6 +21,7 @@
 
 
 
+	 <div class="footer" th:replace="~{/fragments/fragment-piedpage :: fragment-piedpage}"></div> 
 
 </body>
 </html>
