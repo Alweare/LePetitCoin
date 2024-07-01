@@ -4,12 +4,12 @@ import java.time.LocalDate;
 
 public class ArticleVendu {
 	
-	private int noArticle;
+	private int id;
 	private String nomArticle;
 	private String description;
 	private LocalDate dateDebutEnchere;
 	private LocalDate dateFinEncheres;
-	private int miseAPrix;
+	private int prixInitial;
 	private int prixVente;
 	private String etatVente;
 	
@@ -18,23 +18,23 @@ public class ArticleVendu {
 	
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEnchere,
 			LocalDate dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Retrait lieuRetrait, Categorie CategorieArticle) {
-		this.noArticle = noArticle;
+		this.id = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEnchere = dateDebutEnchere;
 		this.dateFinEncheres = dateFinEncheres;
-		this.miseAPrix = miseAPrix;
+		this.prixInitial = miseAPrix;
 		this.prixVente = prixVente;
 		this.etatVente = etatVente;
 		this.lieuretrait = lieuRetrait;
 	}
 
 	public int getNoArticle() {
-		return noArticle;
+		return id;
 	}
 
 	public void setNoArticle(int noArticle) {
-		this.noArticle = noArticle;
+		this.id = noArticle;
 	}
 
 	public String getNomArticle() {
@@ -70,11 +70,11 @@ public class ArticleVendu {
 	}
 
 	public int getMiseAPrix() {
-		return miseAPrix;
+		return prixInitial;
 	}
 
 	public void setMiseAPrix(int miseAPrix) {
-		this.miseAPrix = miseAPrix;
+		this.prixInitial = miseAPrix;
 	}
 
 	public int getPrixVente() {
@@ -113,7 +113,7 @@ public class ArticleVendu {
 	public String toString() {
 		return String.format(
 				"ArticleVendu [noArticle=%s, nomArticle=%s, description=%s, dateDebutEnchere=%s, dateFinEncheres=%s, miseAPrix=%s, prixVente=%s, etatVente=%s, lieuretrait=%s, CategorieArticle=%s]",
-				noArticle, nomArticle, description, dateDebutEnchere, dateFinEncheres, miseAPrix, prixVente, etatVente,
+				id, nomArticle, description, dateDebutEnchere, dateFinEncheres, prixInitial, prixVente, etatVente,
 				lieuretrait, CategorieArticle);
 	}
 

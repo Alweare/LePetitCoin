@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Categorie extends ArticleVendu{
 
-	private int noCategorie;
+	private int id;
 	private String libelle;
 	
 	public Categorie(int noArticle, String nomArticle, String description, LocalDate dateDebutEnchere,
@@ -12,16 +12,16 @@ public class Categorie extends ArticleVendu{
 			Categorie CategorieArticle, int noCategorie, String libelle) {
 		super(noArticle, nomArticle, description, dateDebutEnchere, dateFinEncheres, miseAPrix, prixVente, etatVente,
 				lieuRetrait, CategorieArticle);
-		this.noCategorie = noCategorie;
+		this.id = noCategorie;
 		this.libelle = libelle;
 	}
 
 	public int getNoCategorie() {
-		return noCategorie;
+		return id;
 	}
 
 	public void setNoCategorie(int noCategorie) {
-		this.noCategorie = noCategorie;
+		this.id = noCategorie;
 	}
 
 	public String getLibelle() {
@@ -34,7 +34,7 @@ public class Categorie extends ArticleVendu{
 
 	@Override
 	public String toString() {
-		return String.format("Categorie [noCategorie=%s, libelle=%s]", noCategorie, libelle);
+		return String.format("Categorie [noCategorie=%s, libelle=%s]", id, libelle);
 	}
 	
 	
