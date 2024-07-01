@@ -1,6 +1,7 @@
 package fr.eni.enchere.bo;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class ArticleVendu {
 	
@@ -13,28 +14,29 @@ public class ArticleVendu {
 	private int prixVente;
 	private String etatVente;
 	
-	private Retrait lieuretrait;
+	private Retrait lieuRetrait;
 	private Categorie CategorieArticle;
+	private Utilisateur acheteur;
+	private Utilisateur vendeur;
 	
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEnchere,
-			LocalDate dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Retrait lieuRetrait, Categorie CategorieArticle) {
-		this.id = noArticle;
+	
+
+	public ArticleVendu(int id, String nomArticle, String description, LocalDate dateDebutEnchere,
+			LocalDate dateFinEncheres, int prixInitial, int prixVente, String etatVente, Retrait lieuRetrait,
+			Categorie categorieArticle, Utilisateur acheteur, Utilisateur vendeur) {
+		super();
+		this.id = id;
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEnchere = dateDebutEnchere;
 		this.dateFinEncheres = dateFinEncheres;
-		this.prixInitial = miseAPrix;
+		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
 		this.etatVente = etatVente;
-		this.lieuretrait = lieuRetrait;
-	}
-
-	public int getNoArticle() {
-		return id;
-	}
-
-	public void setNoArticle(int noArticle) {
-		this.id = noArticle;
+		this.lieuRetrait = lieuRetrait;
+		CategorieArticle = categorieArticle;
+		this.acheteur = acheteur;
+		this.vendeur = vendeur;
 	}
 
 	public String getNomArticle() {
@@ -94,11 +96,11 @@ public class ArticleVendu {
 	}
 
 	public Retrait getLieuretrait() {
-		return lieuretrait;
+		return lieuRetrait;
 	}
 
-	public void setLieuretrait(Retrait lieuretrait) {
-		this.lieuretrait = lieuretrait;
+	public void setLieuretrait(Retrait lieuRetrait) {
+		this.lieuRetrait = lieuRetrait;
 	}
 
 	public Categorie getCategorieArticle() {
@@ -109,13 +111,66 @@ public class ArticleVendu {
 		CategorieArticle = categorieArticle;
 	}
 
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getPrixInitial() {
+		return prixInitial;
+	}
+
+	public void setPrixInitial(int prixInitial) {
+		this.prixInitial = prixInitial;
+	}
+
+	public Utilisateur getAcheteur() {
+		return acheteur;
+	}
+
+	public void setAcheteur(Utilisateur acheteur) {
+		this.acheteur = acheteur;
+	}
+
+	public Utilisateur getVendeur() {
+		return vendeur;
+	}
+
+	public void setVendeur(Utilisateur vendeur) {
+		this.vendeur = vendeur;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ArticleVendu other = (ArticleVendu) obj;
+		return id == other.id;
+	}
+
 	@Override
 	public String toString() {
 		return String.format(
-				"ArticleVendu [noArticle=%s, nomArticle=%s, description=%s, dateDebutEnchere=%s, dateFinEncheres=%s, miseAPrix=%s, prixVente=%s, etatVente=%s, lieuretrait=%s, CategorieArticle=%s]",
+				"ArticleVendu [id=%s, nomArticle=%s, description=%s, dateDebutEnchere=%s, dateFinEncheres=%s, prixInitial=%s, prixVente=%s, etatVente=%s, lieuRetrait=%s, CategorieArticle=%s, acheteur=%s, vendeur=%s]",
 				id, nomArticle, description, dateDebutEnchere, dateFinEncheres, prixInitial, prixVente, etatVente,
-				lieuretrait, CategorieArticle);
+				lieuRetrait, CategorieArticle, acheteur, vendeur);
 	}
+
+	
 
 	
 	

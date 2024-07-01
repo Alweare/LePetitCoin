@@ -1,18 +1,14 @@
 package fr.eni.enchere.bo;
 
-import java.time.LocalDate;
-
-public class Retrait extends ArticleVendu{
+public class Retrait {
 	
 	private String rue;
 	private String code_postal;
 	private String ville;
 	
-	public Retrait(int noArticle, String nomArticle, String description, LocalDate dateDebutEnchere,
-			LocalDate dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Retrait lieuRetrait,
-			Categorie CategorieArticle, String rue, String code_postal, String ville) {
-		super(noArticle, nomArticle, description, dateDebutEnchere, dateFinEncheres, miseAPrix, prixVente, etatVente,
-				lieuRetrait, CategorieArticle);
+	
+
+	public Retrait(String rue, String code_postal, String ville) {
 		this.rue = rue;
 		this.code_postal = code_postal;
 		this.ville = ville;
