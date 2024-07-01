@@ -19,7 +19,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	private static final String TROUVE_TOUT = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur FROM UTILISATEURS";
 	private static final String TROUVE_AVEC_ID ="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur FROM UTILISATEURS WHERE id = :id";
+	private static final String TROUVE_AVEC_PSEUDO = "SELECT pseudo, email, motDePasse FROM UTILISATEURS WHERE pseudo = :pseudo";
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (:pseudo,:nom,:prenom,:email,:telephone,:rue,:codePostal,:ville,:motDePasse,0,0)";
+
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -37,7 +39,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	@Override
 	public Utilisateur lire(long id) {
 		MapSqlParameterSource parametreSource = new MapSqlParameterSource();
-		parametreSource.addValue("if", id);
+		parametreSource.addValue("id", id);
 		return jdbcTemplate.queryForObject(TROUVE_AVEC_ID, parametreSource, new UtilisateurRowMapper() );
 	}
 /**
@@ -59,6 +61,13 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		mapSqlParameterSource.addValue("motDePasse", utilisateur.getMotDePasse());
 		
 		jdbcTemplate.update(INSERT_UTILISATEUR, mapSqlParameterSource);
+	}
+	
+	@Override
+	public Utilisateur trouveParPseudo(String pseudo) {
+		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+		parameterSource.addValue("pseudo", pseudo);
+		return jdbcTemplate.queryForObject(TROUVE_AVEC_PSEUDO, parameterSource , Utilisateur.class);
 	}
 
 	class UtilisateurRowMapper implements org.springframework.jdbc.core.RowMapper<Utilisateur>{
@@ -83,5 +92,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		
 		
 	}
+
+
 	
 }
