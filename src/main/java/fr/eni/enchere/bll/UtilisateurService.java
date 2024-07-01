@@ -10,5 +10,5 @@ public interface UtilisateurService {
 	
 	Utilisateur consulterUtilisateurParId();
 	
-	void creerUtilisateur();
+	void creerUtilisateur(Utilisateur utilisateur);
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.tree.RowMapper;
 import javax.swing.tree.TreePath;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,7 +18,8 @@ import fr.eni.enchere.bo.Utilisateur;
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	private static final String TROUVE_TOUT = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur FROM UTILISATEURS";
-	private static final String TROUVE_AVEC_ID ="SLECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur FROM UTILISATEURS WHERE id = :id";
+	private static final String TROUVE_AVEC_ID ="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur FROM UTILISATEURS WHERE id = :id";
+	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (:pseudo,:nom,:prenom,:email,:telephone,:rue,:codePostal,:ville,:motDePasse,0,0)";
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -38,11 +40,25 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		parametreSource.addValue("if", id);
 		return jdbcTemplate.queryForObject(TROUVE_AVEC_ID, parametreSource, new UtilisateurRowMapper() );
 	}
-
+/**
+ * @param : Utilisateur
+ * Créer un utilisateur en base 
+ * on ne set pas l'id car c'est une identity en bdd 
+ * 
+ * */
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) {
-		// TODO Auto-generated method stub
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("pseudo", utilisateur.getPseudo());
+		mapSqlParameterSource.addValue("nom", utilisateur.getNom());
+		mapSqlParameterSource.addValue("prenom", utilisateur.getPrenom());
+		mapSqlParameterSource.addValue("email", utilisateur.getEmail());
+		mapSqlParameterSource.addValue("telephone", utilisateur.getTelephone());
+		mapSqlParameterSource.addValue("rue", utilisateur.getRue());
+		mapSqlParameterSource.addValue("ville", utilisateur.getVille());
+		mapSqlParameterSource.addValue("motDePasse", utilisateur.getMotDePasse());
 		
+		jdbcTemplate.update(INSERT_UTILISATEUR, mapSqlParameterSource);
 	}
 
 	class UtilisateurRowMapper implements org.springframework.jdbc.core.RowMapper<Utilisateur>{
@@ -62,7 +78,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 			utilisateur.setMotDePasse(rs.getString("motDePasse"));
 			utilisateur.setCredit(rs.getInt("credit"));
 			utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
-			return null;
+			return utilisateur;
 		}
 		
 		
