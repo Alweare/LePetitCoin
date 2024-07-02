@@ -1,4 +1,5 @@
-package fr.eni.enchere.controllers;
+	package fr.eni.enchere.controllers;
+
 
 import java.security.Principal;
 
@@ -77,16 +78,6 @@ public class ConnexionController {
 	}
 	 
 	 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	 
 }
