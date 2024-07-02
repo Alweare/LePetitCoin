@@ -12,10 +12,13 @@
 	
 	<h2>Liste des enchères</h2>
 	
+	<form action="POST">
 		<label  th:if="0>1">Filtres</label> 
 			<input type="text" id="recherche" />
 			<select name="categories" id="categories"></select>
 			<button type="submit">Rechercher</button>
+	</form>		
+			
 		<!-- boutons ne doivent apparaitre que pour les utilisateurs connectés -->
 		<input type="radio" id="choix1" name="choix" value="achats" />
 		<label for="choix1">Achats</label>		

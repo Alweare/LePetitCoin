@@ -44,7 +44,9 @@ public class EnchereSecurityConfig {
 				.requestMatchers("/monProfil").permitAll()
 				.requestMatchers("/css/*").permitAll()
 				.requestMatchers("/images/*").permitAll()
-				.anyRequest().authenticated();
+				.requestMatchers("/creationProfil").permitAll()
+
+				.anyRequest().permitAll();
 		});
 		http.formLogin(form->{
 			form.loginPage("/connexion").permitAll();
