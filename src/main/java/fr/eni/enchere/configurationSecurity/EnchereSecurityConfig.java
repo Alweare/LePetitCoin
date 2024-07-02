@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,6 +26,14 @@ public class EnchereSecurityConfig {
 	private String SELECT_ROLES="SELECT administrateur FROM UTILISATEURS where email = ?";
 
 	
+	
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+	
+	
+	
 	@Bean
 	UserDetailsManager userDetailManager(DataSource dataSource) {
 		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
@@ -36,7 +46,7 @@ public class EnchereSecurityConfig {
 	SecurityFilterChain filtreChaine(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(auth-> {
 			auth
-				.requestMatchers(HttpMethod.GET,"/connexion").permitAll()
+				.requestMatchers("/connexion").permitAll()
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/creationProfil").permitAll()
 				.requestMatchers("/creationVente").permitAll()

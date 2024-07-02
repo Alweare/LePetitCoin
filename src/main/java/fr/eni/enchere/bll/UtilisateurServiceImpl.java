@@ -3,6 +3,7 @@ package fr.eni.enchere.bll;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import fr.eni.enchere.bo.Utilisateur;
@@ -14,7 +15,7 @@ import fr.eni.enchere.exceptions.BusinessException;
 public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	private UtilisateurDAO utilisateurDAO;
-	
+	private PasswordEncoder passwordEncoder;
 
 	public UtilisateurServiceImpl(UtilisateurDAO utilisateurDAO) {
 
@@ -38,6 +39,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public void creerUtilisateur(Utilisateur utilisateur) {
 		BusinessException be = new BusinessException();
 		boolean estValid = verifPseudo(null, be);
+		String motDePasseCrypte = passwordEncoder.encode(utilisateur.getMotDePasse());
+		System.out.println(motDePasseCrypte);
+		utilisateur.setMotDePasse(motDePasseCrypte);
+		
 		utilisateurDAO.creerUtilisateur(utilisateur);
 		
 	}
