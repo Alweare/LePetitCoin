@@ -2,6 +2,8 @@ package fr.eni.enchere.bll;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import fr.eni.enchere.bo.Enchere;
 
 public interface EnchereService {
