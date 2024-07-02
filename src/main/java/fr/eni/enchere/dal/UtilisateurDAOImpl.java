@@ -36,12 +36,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		return jdbcTemplate.query(TROUVE_TOUT, new UtilisateurRowMapper());
 	}
 
-	@Override
-	public Utilisateur lire(long id) {
-		MapSqlParameterSource parametreSource = new MapSqlParameterSource();
-		parametreSource.addValue("id", id);
-		return jdbcTemplate.queryForObject(TROUVE_AVEC_ID, parametreSource, new UtilisateurRowMapper() );
-	}
+
 /**
  * @param : Utilisateur
  * Créer un utilisateur en base 
@@ -97,12 +92,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		
 		
 	}
-<<<<<<< Updated upstream
 
-
-
-
-=======
->>>>>>> Stashed changes
+@Override
+public Utilisateur lire(int id) {
+	// TODO Auto-generated method stub
+	return null;
+}
 	
 }

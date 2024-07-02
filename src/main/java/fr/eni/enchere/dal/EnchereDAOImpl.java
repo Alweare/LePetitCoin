@@ -15,6 +15,7 @@ public class EnchereDAOImpl implements EnchereDAO {
 			+ "		INNER JOIN UTILISATEURS as U ON (e.idUtilisateur = u.id) \r\n"
 			+ "		INNER JOIN ARTICLES_VENDUS as AV ON (AV.idUtilisateur = u.id) \r\n"
 			+ "		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) ";
+	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateFinEncheres > CURRENT_TIMESTAMP;";
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
