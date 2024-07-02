@@ -17,27 +17,31 @@ import fr.eni.enchere.dal.UtilisateurDAO;
 @Controller
 @SessionAttributes({"utilisateurSession"})
 public class ConnexionController {
-	
+
 	private UtilisateurService utilisateurService;
 	private ContexteService contexteService;
 	
-	
-	public ConnexionController(ContexteService contexteService) {
-		this.contexteService = contexteService;
-	}
 
-	@GetMapping("/connexion")
-	    public String connexion() {
-	        return "connexion";
-	    }
+		 @GetMapping("/connexion")
+		    public String connexion() {
+		        return "connexion";
+		    }
+
+	
 	 
-	 @GetMapping()
-	 public String verifierConnextion(@RequestParam String pseudo,@RequestParam String motDePasse) {
-		 boolean valide = utilisateurService.verifierPseudoEtMotPasse(pseudo, motDePasse);
-		 if(valide) {
-			 return "redirect:/index";
-		 }else {
-			 return "connextion";
+	 
+		 
+		 @PostMapping("/connexion")
+		 public String verifierConnextion(@RequestParam("pseudo") String pseudo,@RequestParam String motDePasse) {
+			System.out.println("entrer dans la verif utilisateur");
+			 boolean valide = utilisateurService.verifierPseudoEtMotPasse(pseudo, motDePasse);
+			 if(valide) {
+				 System.out.println("utilisateur validé");
+				 return "redirect:/index";
+			 }else {
+				 return "connexion";
+			 }
+
 		 }
 	 }
 	@ModelAttribute("utilisateurSession")
