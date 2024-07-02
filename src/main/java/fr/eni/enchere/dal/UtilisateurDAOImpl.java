@@ -36,12 +36,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		return jdbcTemplate.query(TROUVE_TOUT, new UtilisateurRowMapper());
 	}
 
-	@Override
-	public Utilisateur lire(long id) {
-		MapSqlParameterSource parametreSource = new MapSqlParameterSource();
-		parametreSource.addValue("id", id);
-		return jdbcTemplate.queryForObject(TROUVE_AVEC_ID, parametreSource, new UtilisateurRowMapper() );
-	}
+
 /**
  * @param : Utilisateur
  * Créer un utilisateur en base 
@@ -72,12 +67,17 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		return jdbcTemplate.queryForObject(TROUVE_AVEC_PSEUDO, parameterSource , Utilisateur.class);
 	}
 
+	@Override
+	public void modifierCreditParId(int id) {
+		// TODO Auto-generated method stub
+		
+	}
 	class UtilisateurRowMapper implements org.springframework.jdbc.core.RowMapper<Utilisateur>{
 
 		@Override
 		public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Utilisateur utilisateur = new Utilisateur();
-			utilisateur.setNoUtlisateur(rs.getInt("no_utilisateur"));
+			utilisateur.setId(rs.getInt("id"));
 			utilisateur.setPseudo(rs.getString("pseudo"));
 			utilisateur.setNom(rs.getString("nom"));
 			utilisateur.setPrenom(rs.getString("prenom"));
@@ -95,8 +95,10 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		
 	}
 
-
-
-
+@Override
+public Utilisateur lire(int id) {
+	// TODO Auto-generated method stub
+	return null;
+}
 	
 }

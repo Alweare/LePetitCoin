@@ -2,7 +2,7 @@ package fr.eni.enchere.bo;
 
 public class Utilisateur {
 
-	private int noUtlisateur;
+	private int id;
 	private String pseudo;
 	private String nom;
 	private String prenom;
@@ -21,9 +21,9 @@ public class Utilisateur {
 	}
 
 
-	public Utilisateur(int noUtlisateur, String pseudo, String nom, String prenom, String email, String telephone,
+	public Utilisateur(int id, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
-		this.noUtlisateur = noUtlisateur;
+		this.id = id;
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -38,13 +38,13 @@ public class Utilisateur {
 	}
 
 
-	public int getNoUtlisateur() {
-		return noUtlisateur;
+	public int getId() {
+		return id;
 	}
 
 
-	public void setNoUtlisateur(int noUtlisateur) {
-		this.noUtlisateur = noUtlisateur;
+	public void setId(int noUtlisateur) {
+		this.id = noUtlisateur;
 	}
 
 
@@ -162,7 +162,7 @@ public class Utilisateur {
 	public String toString() {
 		return String.format(
 				"Utilisateur [noUtlisateur=%s, pseudo=%s, nom=%s, prenom=%s, email=%s, telephone=%s, rue=%s, codePostal=%s, ville=%s, motDePasse=%s, credit=%s, administrateur=%s]",
-				noUtlisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit,
+				id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit,
 				administrateur);
 	}
 	
