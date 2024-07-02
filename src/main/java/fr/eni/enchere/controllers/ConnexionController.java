@@ -54,7 +54,7 @@ public class ConnexionController {
 		String pseudo = principal.getName();
 		Utilisateur utilisateur = this.contexteService.charger(pseudo);
 		if(utilisateur != null) {
-			utilisateurEnSession.setNoUtlisateur(utilisateur.getNoUtlisateur());
+			utilisateurEnSession.setId(0);
 			utilisateurEnSession.setPseudo(utilisateur.getPseudo());
 			utilisateurEnSession.setNom(utilisateur.getNom());
 			utilisateurEnSession.setPrenom(utilisateur.getPrenom());
@@ -66,7 +66,7 @@ public class ConnexionController {
 			utilisateurEnSession.setCredit(utilisateur.getCredit());
 			utilisateurEnSession.setAdministrateur(utilisateur.isAdministrateur());
 		}else {
-			utilisateurEnSession.setNoUtlisateur(0);
+			utilisateurEnSession.setId(0);
 			utilisateurEnSession.setPseudo(null);
 			utilisateurEnSession.setNom(null);
 			utilisateurEnSession.setPrenom(null);

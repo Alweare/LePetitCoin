@@ -33,8 +33,7 @@ public class EnchereDAOImpl implements EnchereDAO {
 
 	@Override
 	public List<Enchere> touveToutEnCours() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.jdbc.query(TROUVE_ACTIVES, new BeanPropertyRowMapper<Enchere>(Enchere.class));
 	}
 
 	@Override
