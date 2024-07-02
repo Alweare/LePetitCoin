@@ -70,12 +70,17 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		return jdbcTemplate.queryForObject(TROUVE_AVEC_PSEUDO, parameterSource , Utilisateur.class);
 	}
 
+	@Override
+	public void modifierCreditParId(int id) {
+		// TODO Auto-generated method stub
+		
+	}
 	class UtilisateurRowMapper implements org.springframework.jdbc.core.RowMapper<Utilisateur>{
 
 		@Override
 		public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Utilisateur utilisateur = new Utilisateur();
-			utilisateur.setNoUtlisateur(rs.getInt("no_utilisateur"));
+			utilisateur.setId(rs.getInt("id"));
 			utilisateur.setPseudo(rs.getString("pseudo"));
 			utilisateur.setNom(rs.getString("nom"));
 			utilisateur.setPrenom(rs.getString("prenom"));
@@ -92,9 +97,12 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		
 		
 	}
+<<<<<<< Updated upstream
 
 
 
 
+=======
+>>>>>>> Stashed changes
 	
 }
