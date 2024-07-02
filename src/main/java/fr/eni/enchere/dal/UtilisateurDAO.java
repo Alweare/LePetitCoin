@@ -10,6 +10,7 @@ public interface UtilisateurDAO {
 	
 	Utilisateur lire(long id);
 	
+	
 	void creerUtilisateur(Utilisateur utilisateur);
 	
 	Utilisateur trouveParPseudo(String pseudo);
