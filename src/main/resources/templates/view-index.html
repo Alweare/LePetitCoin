@@ -41,11 +41,11 @@
 		
 		<!-- insérer les annonces -->
 		
-		<fieldset>			
+		<fieldset th:each="enchere:${listeEncheres}">			
 			<img src="" alt="" />
 			<ul>
 			<li><label for="inputArticle"></label>
-				<input id="inputArticle" type="text" readonly="readonly" />
+				<input id="inputArticle" type="text" readonly="readonly"  />
 			</li>
 			<li><label for="inputPrix">Prix :</label>
 				<input id="inputPrix" type="text"  readonly="readonly"/>
