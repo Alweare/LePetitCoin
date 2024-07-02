@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" data-th-href="@{/css/general.css}">
+
+<title>Le Petit Coin</title>
+</head>
+<body>
+
+	<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
+	
+	<h2>Mon profil</h2>
+	
+		<ul>
+			<li><label for="inputPseudo">Pseudo :</label>
+				<input id="inputPseudo" type="text"  />
+			</li>
+			<li><label for="inputNom">Nom :</label>
+				<input id="inputNom" type="password"  />
+			</li>
+			<li><label for="inputPrenom">Prénom :</label>
+				<input id="inputPrenom" type="text"  />
+			</li>
+			<li><label for="inputEmail">Email :</label>
+				<input id="inputEmail" type="email"  />
+			</li>
+			<li><label for="inputTelephone">Téléphone :</label>
+				<input id="inputTelephone" type="number"  />
+			</li>
+			<li><label for="inputRue">Rue :</label>
+				<input id="inputRue" type="text"  />
+			</li>
+			<li><label for="inputCP">Code Postal :</label>
+				<input id="inputCP" type="number"  />
+			</li>
+			<li><label for="inputVille">Ville :</label>
+				<input id="inputVille" type="text"  />
+			</li>
+			<li><label for="inputPassword">Mot de passe :</label>
+				<input id="inputPassword" type="password"  />
+			</li>
+			<li><label for="inputPassword">Confirmation :</label>
+				<input id="inputPassword" type="password"  />
+			</li>
+			
+		
+		</ul>
+
+		<!-- boutons à activer -->
+			<button type="submit">Créer</button>
+			<input type="reset" value="Reset" />Annuler<br />
+		
+		
+		
+		
+		
+
+
+
+	 <div class="footer" th:replace="~{/fragments/fragment-piedpage :: fragment-piedpage}"></div> 
+
+</body>
+</html>

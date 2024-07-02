@@ -1,6 +1,7 @@
 package fr.eni.enchere.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import fr.eni.enchere.bll.UtilisateurServiceImpl;
 import fr.eni.enchere.bo.Utilisateur;
@@ -30,6 +31,15 @@ public class UtilisateurController {
 		
 	}
 	
+	@GetMapping("/creationProfil")
+	public String creationProfil() {
+		return "creationProfil";
+	}
+	
+	@GetMapping("/monProfil")
+	public String monProfil() {
+		return "monProfil";
+	}
 	
 
 }

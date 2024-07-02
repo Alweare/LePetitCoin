@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" data-th-href="@{/css/general.css}">
+
+<title>Le Petit Coin</title>
+</head>
+<body>
+
+	<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
+	
+	<h2>Liste des enchères</h2>
+	
+		<label th:if="0>1">Filtres</label> 
+			<input type="text" id="recherche" />
+			<select name="categories" id="categories"></select>
+			<button type="submit">Rechercher</button>
+
+
+
+
+
+	 <div class="footer" th:replace="~{/fragments/fragment-piedpage :: fragment-piedpage}"></div> 
+
+</body>
+</html>

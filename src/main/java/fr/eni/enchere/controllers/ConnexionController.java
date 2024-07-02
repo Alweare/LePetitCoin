@@ -5,6 +5,7 @@
 	import org.springframework.web.bind.annotation.PostMapping;
 	import org.springframework.web.bind.annotation.RequestParam;
 	
+
 	import fr.eni.enchere.bll.UtilisateurService;
 	import fr.eni.enchere.dal.UtilisateurDAO;
 	
@@ -17,7 +18,10 @@
 		    public String connexion() {
 		        return "connexion";
 		    }
-		 
+
+	
+	 
+	 
 		 
 		 @PostMapping("/connexion")
 		 public String verifierConnextion(@RequestParam("pseudo") String pseudo,@RequestParam String motDePasse) {
