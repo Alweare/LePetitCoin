@@ -8,6 +8,7 @@ import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.UtilisateurDAO;
 
 @Service
+
 public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	private UtilisateurDAO utilisateurDAO;
@@ -18,22 +19,29 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		this.utilisateurDAO = utilisateurDAO;
 	}
 
+
 	@Override
 	public List<Utilisateur> consulterUtilisateur() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Utilisateur> listUtilisateur = utilisateurDAO.trouveTout();
+		return listUtilisateur;
 	}
 
 	@Override
-	public Utilisateur consulterUtilisateurParId() {
-		// TODO Auto-generated method stub
-		return null;
+	public Utilisateur consulterUtilisateurParId(int id) {
+		Utilisateur utilisateur = utilisateurDAO.lire(id);
+		return utilisateur;
 	}
 
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) {
 		utilisateurDAO.creerUtilisateur(utilisateur);
 		
+	}
+
+	@Override
+	public boolean verifierPseudoEtMotPasse(String pseudo, String motDePasse) {
+		Utilisateur utilisateur = utilisateurDAO.trouveParPseudo(pseudo);
+		return utilisateur !=null && utilisateur.getMotDePasse().equals(motDePasse);
 	}
 
 }
