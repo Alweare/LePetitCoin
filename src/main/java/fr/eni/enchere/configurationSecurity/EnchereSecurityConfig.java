@@ -38,6 +38,10 @@ public class EnchereSecurityConfig {
 			auth
 				.requestMatchers(HttpMethod.GET,"/connexion").permitAll()
 				.requestMatchers("/").permitAll()
+				.requestMatchers("/creationProfil").permitAll()
+				.requestMatchers("/creationVente").permitAll()
+				.requestMatchers("/listeEnchere").permitAll()
+				.requestMatchers("/monProfil").permitAll()
 				.requestMatchers("/css/*").permitAll()
 				.requestMatchers("/images/*").permitAll()
 				.anyRequest().authenticated();
