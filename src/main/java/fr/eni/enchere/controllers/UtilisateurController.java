@@ -1,7 +1,9 @@
 package fr.eni.enchere.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import fr.eni.enchere.bll.UtilisateurServiceImpl;
 import fr.eni.enchere.bo.Utilisateur;
@@ -17,12 +19,21 @@ public class UtilisateurController {
 		this.utilisateurImpl = utilisateurImpl;
 	}
 	
+	@GetMapping("/creationProfil")
+	public String creationProfil(Model model) {
+		Utilisateur newUtilisateur = new Utilisateur();
+		model.addAttribute("newUtilisateur", newUtilisateur);
+		
+		return "creationProfil";
+	}
+	
+	@PostMapping("/creationProfil")
 	public String inscriptionUtilisateur (Utilisateur utilisateur)throws BusinessException {
 		BusinessException be = new BusinessException();
 		Utilisateur nouveauUtilisateur = new Utilisateur();
 		
-		if(nouveauUtilisateur != null) {
-			this.utilisateurImpl.creerUtilisateur(nouveauUtilisateur);
+		if(utilisateur != null) {
+			this.utilisateurImpl.creerUtilisateur(utilisateur);
 			be.add("Veuillez saisir tout les champs");
 		}
 		
@@ -31,15 +42,16 @@ public class UtilisateurController {
 		
 	}
 	
-	@GetMapping("/creationProfil")
-	public String creationProfil() {
-		return "creationProfil";
-	}
 	
 	@GetMapping("/monProfil")
 	public String monProfil() {
 		return "monProfil";
 	}
+	
+	
+	
+	
+	
 	
 
 }

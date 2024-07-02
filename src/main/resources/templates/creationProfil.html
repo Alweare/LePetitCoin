@@ -12,33 +12,34 @@
 	
 	<h2>Mon profil</h2>
 	
+	<form th:action="@{/creationProfil}"  method="POST" th:object="${newUtilisateur}">
 		<ul>
 			<li><label for="inputPseudo">Pseudo :</label>
-				<input id="inputPseudo" type="text"  />
+				<input id="inputPseudo" type="text" th:field="*{pseudo}" />
 			</li>
 			<li><label for="inputNom">Nom :</label>
-				<input id="inputNom" type="password"  />
+				<input id="inputNom" type="text"  th:field="*{nom}"/>
 			</li>
 			<li><label for="inputPrenom">Prénom :</label>
-				<input id="inputPrenom" type="text"  />
+				<input id="inputPrenom" type="text"  th:field="*{prenom}"/>
 			</li>
 			<li><label for="inputEmail">Email :</label>
-				<input id="inputEmail" type="email"  />
+				<input id="inputEmail" type="email"  th:field="*{email}"/>
 			</li>
 			<li><label for="inputTelephone">Téléphone :</label>
-				<input id="inputTelephone" type="number"  />
+				<input id="inputTelephone" type="text"  th:field="*{telephone}"/>
 			</li>
 			<li><label for="inputRue">Rue :</label>
-				<input id="inputRue" type="text"  />
+				<input id="inputRue" type="text"  th:field="*{rue}"/>
 			</li>
 			<li><label for="inputCP">Code Postal :</label>
-				<input id="inputCP" type="number"  />
+				<input id="inputCP" type="text"  th:field="*{codePostal}"/>
 			</li>
 			<li><label for="inputVille">Ville :</label>
-				<input id="inputVille" type="text"  />
+				<input id="inputVille" type="text" th:field="*{ville}" />
 			</li>
 			<li><label for="inputPassword">Mot de passe :</label>
-				<input id="inputPassword" type="password"  />
+				<input id="inputPassword" type="password"  th:field="*{motDePasse}"/>
 			</li>
 			<li><label for="inputPassword">Confirmation :</label>
 				<input id="inputPassword" type="password"  />
@@ -46,10 +47,14 @@
 			
 		
 		</ul>
-
+	
 		<!-- boutons à activer -->
 			<button type="submit">Créer</button>
-			<input type="reset" value="Reset" />Annuler<br />
+			<button type="reset">Reset</button>
+			<button type="reset">Annuler</button>
+		</form>	
+			
+			<br />
 		
 		
 		

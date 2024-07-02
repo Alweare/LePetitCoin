@@ -50,6 +50,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
  * */
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) {
+		System.out.println(utilisateur);
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 		mapSqlParameterSource.addValue("pseudo", utilisateur.getPseudo());
 		mapSqlParameterSource.addValue("nom", utilisateur.getNom());
@@ -57,6 +58,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		mapSqlParameterSource.addValue("email", utilisateur.getEmail());
 		mapSqlParameterSource.addValue("telephone", utilisateur.getTelephone());
 		mapSqlParameterSource.addValue("rue", utilisateur.getRue());
+		mapSqlParameterSource.addValue("codePostal", utilisateur.getCodePostal());
 		mapSqlParameterSource.addValue("ville", utilisateur.getVille());
 		mapSqlParameterSource.addValue("motDePasse", utilisateur.getMotDePasse());
 		
