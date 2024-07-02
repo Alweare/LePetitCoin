@@ -10,7 +10,7 @@
 		<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
 	
 
-		<form  method="POST" >
+		<form th:action="@{/connexion}" method="POST" >
 			<h1>Connexion</h1>
 			<div th:if="${param.error}">Erreur : login ou mot de passe incorrect</div>
 			<ul class="flex-outer">			
