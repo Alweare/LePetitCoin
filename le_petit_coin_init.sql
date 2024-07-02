@@ -4,17 +4,17 @@
 --DROP TABLE UTILISATEURS;
 --DROP TABLE CATEGORIES;
 
---USE master;
---go
---DROP DATABASE ENIEncheres;
+USE master;
+go
+DROP DATABASE ENIEncheres;
 
---CREATE DATABASE ENIEncheres;
---go
---USE ENIEncheres;
---go
--- Script de création de la base de données ENCHERES
---   type :      SQL Server 2012
---
+CREATE DATABASE ENIEncheres;
+go
+USE ENIEncheres;
+go
+ --Script de création de la base de données ENCHERES
+ --  type :      SQL Server 2012
+
 
 
 
@@ -29,8 +29,8 @@ ALTER TABLE CATEGORIES ADD constraint categorie_pk PRIMARY KEY (id)
 CREATE TABLE ENCHERES (
     idUtilisateur   INTEGER NOT NULL,
     idArticle      INTEGER NOT NULL,
-    date_enchere     datetime NOT NULL,
-	montant_enchere  INTEGER NOT NULL
+    dateEnchere     datetime NOT NULL,
+	montantEnchere  INTEGER NOT NULL
 );
 
 ALTER TABLE ENCHERES ADD constraint enchere_pk PRIMARY KEY (idUtilisateur, idArticle)
