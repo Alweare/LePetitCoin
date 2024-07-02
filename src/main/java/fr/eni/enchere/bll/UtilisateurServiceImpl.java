@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.UtilisateurDAO;
+import fr.eni.enchere.exceptions.BusinessException;
 
 @Service
 
@@ -43,5 +44,25 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		Utilisateur utilisateur = utilisateurDAO.trouveParPseudo(pseudo);
 		return utilisateur !=null && utilisateur.getMotDePasse().equals(motDePasse);
 	}
+	
+	public boolean checkPseudo(Utilisateur utilisateur, BusinessException be) {
+		boolean isValid = false;
+		Utilisateur testUtilisateur = utilisateurDAO.trouveParPseudo(utilisateur.getPseudo());
+		
+//		if(testUtilisateur.getPseudo()) {
+//			
+//		}
+		
+		
+		
+
+		
+		return isValid;
+		
+	}
+
+
+
+
 
 }
