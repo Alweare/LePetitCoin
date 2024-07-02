@@ -30,13 +30,12 @@ public class UtilisateurController {
 	@PostMapping("/creationProfil")
 	public String inscriptionUtilisateur (Utilisateur utilisateur)throws BusinessException {
 		BusinessException be = new BusinessException();
-//		Utilisateur nouveauUtilisateur = new Utilisateur();
+		Utilisateur nouveauUtilisateur = new Utilisateur();
 		
 		if(utilisateur != null) {
 			this.utilisateurImpl.creerUtilisateur(utilisateur);
 			be.add("Veuillez saisir tout les champs");
 		}
-		
 		
 		
 		return "view-index";
@@ -45,12 +44,14 @@ public class UtilisateurController {
 	
 	
 	@GetMapping("/monProfil")
-	
 	public String monProfil() {
-		
 		return "monProfil";
 	}
-
-
+	
+	
+	
+	
+	
+	
 
 }
