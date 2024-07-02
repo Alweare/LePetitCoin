@@ -34,17 +34,17 @@ public class ConnexionController {
 		 
 		 @PostMapping("/connexion")
 		 public String verifierConnextion(@RequestParam("pseudo") String pseudo,@RequestParam String motDePasse) {
-			System.out.println("entrer dans la verif utilisateur");
-			 boolean valide = utilisateurService.verifierPseudoEtMotPasse(pseudo, motDePasse);
-			 if(valide) {
-				 System.out.println("utilisateur validé");
-				 return "redirect:/index";
-			 }else {
-				 return "connexion";
-			 }
+        System.out.println("entrer dans la verif utilisateur");
+         boolean valide = utilisateurService.verifierPseudoEtMotPasse(pseudo, motDePasse);
+         if(valide) {
+           System.out.println("utilisateur validé");
+           return "redirect:/index";
+         }else {
+           return "connexion";
+         }
+		 }
 
-		 
-	 }
+
 	@ModelAttribute("utilisateurSession")
 	public Utilisateur ajouteUtilisateurEnSession() {
 		return new Utilisateur();
