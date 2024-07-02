@@ -19,27 +19,32 @@ public class UtilisateurController {
 	
 	public String inscriptionUtilisateur (Utilisateur utilisateur)throws BusinessException {
 		BusinessException be = new BusinessException();
-		Utilisateur nouveauUtilisateur = new Utilisateur();
+//		Utilisateur nouveauUtilisateur = new Utilisateur();
 		
-		if(nouveauUtilisateur != null) {
-			this.utilisateurImpl.creerUtilisateur(nouveauUtilisateur);
+		if(utilisateur != null) {
+			this.utilisateurImpl.creerUtilisateur(utilisateur);
 			be.add("Veuillez saisir tout les champs");
 		}
+		
 		
 		
 		return "view-index";
 		
 	}
 	
+
 	@GetMapping("/creationProfil")
 	public String creationProfil() {
+		
 		return "creationProfil";
 	}
 	
 	@GetMapping("/monProfil")
+	
 	public String monProfil() {
+		
 		return "monProfil";
 	}
-	
+
 
 }

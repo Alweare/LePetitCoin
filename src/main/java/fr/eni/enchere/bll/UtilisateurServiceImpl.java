@@ -1,6 +1,7 @@
 package fr.eni.enchere.bll;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) {
+		BusinessException be = new BusinessException();
+		boolean estValid = verifPseudo(null, be);
 		utilisateurDAO.creerUtilisateur(utilisateur);
 		
 	}
@@ -45,19 +48,33 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return utilisateur !=null && utilisateur.getMotDePasse().equals(motDePasse);
 	}
 	
-	public boolean checkPseudo(Utilisateur utilisateur, BusinessException be) {
-		boolean isValid = false;
-		Utilisateur testUtilisateur = utilisateurDAO.trouveParPseudo(utilisateur.getPseudo());
+	public boolean verifPseudo(Utilisateur utilisateur, BusinessException be) {
+		boolean estValid = false;
+		String pseudoRegex = "^[a-zA-Z0-9]+$"; // caractère alphanumérique seulement
+		Pattern pseudoPattern = Pattern.compile(pseudoRegex);
 		
-//		if(testUtilisateur.getPseudo()) {
-//			
-//		}
+		// non nullité
+		if(utilisateur != null) {
+			Utilisateur utilisateurRecu = utilisateurDAO.trouveParPseudo(utilisateur.getPseudo());
+			// test pseudo pas en base
+			if(utilisateurRecu.getPseudo() == null){
+				if(pseudoPattern.matcher(utilisateurRecu.getPseudo()).matches()) {
+					estValid = true;
+					
+					
+				}else {
+					be.add("Caractère interdis dans le pseudo");
+				}
+				
+				
+			}else {
+				be.add("il vous faut un pseudo");
+			}
+		}else {
+			be.add("problème liaison bdd utilisateur");
+		}
 		
-		
-		
-
-		
-		return isValid;
+		return estValid;
 		
 	}
 
