@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 
+@Repository
 public class EnchereDAOImpl implements EnchereDAO {
 	private static final String TROUVE_TOUT = "SELECT AV.id, AV.nomArticle, AV.description, AV.prixInitial, AV.prixVente, AV.dateDebutEncheres, \r\n"
 			+ "	AV.dateDebutEncheres, C.id, C.libelle,E.dateEnchere, E.montantEnchere,U.id, U.pseudo"

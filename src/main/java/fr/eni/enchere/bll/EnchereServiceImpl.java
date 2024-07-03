@@ -2,9 +2,12 @@ package fr.eni.enchere.bll;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.dal.EnchereDAO;
 
+@Service
 public class EnchereServiceImpl implements EnchereService {
 	private EnchereDAO enchereDao;
 	

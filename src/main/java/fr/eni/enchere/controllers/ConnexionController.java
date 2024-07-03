@@ -27,9 +27,7 @@ public class ConnexionController {
 		    public String connexion() {
 		        return "connexion";
 		    }
-
-	
-	 
+		
 	 
 		 
 		 @PostMapping("/connexion")
@@ -79,7 +77,7 @@ public class ConnexionController {
 			utilisateurEnSession.setAdministrateur(false);
 			
 		}
-		return "redirect:/index";
+		return "redirect:/view-index";
 	}
 	 
 	 
