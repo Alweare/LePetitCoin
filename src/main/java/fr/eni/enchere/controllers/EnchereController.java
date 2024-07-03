@@ -5,18 +5,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import fr.eni.enchere.bll.EnchereService;
+import fr.eni.enchere.bll.ArticleService;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.exceptions.BusinessException;
 
 @Controller
 public class EnchereController {
 	
-	private EnchereService enchereService;
+	private ArticleService enchereService;
 	
 	
 	
-	public EnchereController(EnchereService enchereService) {
+	public EnchereController(ArticleService enchereService) {
 		this.enchereService = enchereService;
 	}
 
@@ -30,7 +30,7 @@ public class EnchereController {
 	 @GetMapping("/")
 	 public String acceuil(Model model) {
 		 model.addAttribute("listeEncheres", enchereService.recupererEnchereEnCours());
-		 System.out.println(model.getAttribute("listeEnchere"));
+		 System.out.println(model.getAttribute("listeEncheres"));
 		 return "view-index";
 	 }
 
