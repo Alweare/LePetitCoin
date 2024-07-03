@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -22,9 +20,8 @@ public class EnchereSecurityConfig {
 	
 	protected final Log logger = LogFactory.getLog(getClass());
 	
-	//private String SELECT_UTILISATEUR ="SELECT pseudo, mot_de_passe FROM UTILISATEURS WHERE pseudo=?";
-	private String SELECT_UTILISATEUR ="SELECT pseudo, mot_de_passe, 1 as enabled FROM UTILISATEURS WHERE pseudo = ?";
-	private String SELECT_ROLES="SELECT pseudo,administrateur FROM UTILISATEURS where pseudo=?";
+	private String SELECT_UTILISATEUR ="SELECT pseudo, mot_de_passe FROM UTILISATEURS WHERE pseudo=?";
+	private String SELECT_ROLES="SELECT administrateur FROM UTILISATEURS where email = ?";
 
 	
 	@Bean
@@ -36,33 +33,32 @@ public class EnchereSecurityConfig {
 	}
 	
 	@Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-	
-	@Bean
 	SecurityFilterChain filtreChaine(HttpSecurity http) throws Exception {
-		System.err.println("Je suis present ici");
-		http.authorizeHttpRequests(authorize->authorize 
-			
-				.requestMatchers("/connexion").permitAll()
+		http.authorizeHttpRequests(auth-> {
+			auth
+				.requestMatchers(HttpMethod.GET,"/connexion").permitAll()
 				.requestMatchers("/").permitAll()
-				.requestMatchers("/session").permitAll()
+				.requestMatchers("/creationProfil").permitAll()
+				.requestMatchers("/creationVente").permitAll()
+				.requestMatchers("/listeEnchere").permitAll()
+				.requestMatchers("/monProfil").permitAll()
 				.requestMatchers("/css/*").permitAll()
 				.requestMatchers("/images/*").permitAll()
-				.anyRequest().permitAll()
-		);
+				.requestMatchers("/creationProfil").permitAll()
+
+				.anyRequest().permitAll();
+		});
 		http.formLogin(form->{
 			form.loginPage("/connexion").permitAll();
-			form.defaultSuccessUrl("/").permitAll();//Changer plus tard au cas ou 
+			form.defaultSuccessUrl("/index").permitAll();//Changer plus tard au cas ou 
 		});
 		http.logout(logout->
 			logout
 				.invalidateHttpSession(true)
 				.clearAuthentication(true)
 				.deleteCookies("JSESSIONID")
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/").permitAll());
+				.logoutRequestMatcher(new AntPathRequestMatcher("/deconnecter"))
+				.logoutSuccessUrl("/connexion?deconnecter").permitAll());
 		
 		return http.build();
 	}

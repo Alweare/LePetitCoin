@@ -17,10 +17,10 @@ import fr.eni.enchere.bo.Utilisateur;
 @Repository
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
-	private static final String TROUVE_TOUT = "SELECT id, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
-	private static final String TROUVE_AVEC_ID ="SELECT id, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE id = :id";
-	private static final String TROUVE_AVEC_PSEUDO = "SELECT pseudo, mot_de_passe FROM UTILISATEURS WHERE pseudo = :pseudo";
-	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (:pseudo,:nom,:prenom,:email,:telephone,:rue,:code_postal,:ville,:mot_de_passe,0,0)";
+	private static final String TROUVE_TOUT = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur FROM UTILISATEURS";
+	private static final String TROUVE_AVEC_ID ="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur FROM UTILISATEURS WHERE id = :id";
+	private static final String TROUVE_AVEC_PSEUDO = "SELECT pseudo, email, motDePasse FROM UTILISATEURS WHERE pseudo = :pseudo";
+	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (:pseudo,:nom,:prenom,:email,:telephone,:rue,:codePostal,:ville,:motDePasse,0,0)";
 
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
@@ -36,12 +36,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		return jdbcTemplate.query(TROUVE_TOUT, new UtilisateurRowMapper());
 	}
 
-	@Override
-	public Utilisateur lire(long id) {
-		MapSqlParameterSource parametreSource = new MapSqlParameterSource();
-		parametreSource.addValue("id", id);
-		return jdbcTemplate.queryForObject(TROUVE_AVEC_ID, parametreSource, new UtilisateurRowMapper() );
-	}
+
 /**
  * @param : Utilisateur
  * Créer un utilisateur en base 
@@ -50,6 +45,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
  * */
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) {
+		System.out.println(utilisateur);
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 		mapSqlParameterSource.addValue("pseudo", utilisateur.getPseudo());
 		mapSqlParameterSource.addValue("nom", utilisateur.getNom());
@@ -57,10 +53,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		mapSqlParameterSource.addValue("email", utilisateur.getEmail());
 		mapSqlParameterSource.addValue("telephone", utilisateur.getTelephone());
 		mapSqlParameterSource.addValue("rue", utilisateur.getRue());
+		mapSqlParameterSource.addValue("codePostal", utilisateur.getCodePostal());
 		mapSqlParameterSource.addValue("ville", utilisateur.getVille());
-		mapSqlParameterSource.addValue("code_postal", utilisateur.getCodePostal());
-		mapSqlParameterSource.addValue("mot_de_passe", utilisateur.getMotDePasse());
-		mapSqlParameterSource.addValue("credit", utilisateur.getCredit());
+		mapSqlParameterSource.addValue("motDePasse", utilisateur.getMotDePasse());
 		
 		jdbcTemplate.update(INSERT_UTILISATEUR, mapSqlParameterSource);
 	}
@@ -69,25 +64,29 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	public Utilisateur trouveParPseudo(String pseudo) {
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 		parameterSource.addValue("pseudo", pseudo);
-		System.out.println(pseudo);
-		return jdbcTemplate.queryForObject(TROUVE_AVEC_PSEUDO, parameterSource , new BeanPropertyRowMapper<>(Utilisateur.class));
+		return jdbcTemplate.queryForObject(TROUVE_AVEC_PSEUDO, parameterSource , Utilisateur.class);
 	}
 
+	@Override
+	public void modifierCreditParId(int id) {
+		// TODO Auto-generated method stub
+		
+	}
 	class UtilisateurRowMapper implements org.springframework.jdbc.core.RowMapper<Utilisateur>{
 
 		@Override
 		public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Utilisateur utilisateur = new Utilisateur();
-			utilisateur.setNoUtlisateur(rs.getInt("id"));
+			utilisateur.setId(rs.getInt("id"));
 			utilisateur.setPseudo(rs.getString("pseudo"));
 			utilisateur.setNom(rs.getString("nom"));
 			utilisateur.setPrenom(rs.getString("prenom"));
 			utilisateur.setEmail(rs.getString("email"));
 			utilisateur.setTelephone(rs.getString("telephone"));
 			utilisateur.setRue(rs.getString("rue"));
-			utilisateur.setCodePostal(rs.getString("code_postal"));
+			utilisateur.setCodePostal(rs.getString("codePostal"));
 			utilisateur.setVille(rs.getString("ville"));
-			utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
+			utilisateur.setMotDePasse(rs.getString("motDePasse"));
 			utilisateur.setCredit(rs.getInt("credit"));
 			utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
 			return utilisateur;
@@ -96,8 +95,10 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		
 	}
 
-
-
-
+@Override
+public Utilisateur lire(int id) {
+	// TODO Auto-generated method stub
+	return null;
+}
 	
 }

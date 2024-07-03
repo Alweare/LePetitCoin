@@ -8,12 +8,13 @@ public interface UtilisateurDAO {
 
 	List<Utilisateur> trouveTout();
 	
-	Utilisateur lire(long id);
+	Utilisateur lire(int id);
 	
 	
 	void creerUtilisateur(Utilisateur utilisateur);
 	
 	Utilisateur trouveParPseudo(String pseudo);
 	
+	void modifierCreditParId(int id);
 	
 }
