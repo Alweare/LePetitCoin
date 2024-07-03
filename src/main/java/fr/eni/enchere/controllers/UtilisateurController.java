@@ -14,6 +14,8 @@ public class UtilisateurController {
 	
 	private UtilisateurServiceImpl utilisateurImpl;
 
+	
+	
 	public UtilisateurController(UtilisateurServiceImpl utilisateurImpl) {
 
 		this.utilisateurImpl = utilisateurImpl;
@@ -35,6 +37,8 @@ public class UtilisateurController {
 		if(utilisateur != null) {
 			this.utilisateurImpl.creerUtilisateur(utilisateur);
 			be.add("Veuillez saisir tout les champs");
+		}else {
+			throw be;
 		}
 		
 		
