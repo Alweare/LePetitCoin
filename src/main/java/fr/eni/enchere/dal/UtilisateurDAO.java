@@ -16,5 +16,7 @@ public interface UtilisateurDAO {
 	Utilisateur trouveParPseudo(String pseudo);
 	
 	void modifierCreditParId(int id);
+
+	void miseAjourUtilisateur(Utilisateur utilisateur);
 	
 }
