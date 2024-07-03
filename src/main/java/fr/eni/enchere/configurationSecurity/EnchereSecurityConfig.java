@@ -40,10 +40,7 @@ public class EnchereSecurityConfig {
 		return jdbcUserDetailsManager;
 	}
 	
-	@Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 	
 	@Bean
 	SecurityFilterChain filtreChaine(HttpSecurity http) throws Exception {
@@ -61,8 +58,8 @@ public class EnchereSecurityConfig {
 				.requestMatchers("/images/*").permitAll()
 				.requestMatchers("/creationProfil").permitAll()
 
-				.anyRequest().permitAll();
-		});
+				.anyRequest().permitAll());
+		
     
 		http.formLogin(form->{
 			form.loginPage("/connexion").permitAll();

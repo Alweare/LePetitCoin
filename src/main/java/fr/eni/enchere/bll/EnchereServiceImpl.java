@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.dal.EnchereDAO;
+import fr.eni.enchere.exceptions.BusinessException;
 
 @Service
 public class EnchereServiceImpl implements EnchereService {
@@ -19,7 +20,7 @@ public class EnchereServiceImpl implements EnchereService {
 
 	@Override
 	public void CreerEnchere(Enchere enchere) {
-		// TODO Auto-generated method stub
+		enchereDao.creer(enchere);
 		
 	}
 

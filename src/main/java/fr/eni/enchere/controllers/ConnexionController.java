@@ -82,7 +82,9 @@ public class ConnexionController {
 			
 		}
 
+;
 		return "redirect:/";
+
 	}
 
 	 
