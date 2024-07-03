@@ -18,5 +18,7 @@ public interface UtilisateurService {
 	void creerUtilisateur(Utilisateur utilisateur);
 	
 	void mettreAJourUtilisateur(Utilisateur utilisateur) throws BusinessException;
+	
+	Utilisateur trouverUtilisateurParPseudo(String pseudo);
 
 }

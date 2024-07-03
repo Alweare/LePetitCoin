@@ -1,5 +1,9 @@
 package fr.eni.enchere.controllers;
 
+import java.security.Principal;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +16,7 @@ import fr.eni.enchere.bll.UtilisateurService;
 import fr.eni.enchere.bll.UtilisateurServiceImpl;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.exceptions.BusinessException;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertFalse.List;
 
 @Controller
@@ -48,11 +53,9 @@ public class UtilisateurController {
 		
 	}
 	@GetMapping("/monProfil")
-	public String afficherProfil(@ModelAttribute("utilisateurEnSession")Utilisateur utilisateurSession, Model model) {
-		Utilisateur utilisateur = this.utilisateurService.consulterUtilisateurParId(utilisateurSession.getId());
-		System.err.println("Je suis la 1");
-		System.out.println(utilisateurSession);
-		model.addAttribute("utilisateur", utilisateur);
+	public String afficherProfil( Model model, Principal principal) {
+		Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(principal.getName());
+		model.addAttribute("utilisateur",utilisateur);
 		return "monProfil";
 	}
 	
@@ -62,18 +65,29 @@ public class UtilisateurController {
 	}
 
 	@PostMapping("/miseAJourProfil")
-	public String miseAJourProfil(@ModelAttribute("utilisateur") Utilisateur utilisateur, Model model) {
+	public String miseAJourProfil(@ModelAttribute("utilisateur") Utilisateur utilisateur,Model model, Principal principal) {
+		
 		try {
+			
+			Utilisateur utilisateurExist = utilisateurService.trouverUtilisateurParPseudo(principal.getName());
+			utilisateur.setId(utilisateurExist.getId());
 			utilisateurService.mettreAJourUtilisateur(utilisateur);
 			model.addAttribute("utilisateur", utilisateur);
-			return "redirect:/";
+			 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		        if (auth != null) {
+		        	 SecurityContextHolder.getContext().setAuthentication(null);
+		        }
+		        return "redirect:/"; // Rediriger vers la page de connexion après déconnexion
 		} catch (BusinessException e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "monProfil";
 		}
 		
 	}
-	
+	@GetMapping("/logout")
+	public String deconnexion() {
+		return "/index";
+	}
 	
 	
 	
