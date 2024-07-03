@@ -7,8 +7,11 @@ public class Enchere {
 	private LocalDate dateEnchere;
 	private int montantEnchere;
 	
+	public Enchere() {
+		
+	}
+	
 	public Enchere(LocalDate dateEnchere, int montantEnchere) {
-		super();
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
 	}
