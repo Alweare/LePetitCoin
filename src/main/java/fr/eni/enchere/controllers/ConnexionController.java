@@ -1,4 +1,4 @@
-	package fr.eni.enchere.controllers;
+package fr.eni.enchere.controllers;
 
 
 import java.security.Principal;
@@ -6,6 +6,7 @@ import java.security.Principal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -31,21 +32,15 @@ public class ConnexionController {
 	        return "connexion";
 	    }
 	 
-	 @GetMapping()
-	 public String verifierConnextion(@RequestParam String pseudo,@RequestParam String motDePasse) {
-		 boolean valide = utilisateurService.verifierPseudoEtMotPasse(pseudo, motDePasse);
-		 if(valide) {
-			 return "redirect:/index";
-		 }else {
-			 return "connextion";
-		 }
-	 }
+	
 	@ModelAttribute("utilisateurSession")
 	public Utilisateur ajouteUtilisateurEnSession() {
 		return new Utilisateur();
 	}
 	@GetMapping("/session")
 	public String connexionSession(@ModelAttribute("utilisateurSession") Utilisateur utilisateurEnSession, Principal principal) {
+		System.out.println("connexionSession");
+		
 		String pseudo = principal.getName();
 		Utilisateur utilisateur = this.contexteService.charger(pseudo);
 		if(utilisateur != null) {
@@ -74,7 +69,7 @@ public class ConnexionController {
 			utilisateurEnSession.setAdministrateur(false);
 			
 		}
-		return "redirect:/index";
+		return "redirect:/";
 	}
 	 
 	 
