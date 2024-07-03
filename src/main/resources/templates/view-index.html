@@ -12,13 +12,12 @@
 	
 	<h2>Liste des enchères</h2>
 	
-	<form action="POST">
+	<form action="POST" >
 		<label  th:if="0>1">Filtres</label> 
 			<input type="text" id="recherche" />
 			<select name="categories" id="categories"></select>
 			<button type="submit">Rechercher</button>
-	</form>		
-			
+	
 		<!-- boutons ne doivent apparaitre que pour les utilisateurs connectés -->
 		<input type="radio" id="choix1" name="choix" value="achats" />
 		<label for="choix1">Achats</label>		
@@ -40,25 +39,25 @@
 		
 		
 		<!-- insérer les annonces -->
-		
-		<fieldset th:each="enchere:${listeEncheres}">			
+		<p th:text="${listeEncheres}"></p>
+		<fieldset th:each="enchere: ${listeEncheres}">			
 			<img src="" alt="" />
 			<ul>
 			<li><label for="inputArticle"></label>
-				<input id="inputArticle" type="text" readonly="readonly"  />
+				<input id="inputArticle" type="text" th:value="${enchere.nomArticle}" readonly  />
 			</li>
 			<li><label for="inputPrix">Prix :</label>
-				<input id="inputPrix" type="text"  readonly="readonly"/>
+				<input id="inputPrix" type="text" th:value="${enchere.prixVente}"  readonly/>
 			</li>
 			<li><label for="inputFin">Fin de l'enchère :</label>
-				<input id="inputFin" type="text"  readonly="readonly"/>
+				<input id="inputFin" type="text" th:value="${enchere.dateFinEncheres}" readonly/>
 			</li>
 			<li><label for="inputVendeur">Vendeur :</label>
-				<input id="inputVendeur" type="text"  readonly="readonly"/>
+				<input id="inputVendeur" type="text" th:value="${enchere.vendeur.pseudo}"  readonly/>
 			</li>
 			</ul>
 			</fieldset>
-		
+	</form>	
 		
 		
 
