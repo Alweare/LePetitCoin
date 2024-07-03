@@ -92,6 +92,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 
+	@Override
+	public Utilisateur trouverUtilisateurParPseudo(String pseudo) {
+		return utilisateurDAO.trouveParPseudo(pseudo);
+	}
+
+
 
 
 

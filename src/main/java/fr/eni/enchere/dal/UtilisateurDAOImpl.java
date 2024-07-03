@@ -19,7 +19,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	private static final String TROUVE_TOUT = "SELECT id, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
 	private static final String TROUVE_AVEC_ID ="SELECT id, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE id = :id";
-	private static final String TROUVE_AVEC_PSEUDO = "SELECT pseudo, email, mot_de_passe FROM UTILISATEURS WHERE pseudo = :pseudo";
+	private static final String TROUVE_AVEC_PSEUDO = "SELECT id, pseudo, nom, prenom, email, telephone, rue,code_postal,ville, mot_de_passe, credit FROM UTILISATEURS WHERE pseudo = :pseudo";
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (:pseudo,:nom,:prenom,:email,:telephone,:rue,:code_postal,:ville,:mot_de_passe,0,0)";
 	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET pseudo = :pseudo, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :code_postal, ville = :ville WHERE id = :id";
 	
@@ -64,7 +64,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	public Utilisateur trouveParPseudo(String pseudo) {
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 		parameterSource.addValue("pseudo", pseudo);
-		return jdbcTemplate.queryForObject(TROUVE_AVEC_PSEUDO, parameterSource , Utilisateur.class);
+		return jdbcTemplate.queryForObject(TROUVE_AVEC_PSEUDO, parameterSource , new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 	@Override
 	public Utilisateur lire(int id) {

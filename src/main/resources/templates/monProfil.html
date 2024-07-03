@@ -12,31 +12,31 @@
 	
 	<h2>Mon profil</h2>
 	
-	<form th:action="@{/miseAJourProfil}" method="POST">
+	<form th:action="@{/miseAJourProfil}" method="POST" th:object="${utilisateur}">
 		<ul>
 			<li><label for="inputPseudo">Pseudo :</label>
-				<input id="inputPseudo" type="text" data-th-value="${utilisateur.pseudo}"  />
+				<input id="inputPseudo" type="text" data-th-field="*{pseudo}"  />
 			</li>
 			<li><label for="inputNom">Nom :</label>
-				<input id="inputNom" type="text" data-th-value="${utilisateur.nom}" />
+				<input id="inputNom" type="text" data-th-field="*{nom}" />
 			</li>
 			<li><label for="inputPrenom">Prénom :</label>
-				<input id="inputPrenom" type="text" data-th-value="${utilisateur.prenom}" />
+				<input id="inputPrenom" type="text" data-th-field="*{prenom}" />
 			</li>
 			<li><label for="inputEmail">Email :</label>
-				<input id="inputEmail" type="email" data-th-value="${utilisateur.email}" />
+				<input id="inputEmail" type="email" data-th-field="*{email}" />
 			</li>
 			<li><label for="inputTelephone">Téléphone :</label>
-				<input id="inputTelephone" type="text" data-th-value="${utilisateur.telephone}" />
+				<input id="inputTelephone" type="text" data-th-field="*{telephone}" />
 			</li>
 			<li><label for="inputRue">Rue :</label>
-				<input id="inputRue" type="text" data-th-value="${utilisateur.rue}" />
+				<input id="inputRue" type="text" data-th-field="*{rue}" />
 			</li>
 			<li><label for="inputCP">Code Postal :</label>
-				<input id="inputCP" type="text" data-th-value="${utilisateur.codePostal}" />
+				<input id="inputCP" type="text" data-th-field="*{codePostal}" />
 			</li>
 			<li><label for="inputVille">Ville :</label>
-				<input id="inputVille" type="text" data-th-value="${utilisateur.ville}" />
+				<input id="inputVille" type="text" data-th-field="*{ville}" />
 			</li>			
 		
 		</ul>
