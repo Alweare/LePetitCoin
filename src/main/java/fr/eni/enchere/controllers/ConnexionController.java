@@ -18,21 +18,33 @@ import fr.eni.enchere.dal.UtilisateurDAO;
 @Controller
 @SessionAttributes({"utilisateurSession"})
 public class ConnexionController {
-	
+
 	private UtilisateurService utilisateurService;
 	private ContexteService contexteService;
 	
-	
-	public ConnexionController(ContexteService contexteService) {
-		this.contexteService = contexteService;
-	}
 
-	@GetMapping("/connexion")
-	    public String connexion() {
-	        return "connexion";
-	    }
+		 @GetMapping("/connexion")
+		    public String connexion() {
+		        return "connexion";
+		    }
+		
 	 
-	
+//revenir plus tard sur la suppression des syso
+		 
+		 @PostMapping("/connexion")
+		 public String verifierConnextion(@RequestParam("pseudo") String pseudo,@RequestParam String motDePasse) {
+			System.out.println("entrer dans la verif utilisateur");
+			 boolean valide = utilisateurService.verifierPseudoEtMotPasse(pseudo, motDePasse);
+			 if(valide) {
+				 System.out.println("utilisateur validé");
+				 return "redirect:/index";
+			 }else {
+				 return "connexion";
+			 }
+
+		 
+	 }
+
 	@ModelAttribute("utilisateurSession")
 	public Utilisateur ajouteUtilisateurEnSession() {
 		return new Utilisateur();
@@ -44,7 +56,7 @@ public class ConnexionController {
 		String pseudo = principal.getName();
 		Utilisateur utilisateur = this.contexteService.charger(pseudo);
 		if(utilisateur != null) {
-			utilisateurEnSession.setNoUtlisateur(utilisateur.getNoUtlisateur());
+			utilisateurEnSession.setId(0);
 			utilisateurEnSession.setPseudo(utilisateur.getPseudo());
 			utilisateurEnSession.setNom(utilisateur.getNom());
 			utilisateurEnSession.setPrenom(utilisateur.getPrenom());
@@ -56,7 +68,7 @@ public class ConnexionController {
 			utilisateurEnSession.setCredit(utilisateur.getCredit());
 			utilisateurEnSession.setAdministrateur(utilisateur.isAdministrateur());
 		}else {
-			utilisateurEnSession.setNoUtlisateur(0);
+			utilisateurEnSession.setId(0);
 			utilisateurEnSession.setPseudo(null);
 			utilisateurEnSession.setNom(null);
 			utilisateurEnSession.setPrenom(null);
@@ -69,10 +81,9 @@ public class ConnexionController {
 			utilisateurEnSession.setAdministrateur(false);
 			
 		}
+
 		return "redirect:/";
 	}
-	 
-	 
 
 	 
 }

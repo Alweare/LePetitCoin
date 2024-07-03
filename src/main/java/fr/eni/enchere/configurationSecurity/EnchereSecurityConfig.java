@@ -26,6 +26,11 @@ public class EnchereSecurityConfig {
 	private String SELECT_UTILISATEUR ="SELECT pseudo, mot_de_passe, 1 as enabled FROM UTILISATEURS WHERE pseudo = ?";
 	private String SELECT_ROLES="SELECT pseudo,administrateur FROM UTILISATEURS where pseudo=?";
 
+	@Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+	
 	
 	@Bean
 	UserDetailsManager userDetailManager(DataSource dataSource) {
@@ -47,11 +52,18 @@ public class EnchereSecurityConfig {
 			
 				.requestMatchers("/connexion").permitAll()
 				.requestMatchers("/").permitAll()
-				.requestMatchers("/session").permitAll()
+        .requestMatchers("/session").permitAll()
+				.requestMatchers("/creationProfil").permitAll()
+				.requestMatchers("/creationVente").permitAll()
+				.requestMatchers("/listeEnchere").permitAll()
+				.requestMatchers("/monProfil").permitAll()
 				.requestMatchers("/css/*").permitAll()
 				.requestMatchers("/images/*").permitAll()
-				.anyRequest().permitAll()
-		);
+				.requestMatchers("/creationProfil").permitAll()
+
+				.anyRequest().permitAll();
+		});
+    
 		http.formLogin(form->{
 			form.loginPage("/connexion").permitAll();
 			form.defaultSuccessUrl("/").permitAll();//Changer plus tard au cas ou 

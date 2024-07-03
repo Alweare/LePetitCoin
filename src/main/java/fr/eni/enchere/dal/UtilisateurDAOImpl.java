@@ -36,12 +36,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		return jdbcTemplate.query(TROUVE_TOUT, new UtilisateurRowMapper());
 	}
 
-	@Override
-	public Utilisateur lire(long id) {
-		MapSqlParameterSource parametreSource = new MapSqlParameterSource();
-		parametreSource.addValue("id", id);
-		return jdbcTemplate.queryForObject(TROUVE_AVEC_ID, parametreSource, new UtilisateurRowMapper() );
-	}
+
 /**
  * @param : Utilisateur
  * Créer un utilisateur en base 
@@ -50,6 +45,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
  * */
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) {
+		System.out.println(utilisateur);
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 		mapSqlParameterSource.addValue("pseudo", utilisateur.getPseudo());
 		mapSqlParameterSource.addValue("nom", utilisateur.getNom());
@@ -57,6 +53,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		mapSqlParameterSource.addValue("email", utilisateur.getEmail());
 		mapSqlParameterSource.addValue("telephone", utilisateur.getTelephone());
 		mapSqlParameterSource.addValue("rue", utilisateur.getRue());
+		mapSqlParameterSource.addValue("codePostal", utilisateur.getCodePostal());
 		mapSqlParameterSource.addValue("ville", utilisateur.getVille());
 		mapSqlParameterSource.addValue("code_postal", utilisateur.getCodePostal());
 		mapSqlParameterSource.addValue("mot_de_passe", utilisateur.getMotDePasse());
@@ -73,12 +70,17 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		return jdbcTemplate.queryForObject(TROUVE_AVEC_PSEUDO, parameterSource , new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 
+	@Override
+	public void modifierCreditParId(int id) {
+		// TODO Auto-generated method stub
+		
+	}
 	class UtilisateurRowMapper implements org.springframework.jdbc.core.RowMapper<Utilisateur>{
 
 		@Override
 		public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Utilisateur utilisateur = new Utilisateur();
-			utilisateur.setNoUtlisateur(rs.getInt("id"));
+			utilisateur.setId(rs.getInt("id"));
 			utilisateur.setPseudo(rs.getString("pseudo"));
 			utilisateur.setNom(rs.getString("nom"));
 			utilisateur.setPrenom(rs.getString("prenom"));
@@ -96,8 +98,10 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		
 	}
 
-
-
-
+@Override
+public Utilisateur lire(int id) {
+	// TODO Auto-generated method stub
+	return null;
+}
 	
 }
