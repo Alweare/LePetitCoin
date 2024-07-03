@@ -12,44 +12,37 @@
 	
 	<h2>Mon profil</h2>
 	
-	<form action="POST">
+	<form th:action="@{/miseAJourProfil}" method="POST">
 		<ul>
 			<li><label for="inputPseudo">Pseudo :</label>
-				<input id="inputPseudo" type="text"  />
+				<input id="inputPseudo" type="text" data-th-value="${utilisateur.pseudo}"  />
 			</li>
 			<li><label for="inputNom">Nom :</label>
-				<input id="inputNom" type="text"  />
+				<input id="inputNom" type="text" data-th-value="${utilisateur.nom}" />
 			</li>
 			<li><label for="inputPrenom">Prénom :</label>
-				<input id="inputPrenom" type="text"  />
+				<input id="inputPrenom" type="text" data-th-value="${utilisateur.prenom}" />
 			</li>
 			<li><label for="inputEmail">Email :</label>
-				<input id="inputEmail" type="email"  />
+				<input id="inputEmail" type="email" data-th-value="${utilisateur.email}" />
 			</li>
 			<li><label for="inputTelephone">Téléphone :</label>
-				<input id="inputTelephone" type="text"  />
+				<input id="inputTelephone" type="text" data-th-value="${utilisateur.telephone}" />
 			</li>
 			<li><label for="inputRue">Rue :</label>
-				<input id="inputRue" type="text"  />
+				<input id="inputRue" type="text" data-th-value="${utilisateur.rue}" />
 			</li>
 			<li><label for="inputCP">Code Postal :</label>
-				<input id="inputCP" type="text"  />
+				<input id="inputCP" type="text" data-th-value="${utilisateur.codePostal}" />
 			</li>
 			<li><label for="inputVille">Ville :</label>
-				<input id="inputVille" type="text"  />
-			</li>
-			<li><label for="inputPassword">Mot de passe :</label>
-				<input id="inputPassword" type="password"  />
-			</li>
-			<li><label for="inputPassword">Confirmation :</label>
-				<input id="inputPassword" type="password"  />
-			</li>
-			
+				<input id="inputVille" type="text" data-th-value="${utilisateur.ville}" />
+			</li>			
 		
 		</ul>
 
 		<!-- boutons à activer -->
-			<button type="submit">Enregistrer</button>
+			<button type="submit">Modifier mes information</button>
 			<button type="reset">Supprimer mon compte</button><br />
 		</form>
 		

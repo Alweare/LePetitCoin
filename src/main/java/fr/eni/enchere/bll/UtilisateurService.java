@@ -3,6 +3,7 @@ package fr.eni.enchere.bll;
 import java.util.List;
 
 import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.enchere.exceptions.BusinessException;
 
 public interface UtilisateurService {
 
@@ -15,5 +16,7 @@ public interface UtilisateurService {
 	boolean verifierPseudoEtMotPasse(String pseudo, String motDePasse);
 	
 	void creerUtilisateur(Utilisateur utilisateur);
+	
+	void mettreAJourUtilisateur(Utilisateur utilisateur) throws BusinessException;
 
 }
