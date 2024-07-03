@@ -22,16 +22,14 @@ public class EnchereSecurityConfig {
 	
 	protected final Log logger = LogFactory.getLog(getClass());
 	
-	private String SELECT_UTILISATEUR ="SELECT pseudo, mot_de_passe FROM UTILISATEURS WHERE pseudo=?";
-	private String SELECT_ROLES="SELECT administrateur FROM UTILISATEURS where email = ?";
+	//private String SELECT_UTILISATEUR ="SELECT pseudo, mot_de_passe FROM UTILISATEURS WHERE pseudo=?";
+	private String SELECT_UTILISATEUR ="SELECT pseudo, mot_de_passe, 1 as enabled FROM UTILISATEURS WHERE pseudo = ?";
+	private String SELECT_ROLES="SELECT pseudo,administrateur FROM UTILISATEURS where pseudo=?";
 
-	
-	
-    @Bean
+	@Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-	
 	
 	
 	@Bean
@@ -43,11 +41,18 @@ public class EnchereSecurityConfig {
 	}
 	
 	@Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+	
+	@Bean
 	SecurityFilterChain filtreChaine(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(auth-> {
-			auth
+		System.err.println("Je suis present ici");
+		http.authorizeHttpRequests(authorize->authorize 
+			
 				.requestMatchers("/connexion").permitAll()
 				.requestMatchers("/").permitAll()
+        .requestMatchers("/session").permitAll()
 				.requestMatchers("/creationProfil").permitAll()
 				.requestMatchers("/creationVente").permitAll()
 				.requestMatchers("/listeEnchere").permitAll()
@@ -58,17 +63,18 @@ public class EnchereSecurityConfig {
 
 				.anyRequest().permitAll();
 		});
+    
 		http.formLogin(form->{
 			form.loginPage("/connexion").permitAll();
-			form.defaultSuccessUrl("/index").permitAll();//Changer plus tard au cas ou 
+			form.defaultSuccessUrl("/").permitAll();//Changer plus tard au cas ou 
 		});
 		http.logout(logout->
 			logout
 				.invalidateHttpSession(true)
 				.clearAuthentication(true)
 				.deleteCookies("JSESSIONID")
-				.logoutRequestMatcher(new AntPathRequestMatcher("/deconnecter"))
-				.logoutSuccessUrl("/connexion?deconnecter").permitAll());
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/").permitAll());
 		
 		return http.build();
 	}
