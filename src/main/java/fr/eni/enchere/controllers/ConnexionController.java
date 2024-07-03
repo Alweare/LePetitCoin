@@ -1,4 +1,4 @@
-	package fr.eni.enchere.controllers;
+package fr.eni.enchere.controllers;
 
 
 import java.security.Principal;
@@ -29,6 +29,7 @@ public class ConnexionController {
 		    }
 		
 	 
+//revenir plus tard sur la suppression des syso
 		 
 		 @PostMapping("/connexion")
 		 public String verifierConnextion(@RequestParam("pseudo") String pseudo,@RequestParam String motDePasse) {
@@ -43,12 +44,15 @@ public class ConnexionController {
 
 		 
 	 }
+
 	@ModelAttribute("utilisateurSession")
 	public Utilisateur ajouteUtilisateurEnSession() {
 		return new Utilisateur();
 	}
 	@GetMapping("/session")
 	public String connexionSession(@ModelAttribute("utilisateurSession") Utilisateur utilisateurEnSession, Principal principal) {
+		System.out.println("connexionSession");
+		
 		String pseudo = principal.getName();
 		Utilisateur utilisateur = this.contexteService.charger(pseudo);
 		if(utilisateur != null) {
@@ -77,10 +81,9 @@ public class ConnexionController {
 			utilisateurEnSession.setAdministrateur(false);
 			
 		}
-		return "redirect:/view-index";
+
+		return "redirect:/";
 	}
-	 
-	 
 
 	 
 }
