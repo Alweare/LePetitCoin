@@ -79,7 +79,9 @@ public class ConnexionController {
 			utilisateurEnSession.setAdministrateur(false);
 			
 		}
-		return "redirect:/index";
+
+		return "redirect:/";
+
 	}
 	 
 	 

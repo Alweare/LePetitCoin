@@ -19,7 +19,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public void CreerEnchere(Enchere enchere) {
+	public void CreerArticle(ArticleVendu article) {
 		// TODO Auto-generated method stub
 		
 	}
