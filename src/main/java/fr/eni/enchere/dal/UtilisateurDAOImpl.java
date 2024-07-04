@@ -19,8 +19,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	private static final String TROUVE_TOUT = "SELECT id, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
 	private static final String TROUVE_AVEC_ID ="SELECT id, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE id = :id";
-	private static final String TROUVE_AVEC_PSEUDO = "SELECT pseudo, mot_de_passe FROM UTILISATEURS WHERE pseudo = :pseudo";
+
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (:pseudo,:nom,:prenom,:email,:telephone,:rue,:code_postal,:ville,:mot_de_passe,:credit,0)";
+
+	private static final String TROUVE_AVEC_PSEUDO = "SELECT id, pseudo, nom, prenom, email, telephone, rue,code_postal,ville, mot_de_passe, credit FROM UTILISATEURS WHERE pseudo = :pseudo";
+	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET pseudo = :pseudo, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :code_postal, ville = :ville WHERE id = :id";
 
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
@@ -53,11 +56,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		mapSqlParameterSource.addValue("email", utilisateur.getEmail());
 		mapSqlParameterSource.addValue("telephone", utilisateur.getTelephone());
 		mapSqlParameterSource.addValue("rue", utilisateur.getRue());
-		mapSqlParameterSource.addValue("codePostal", utilisateur.getCodePostal());
-		mapSqlParameterSource.addValue("ville", utilisateur.getVille());
 		mapSqlParameterSource.addValue("code_postal", utilisateur.getCodePostal());
+		mapSqlParameterSource.addValue("ville", utilisateur.getVille());
 		mapSqlParameterSource.addValue("mot_de_passe", utilisateur.getMotDePasse());
-		mapSqlParameterSource.addValue("credit", utilisateur.getCredit());
 		
 		jdbcTemplate.update(INSERT_UTILISATEUR, mapSqlParameterSource);
 	}
@@ -66,8 +67,16 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	public Utilisateur trouveParPseudo(String pseudo) {
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 		parameterSource.addValue("pseudo", pseudo);
-		System.out.println(pseudo);
-		return jdbcTemplate.queryForObject(TROUVE_AVEC_PSEUDO, parameterSource , new UtilisateurRowMapper());
+
+		return jdbcTemplate.queryForObject(TROUVE_AVEC_PSEUDO, parameterSource , new BeanPropertyRowMapper<>(Utilisateur.class));
+
+	}
+	@Override
+	public Utilisateur lire(int id) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id);
+		return jdbcTemplate.queryForObject(TROUVE_AVEC_ID, mapSqlParameterSource,new UtilisateurRowMapper());
+		 
 	}
 
 	@Override
@@ -97,11 +106,21 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		
 		
 	}
+	@Override
+	public void miseAjourUtilisateur(Utilisateur utilisateur) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", utilisateur.getId());
+		mapSqlParameterSource.addValue("pseudo", utilisateur.getPseudo());
+		mapSqlParameterSource.addValue("nom", utilisateur.getNom());
+		mapSqlParameterSource.addValue("prenom", utilisateur.getPrenom());
+		mapSqlParameterSource.addValue("email", utilisateur.getEmail());
+		mapSqlParameterSource.addValue("telephone", utilisateur.getTelephone());
+		mapSqlParameterSource.addValue("rue", utilisateur.getRue());
+		mapSqlParameterSource.addValue("code_postal", utilisateur.getCodePostal());
+		mapSqlParameterSource.addValue("ville", utilisateur.getVille());
+		
+		jdbcTemplate.update(UPDATE_UTILISATEUR, mapSqlParameterSource);
+	}
 
-@Override
-public Utilisateur lire(int id) {
-	// TODO Auto-generated method stub
-	return null;
-}
 	
 }

@@ -12,6 +12,14 @@ public interface UtilisateurService {
 	Utilisateur consulterUtilisateurParId(int id);
 
 	
+
 	void creerUtilisateur(Utilisateur utilisateur) throws BusinessException;
+
+	boolean verifierPseudoEtMotPasse(String pseudo, String motDePasse);
+	
+	
+	void mettreAJourUtilisateur(Utilisateur utilisateur) throws BusinessException;
+	
+	Utilisateur trouverUtilisateurParPseudo(String pseudo);
 
 }

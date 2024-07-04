@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.springframework.dao.DataAccessException;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 import fr.eni.enchere.bo.Utilisateur;
@@ -110,6 +112,24 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		
 		return estValid;
 		
+	}
+
+
+	@Override
+	public void mettreAJourUtilisateur(Utilisateur utilisateur)  throws BusinessException{
+		BusinessException be = new BusinessException();
+		try {
+		utilisateurDAO.miseAjourUtilisateur(utilisateur);
+		}catch (DataAccessException e) {
+			be.add("Un problème est survenu lors de la connexion à la base de données");
+			throw be;
+		}
+	}
+
+
+	@Override
+	public Utilisateur trouverUtilisateurParPseudo(String pseudo) {
+		return utilisateurDAO.trouveParPseudo(pseudo);
 	}
 
 

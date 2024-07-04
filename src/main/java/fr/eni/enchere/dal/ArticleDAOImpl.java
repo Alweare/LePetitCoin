@@ -43,6 +43,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) "
 			+ "		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)";
 	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateFinEncheres > CURRENT_TIMESTAMP;";
+	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
+			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :inCategoie);";
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
