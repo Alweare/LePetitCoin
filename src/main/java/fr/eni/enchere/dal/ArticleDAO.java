@@ -17,4 +17,6 @@ public interface ArticleDAO {
 	List<ArticleVendu>  trouverParVendeur(int id);
 	List<ArticleVendu>  trouveParEncherisseur(int id);
 	void creer(ArticleVendu enchere);
+	Enchere trouverEnchereParID(int id);
+	void changerIdDansEnchere(int ancienId, int nouveauId);
 }

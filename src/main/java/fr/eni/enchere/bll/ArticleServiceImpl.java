@@ -46,5 +46,17 @@ public class ArticleServiceImpl implements ArticleService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Enchere  trouverEnchereParID(int id) {
+		Enchere article =  articleDao.trouverEnchereParID(id);
+		return article;
+	}
+
+	@Override
+	public void changerID(int ancienId, int nouveauId) {
+		articleDao.changerIdDansEnchere(ancienId, nouveauId);
+		
+	}
 	
 }

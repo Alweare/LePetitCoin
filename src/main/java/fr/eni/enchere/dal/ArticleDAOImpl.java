@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -45,6 +46,12 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateFinEncheres > CURRENT_TIMESTAMP;";
 	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
 			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :inCategoie);";
+	private static final String TROUVE_ENCHERE_PAR_ID="SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES where idUtilisateur = :id";
+	private static final String CHANGER_ID_ENCHERES="ALTER TABLE ENCHERES DROP enchere_pk;\r\n"
+			+ "UPDATE ENCHERES SET idUtilisateur=:nouveauId WHERE idUtilisateur=:ancienId;\r\n"
+			+ "ALTER TABLE ENCHERES ADD CONSTRAINT enchere_pk PRIMARY KEY (idUtilisateur,idArticle);";
+			
+	
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
@@ -139,6 +146,21 @@ public class ArticleDAOImpl implements ArticleDAO {
 			
 			return article;
 		}
+	}
+	@Override
+	public Enchere trouverEnchereParID(int id) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id);
+		return jdbc.queryForObject(TROUVE_ENCHERE_PAR_ID, mapSqlParameterSource, new BeanPropertyRowMapper<>(Enchere.class));
+	}
+
+	@Override
+	public void changerIdDansEnchere(int ancienId, int nouveauId) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("ancienId",ancienId);
+		mapSqlParameterSource.addValue("nouveauId", nouveauId);
+		jdbc.update(CHANGER_ID_ENCHERES, mapSqlParameterSource);
+		
 	}
 }
 
