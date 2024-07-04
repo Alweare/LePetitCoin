@@ -8,15 +8,14 @@
 </head>
 <body>
 
-	<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
-	<div th:replace="~{/fragments/errors/fragment-errors :: fragment-errors}"></div>
+	
 	<h2>Mon profil</h2>
 	
 	<form th:action="@{/creationProfil}"  method="POST" th:object="${newUtilisateur}">
 		<ul >
 			<li><label for="inputPseudo">Pseudo :</label>
 				<input id="inputPseudo" type="text" th:field="*{pseudo}" />
-				<div th:replace="~{/fragments/errors/fragment-error :: frag-error('pseudo')}"></div>
+
 	
 			</li>
 			<li><label for="inputNom">Nom :</label>
