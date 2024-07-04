@@ -63,15 +63,6 @@ public class UtilisateurController {
 		}
 
 
-		@GetMapping("/monProfil")
-		public String monProfil() {
-			return "monProfil";
-		}
-
-
-
-
-	}
 
 	@GetMapping("/monProfil")
 	public String afficherProfil( Model model, Principal principal) {

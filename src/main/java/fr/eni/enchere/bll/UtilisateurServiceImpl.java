@@ -132,6 +132,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return utilisateurDAO.trouveParPseudo(pseudo);
 	}
 
+	@Override
+	public boolean verifierPseudoEtMotPasse(String pseudo, String motDePasse) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 
 
