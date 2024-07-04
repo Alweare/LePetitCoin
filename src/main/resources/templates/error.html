@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" data-th-href="@{/css/general.css}">
+
+<title>Le Petit Coin</title>
+</head>
+<body>
+	
+
+	<main>
+		<h1 class="cards" data-th-text="Erreur + ${status}"></h1>
+		
+		<form>
+			<ul class="flex-outer cards">
+				<li data-th-switch="${status}">
+					<label data-th-case="403" >Vous n'êtes pas autorisé</label>
+					<label data-th-case="404" >Cette ressource n'existe pas</label>
+					<label data-th-case="500" >Impossible d'interagir avec le serveur</label>
+					<label data-th-case="*" >Veuillez nous excuser pour ce problème</label>
+				</li>
+				<li><a data-th-href="@{/}" >Retour à l'accueil</a></li>
+			</ul>
+			
+		</form>
+
+
+	</main>
+	 <div class="footer" th:replace="~{/fragments/fragment-piedpage :: fragment-piedpage}"></div> 
+</body>
+</html>
+

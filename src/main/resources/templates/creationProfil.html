@@ -8,14 +8,15 @@
 </head>
 <body>
 
-	<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
-	
+	<div  ></div>
 	<h2>Mon profil</h2>
 	
 	<form th:action="@{/creationProfil}"  method="POST" th:object="${newUtilisateur}">
-		<ul>
+		<ul >
 			<li><label for="inputPseudo">Pseudo :</label>
 				<input id="inputPseudo" type="text" th:field="*{pseudo}" />
+
+	
 			</li>
 			<li><label for="inputNom">Nom :</label>
 				<input id="inputNom" type="text"  th:field="*{nom}"/>
@@ -25,6 +26,7 @@
 			</li>
 			<li><label for="inputEmail">Email :</label>
 				<input id="inputEmail" type="email"  th:field="*{email}"/>
+
 			</li>
 			<li><label for="inputTelephone">Téléphone :</label>
 				<input id="inputTelephone" type="text"  th:field="*{telephone}"/>
@@ -44,7 +46,6 @@
 			<li><label for="inputPassword">Confirmation :</label>
 				<input id="inputPassword" type="password"  />
 			</li>
-			
 		
 		</ul>
 	

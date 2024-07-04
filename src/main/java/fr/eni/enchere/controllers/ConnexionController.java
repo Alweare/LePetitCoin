@@ -22,6 +22,14 @@ public class ConnexionController {
 	private UtilisateurService utilisateurService;
 	private ContexteService contexteService;
 	
+	
+	
+	@GetMapping("/index")
+	public String acceuil() {
+		
+		return "view-index";
+	}
+	
 
 		 @GetMapping("/connexion")
 		    public String connexion() {
@@ -31,20 +39,7 @@ public class ConnexionController {
 	
 	 
 	 
-		 
-		 @PostMapping("/connexion")
-		 public String verifierConnextion(@RequestParam("pseudo") String pseudo,@RequestParam String motDePasse) {
-			System.out.println("entrer dans la verif utilisateur");
-			 boolean valide = utilisateurService.verifierPseudoEtMotPasse(pseudo, motDePasse);
-			 if(valide) {
-				 System.out.println("utilisateur validé");
-				 return "redirect:/index";
-			 }else {
-				 return "connexion";
-			 }
 
-		 
-	 }
 	@ModelAttribute("utilisateurSession")
 	public Utilisateur ajouteUtilisateurEnSession() {
 		return new Utilisateur();
@@ -79,7 +74,9 @@ public class ConnexionController {
 			utilisateurEnSession.setAdministrateur(false);
 			
 		}
-		return "redirect:/index";
+
+		return "redirect:/";
+
 	}
 	 
 	 
