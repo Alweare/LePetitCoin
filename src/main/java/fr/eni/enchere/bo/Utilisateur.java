@@ -1,16 +1,33 @@
 package fr.eni.enchere.bo;
 
-public class Utilisateur {
+import java.io.Serializable;
 
+import jakarta.validation.constraints.NotBlank;
+
+public class Utilisateur implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
+	@NotBlank(message ="Saisir pseudo")
 	private String pseudo;
+	@NotBlank(message ="saisir nom")
 	private String nom;
+	@NotBlank(message ="saisir prenom")
 	private String prenom;
+	@NotBlank(message ="saisir email")
 	private String email;
+	@NotBlank(message ="saisir telephone")
 	private String telephone;
+	@NotBlank(message ="saisir rue")
 	private String rue;
+	@NotBlank(message ="saisir code postal")
 	private String codePostal;
+	@NotBlank(message ="saisir ville")
 	private String ville;
+	@NotBlank(message ="saisir mot de passe")
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
