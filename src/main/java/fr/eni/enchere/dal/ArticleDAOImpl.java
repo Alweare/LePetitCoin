@@ -3,19 +3,18 @@ package fr.eni.enchere.dal;
 import java.security.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
-import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 
@@ -104,6 +103,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 	@Override
 	public void creer(ArticleVendu article) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		//(:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :inCategoie);";
 		map.addValue("nomArticle", article.getNomArticle());
@@ -115,6 +115,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 		map.addValue("idUtilisateur", article.getVendeur().getId());
 		map.addValue("idCategorie", article.getCategorieArticle().getId());
 		
+		this.jdbc.update(CREER, map, keyHolder);
 	}
 	public class ArticleRowMapper implements RowMapper<ArticleVendu> {
 
