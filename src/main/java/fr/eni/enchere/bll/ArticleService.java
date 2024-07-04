@@ -14,6 +14,9 @@ public interface ArticleService {
 	List<ArticleVendu> recupererParParticipant(int idParticipant);
 	List<ArticleVendu> recupererEnchereGagnee(int idAcquereur);
 	ArticleVendu RecupererArticle(int idArticle);
+	Enchere trouverEnchereParID(int id);
+	void changerID(int ancienId, int nouveauId);
 	List<ArticleVendu> recupererCategorie();
+
 
 }

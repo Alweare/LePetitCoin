@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import fr.eni.enchere.bll.ArticleService;
 import fr.eni.enchere.bll.UtilisateurService;
 import fr.eni.enchere.bll.UtilisateurServiceImpl;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.exceptions.BusinessException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,12 +30,13 @@ public class UtilisateurController {
 
 	
 	private UtilisateurService utilisateurService;
+	private ArticleService articleService;
 
-	public UtilisateurController(UtilisateurService utilisateurService) {
-
-
+	public UtilisateurController(UtilisateurService utilisateurService, ArticleService articleService) {
 		this.utilisateurService = utilisateurService;
+		this.articleService = articleService;
 	}
+
 
 	@GetMapping("/creationProfil")
 	public String creationProfil(Model model) {
@@ -109,7 +112,16 @@ public class UtilisateurController {
 	@PostMapping("/supprimerCompte")
 	public String supprimerCompte(Principal principal) {
 		Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(principal.getName());
-		utilisateurService.supprimerUtilisateur(utilisateur.getId());
+		int idUtilisateur = utilisateur.getId();
+		Enchere enchere = articleService.trouverEnchereParID(idUtilisateur);
+		
+		if(enchere == null) {
+			utilisateurService.supprimerUtilisateur(idUtilisateur);
+		}else {
+			articleService.changerID(idUtilisateur,100);
+			utilisateurService.supprimerUtilisateur(idUtilisateur);
+		}
+		
 		return "/view-index";
 	}
 	
