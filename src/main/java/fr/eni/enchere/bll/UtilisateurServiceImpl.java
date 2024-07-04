@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.springframework.dao.DataAccessException;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 import fr.eni.enchere.bo.Utilisateur;
@@ -15,13 +18,15 @@ import fr.eni.enchere.exceptions.BusinessException;
 public class UtilisateurServiceImpl implements UtilisateurService {
 	
 	private UtilisateurDAO utilisateurDAO;
+	private PasswordEncoder passwordEncoder;
+
 	
 
-	public UtilisateurServiceImpl(UtilisateurDAO utilisateurDAO) {
-
+	public UtilisateurServiceImpl(UtilisateurDAO utilisateurDAO, PasswordEncoder passwordEncoder) {
+		super();
 		this.utilisateurDAO = utilisateurDAO;
+		this.passwordEncoder = passwordEncoder;
 	}
-
 
 	@Override
 	public List<Utilisateur> consulterUtilisateur() {
@@ -36,30 +41,46 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public void creerUtilisateur(Utilisateur utilisateur) {
+	public void creerUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		BusinessException be = new BusinessException();
-		boolean estValid = verifPseudo(null, be);
-		utilisateurDAO.creerUtilisateur(utilisateur);
+		boolean estValid = verifPseudo(utilisateur, be);
+		estValid &= verifEmail(utilisateur, be);
+		
+		if(estValid) {
+			try {
+				String motDePasseCrypte = passwordEncoder.encode(utilisateur.getMotDePasse());
+				System.out.println(motDePasseCrypte);
+				utilisateur.setMotDePasse(motDePasseCrypte);
+				utilisateur.setCredit(200);
+				
+				utilisateurDAO.creerUtilisateur(utilisateur);
+				
+			} catch (DataAccessException e) {
+				be.add("Problème avec la connexion base");
+				
+			
+				
+			}
+		}else {
+			be.getErreurs().forEach(System.out::println);
+			throw be;
+		}
+	
+
 		
 	}
 
-	@Override
-	public boolean verifierPseudoEtMotPasse(String pseudo, String motDePasse) {
-		Utilisateur utilisateur = utilisateurDAO.trouveParPseudo(pseudo);
-		return utilisateur !=null && utilisateur.getMotDePasse().equals(motDePasse);
-	}
-	
-	public boolean verifPseudo(Utilisateur utilisateur, BusinessException be) {
+	private boolean verifPseudo(Utilisateur utilisateur, BusinessException be) {
+
 		boolean estValid = false;
 		String pseudoRegex = "^[a-zA-Z0-9]+$"; // caractère alphanumérique seulement
 		Pattern pseudoPattern = Pattern.compile(pseudoRegex);
-		
 		// non nullité
 		if(utilisateur != null) {
-			Utilisateur utilisateurRecu = utilisateurDAO.trouveParPseudo(utilisateur.getPseudo());
 			// test pseudo pas en base
-			if(utilisateurRecu.getPseudo() == null){
-				if(pseudoPattern.matcher(utilisateurRecu.getPseudo()).matches()) {
+			if(!utilisateurDAO.trouveTout().stream().anyMatch(pseudo -> pseudo.getPseudo().equals(utilisateur.getPseudo()))){
+
+				if(pseudoPattern.matcher(utilisateur.getPseudo()).matches()) {
 					estValid = true;
 					
 					
@@ -69,11 +90,25 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				
 				
 			}else {
-				be.add("il vous faut un pseudo");
+				be.add("pseudo existant merci d'en saisir un autre");
 			}
 		}else {
 			be.add("problème liaison bdd utilisateur");
 		}
+		
+		return estValid;
+		
+	}
+	private boolean verifEmail(Utilisateur utilisateur, BusinessException be) {
+		boolean estValid = false;
+		if(!utilisateurDAO.trouveTout().stream().anyMatch(utilisateurExistant -> utilisateurExistant.getEmail().equals(utilisateur.getEmail()))) {
+			
+			estValid = true;
+		}else {
+			be.add("l'email existe déjà");
+		}
+		
+		
 		
 		return estValid;
 		

@@ -28,7 +28,15 @@ public class EnchereSecurityConfig {
 	private String SELECT_UTILISATEUR ="SELECT pseudo, mot_de_passe, 1 as enabled FROM UTILISATEURS WHERE pseudo = ?";
 	private String SELECT_ROLES="SELECT pseudo,administrateur FROM UTILISATEURS where pseudo=?";
 
+
 	
+	
+	@Bean
+   PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+	
+
 	@Bean
 	UserDetailsManager userDetailManager(DataSource dataSource) {
 		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
@@ -38,22 +46,27 @@ public class EnchereSecurityConfig {
 	}
 	
 
-	
 	@Bean
 	SecurityFilterChain filtreChaine(HttpSecurity http) throws Exception {
-		System.err.println("Je suis present ici");
-		http.authorizeHttpRequests(authorize->authorize 
+		http.authorizeHttpRequests(authorize-> authorize 
 			
 				.requestMatchers("/connexion").permitAll()
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/session").permitAll()
+				.requestMatchers("/creationProfil").permitAll()
+				.requestMatchers("/creationVente").permitAll()
+				.requestMatchers("/listeEnchere").permitAll()
+				.requestMatchers("/monProfil").permitAll()
 				.requestMatchers("/css/*").permitAll()
 				.requestMatchers("/images/*").permitAll()
+				.requestMatchers("/creationProfil").permitAll()
+				.anyRequest().permitAll());
 
 		http.formLogin(form->{
 			form.loginPage("/connexion").permitAll();
 			form.defaultSuccessUrl("/").permitAll();//Changer plus tard au cas ou 
 		});
+		
 		http.logout(logout->
 			logout
 				.invalidateHttpSession(true)
@@ -65,6 +78,7 @@ public class EnchereSecurityConfig {
 		
 		return http.build();
 	}
+
 	
 }
 
