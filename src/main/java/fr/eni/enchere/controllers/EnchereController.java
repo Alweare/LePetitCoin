@@ -47,6 +47,7 @@ public class EnchereController {
 
 	@GetMapping("/creationVente")
 	public String creationVente(Model model, Principal principal) {
+		
 		ArticleVendu articleVendu = new ArticleVendu();
 		model.addAttribute("nouvelleEnchere", articleVendu);
 		System.out.println(principal.getName());
@@ -57,10 +58,17 @@ public class EnchereController {
 
 	
 	@PostMapping("/creationVente")
-	public String creerVente(@ModelAttribute("nouvelleEnchere") ArticleVendu article, Principal principal) {
+	public String creerVente(
+			@ModelAttribute("nouvelleEnchere") ArticleVendu article, 
+			Principal principal, 
+			@ModelAttribute("ville") String ville,
+			@ModelAttribute("rue") String rue,
+			@ModelAttribute("codePostal") String cp
+			) {
+		System.err.println(ville);
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
 		article.setCategorieArticle(new Categorie());
-		articleService.CreerArticle(article);
+		articleService.CreerArticle(article, ville, rue, cp);
 
 		return "listeEnchere";
 	}

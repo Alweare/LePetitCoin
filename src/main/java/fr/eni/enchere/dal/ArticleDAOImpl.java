@@ -46,7 +46,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)";
 	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateFinEncheres > CURRENT_TIMESTAMP;";
 	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
-			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :inCategoie);";
+			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
 	private static final String TROUVE_ENCHERE_PAR_ID="SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES where idUtilisateur = :id";
 	private static final String CHANGER_ID_ENCHERES="ALTER TABLE ENCHERES DROP enchere_pk;\r\n"
 			+ "UPDATE ENCHERES SET idUtilisateur=:nouveauId WHERE idUtilisateur=:ancienId;\r\n"
