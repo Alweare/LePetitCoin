@@ -140,6 +140,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 
+	@Override
+	public void supprimerUtilisateur(int id) {
+		utilisateurDAO.supprimerUnUtilisateur(id);
+		
+	}
+
+
 
 
 

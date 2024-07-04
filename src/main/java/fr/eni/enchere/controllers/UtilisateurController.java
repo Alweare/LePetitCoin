@@ -18,6 +18,7 @@ import fr.eni.enchere.bll.UtilisateurService;
 import fr.eni.enchere.bll.UtilisateurServiceImpl;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.exceptions.BusinessException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertFalse.List;
 
@@ -96,12 +97,18 @@ public class UtilisateurController {
 		}
 		
 	}
+	///VOIR DEMAIN POUR LA REDIRECTION APRES DECONNEXION 
 	@GetMapping("/logout")
 	public String deconnexion() {
-		return "/index";
+		return "/view-index";
 	}
 	
-	
+	@PostMapping("/supprimerCompte")
+	public String supprimerCompte(Principal principal) {
+		Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(principal.getName());
+		utilisateurService.supprimerUtilisateur(utilisateur.getId());
+		return "/view-index";
+	}
 	
 	
 
