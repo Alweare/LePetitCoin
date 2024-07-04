@@ -13,31 +13,31 @@
 	<h2>Nouvelle vente</h2>
 	
 		<img src="" alt="" />
-		<form action="POST">
+		<form th:action="@{/creationVente}" method="POST" th:object="${nouvelleEnchere}">
 		<ul>
 		
-			<li><label for="inputArticle">Article :</label>
-				<input id="inputArticle" type="text"  />
+			<li><label for="inputNom">Article :</label>
+				<input th:field="*{nomArticle}" id="inputNom" type="text"  />
 			</li>
-			<li><label for="inputNom">Description :</label>
-				<textarea name="inputNom" id="inputNom" cols="30" rows="10"></textarea>
+			<li><label for="inputDescription">Description :</label>
+				<textarea th:field="*{description}" id="inputDescription" cols="30" rows="10" ></textarea>
 			</li>
 			<li><label for="inputCategorie">Catégorie :</label>
 				<select id="inputCategorie"  multiple="multiple">
 						<option ></option>
 					</select>				
 			</li>
-			<li><label for="inputEmail">Photo de l'article :</label>
+			<li><label for="inputFile">Photo de l'article :</label>
 				<input type="file" id="profile_pic" name="profile_pic" accept=".jpg, .jpeg, .png" />
 			</li>
 			<li><label for="inputMAP">Mise à prix :</label>
-				<input type="number" id="inputMAP" name="inputMAP" min="1"  />
+				<input type="number" id="inputMAP" name="inputMAP" min="1"  th:field="*{prixInitial}"/>
 			</li>
 			<li><label for="inputDebut">Début de l'enchère :</label>
-				<input id="inputDebut" type="date" value="" />
+				<input id="inputDebut" type="datetime-local" value=""  th:field="*{dateDebutEnchere}"/>
 			</li>
 			<li><label for="inputFin">Fin de l'enchère :</label>
-				<input id="inputFin" type="date" value="" />
+				<input id="inputFin" type="datetime-local" value=""  th:field="*{dateFinEncheres}"/>
 			</li>
 			</ul>
 			<fieldset>
@@ -47,7 +47,7 @@
 				<input id="inputRue" type="text"  />
 			</li>
 			<li><label for="inputCP">Code Postal :</label>
-				<input id="inputCP" type="number"  />
+				<input id="inputCP" type="text"  />
 			</li>
 			<li><label for="inputVille">Ville :</label>
 				<input id="inputVille" type="text"  />
