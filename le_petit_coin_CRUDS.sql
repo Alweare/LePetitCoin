@@ -5,7 +5,7 @@ go
 --------------------------------------------------------------------UTILISATEURS--------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
---INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES ('Alwear','Rougail','Saucisse','yanis.renard@campus','0633134552','kervegan','44000','Nantes','Pa$$W0rd',0,0);
+INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES ('Alwear','Rougail','Saucisse','yanis.renard@campus','0633134552','kervegan','44000','Nantes','Pa$$W0rd',0,0);
 --UPDATE UTILISATEURS SET credit=156 WHERE id = 1;
 SELECT * FROM UTILISATEURS
 --------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -16,7 +16,7 @@ SELECT * FROM UTILISATEURS
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------ARTICLES_vendus-----------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
---INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)
+INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)
 	VALUES ('une pelle', 'c''est une pelle', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 20, 30, 1, 1);
 
 UPDATE ARTICLES_VENDUS SET 
@@ -76,7 +76,7 @@ UPDATE ARTICLES_VENDUS SET
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------ENCHERE--------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
---INSERT INTO ENCHERES (idUtilisateur, idArticle, dateEnchere,montantEnchere) VALUES (1, 2, CURRENT_TIMESTAMP, 125);
+INSERT INTO ENCHERES (idUtilisateur, idArticle, dateEnchere,montantEnchere) VALUES (1, 2, CURRENT_TIMESTAMP, 125);
 --UPDATE ENCHERES SET dateEnchere = CURRENT_TIMESTAMP, montantEnchere= 150 WHERE idUtilisateur = 1 AND montantEnchere = 1;
 --DELETE ENCHERES WHERE idUtilisateur=1 AND idArticle = 1;
 
@@ -84,7 +84,7 @@ UPDATE ARTICLES_VENDUS SET
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------RETRAIT--------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
---INSERT INTO RETRAITS (idArticle, rue, code_postal,ville) VALUES (3, 'MenilMontant Mais oui mesdames', '46544', 'Saint-Jean-du-doigts');
+INSERT INTO RETRAITS (idArticle, rue, code_postal,ville) VALUES (1, 'MenilMontant Mais oui mesdames', '46544', 'Saint-Jean-du-doigts');
 --UPDATE RETRAITS SET rue = 'chez ta mere', code_postal= '95786', ville= 'Quimper' WHERE idArticle = 1;
 --DELETE RETRAITS WHERE idUtilisateur=1 AND idArticle = 1;
 SELECT * FROM RETRAITS
