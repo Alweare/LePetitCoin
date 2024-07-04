@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 
 public interface ArticleService {
@@ -13,5 +14,6 @@ public interface ArticleService {
 	List<ArticleVendu> recupererParParticipant(int idParticipant);
 	List<ArticleVendu> recupererEnchereGagnee(int idAcquereur);
 	ArticleVendu RecupererArticle(int idArticle);
+	List<ArticleVendu> recupererCategorie();
 
 }
