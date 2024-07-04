@@ -3,18 +3,17 @@ package fr.eni.enchere.bll;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.eni.enchere.bo.ArticleVendu;
-import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.dal.ArticleDAO;
-import fr.eni.enchere.exceptions.BusinessException;
+import fr.eni.enchere.dal.RetraitDAO;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
 	private ArticleDAO articleDao;
-	
-	
+	private RetraitDAO retraitDao;
 	
 	
 	public ArticleServiceImpl(ArticleDAO enchereDao) {
@@ -22,10 +21,11 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void CreerArticle(ArticleVendu article) {
 		System.out.println(article);
-		this.articleDao.creer(article);
-		
+		int idArticle = this.articleDao.creer(article);
+		this.retraitDao.creer(article.getLieuRetrait(), idArticle);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public void changerID(int ancienId, int nouveauId) {
 		articleDao.changerIdDansEnchere(ancienId, nouveauId);
-		
+	}
 	public List<ArticleVendu> recupererCategorie() {
 		
 		return articleDao.trouverCategories();
