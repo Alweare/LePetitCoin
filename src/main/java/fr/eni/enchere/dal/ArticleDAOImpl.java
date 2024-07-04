@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -102,8 +103,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 
 	@Override
-	public void creer(ArticleVendu enchere) {
-		// TODO Auto-generated method stub
+	public void creer(ArticleVendu article) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		
+		map.addValue("nomArticle", article.getNomArticle());
+		map.addValue("description", map)
 		
 	}
 	public class ArticleRowMapper implements RowMapper<ArticleVendu> {
