@@ -32,7 +32,6 @@ public class EnchereController {
 	 @GetMapping("/")
 	 public String acceuil(Model model) {
 		 model.addAttribute("listeEncheres", articleService.recupererEnchereEnCours());
-		 System.out.println(model.getAttribute("listeEncheres"));
 		 return "view-index";
 	 }
 
