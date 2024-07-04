@@ -4,9 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.swing.tree.RowMapper;
-import javax.swing.tree.TreePath;
-
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -49,7 +46,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
  * */
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) {
-		System.out.println(utilisateur);
+
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 		mapSqlParameterSource.addValue("pseudo", utilisateur.getPseudo());
 		mapSqlParameterSource.addValue("nom", utilisateur.getNom());
@@ -61,7 +58,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		mapSqlParameterSource.addValue("ville", utilisateur.getVille());
 		mapSqlParameterSource.addValue("mot_de_passe", utilisateur.getMotDePasse());
 		mapSqlParameterSource.addValue("credit", utilisateur.getCredit());
-		
+
 		jdbcTemplate.update(INSERT_UTILISATEUR, mapSqlParameterSource);
 	}
 	

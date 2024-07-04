@@ -19,4 +19,6 @@ public interface ArticleDAO {
 	void creer(ArticleVendu enchere);
 	Enchere trouverEnchereParID(int id);
 	void changerIdDansEnchere(int ancienId, int nouveauId);
+	List<ArticleVendu> trouverCategories();
+
 }

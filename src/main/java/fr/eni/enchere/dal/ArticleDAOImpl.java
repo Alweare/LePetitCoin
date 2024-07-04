@@ -3,19 +3,19 @@ package fr.eni.enchere.dal;
 import java.security.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
-import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 
@@ -50,8 +50,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String CHANGER_ID_ENCHERES="ALTER TABLE ENCHERES DROP enchere_pk;\r\n"
 			+ "UPDATE ENCHERES SET idUtilisateur=:nouveauId WHERE idUtilisateur=:ancienId;\r\n"
 			+ "ALTER TABLE ENCHERES ADD CONSTRAINT enchere_pk PRIMARY KEY (idUtilisateur,idArticle);";
-			
-	
+			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
+	private static final String TROUVE_CATEGORIES = "SELECT id, libelle FROM categories";
+
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
@@ -109,9 +110,20 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 
 	@Override
-	public void creer(ArticleVendu enchere) {
-		// TODO Auto-generated method stub
+	public void creer(ArticleVendu article) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		//(:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :inCategoie);";
+		map.addValue("nomArticle", article.getNomArticle());
+		map.addValue("description", article.getDescription());
+		map.addValue("dateDebut", article.getDateDebutEnchere());
+		map.addValue("dateFin", article.getDateFinEncheres());
+		map.addValue("prixInitial", article.getPrixInitial());
+		map.addValue("prixVente", article.getPrixVente());
+		map.addValue("idUtilisateur", article.getVendeur().getId());
+		map.addValue("idCategorie", article.getCategorieArticle().getId());
 		
+		this.jdbc.update(CREER, map, keyHolder);
 	}
 	public class ArticleRowMapper implements RowMapper<ArticleVendu> {
 
@@ -148,6 +160,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 		}
 	}
 	@Override
+
 	public Enchere trouverEnchereParID(int id) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 		mapSqlParameterSource.addValue("id", id);
@@ -161,6 +174,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 		mapSqlParameterSource.addValue("nouveauId", nouveauId);
 		jdbc.update(CHANGER_ID_ENCHERES, mapSqlParameterSource);
 		
+
+	public List<ArticleVendu> trouverCategories() {
+		
+		return this.jdbc.query(TROUVE_CATEGORIES, new BeanPropertyRowMapper<ArticleVendu>(ArticleVendu.class));
+
 	}
 }
 
