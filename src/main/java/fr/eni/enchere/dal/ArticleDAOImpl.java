@@ -45,7 +45,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)";
 	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateFinEncheres > CURRENT_TIMESTAMP;";
 	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
-			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :inCategoie);";
+			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :idCategoie);";
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
@@ -105,9 +105,15 @@ public class ArticleDAOImpl implements ArticleDAO {
 	@Override
 	public void creer(ArticleVendu article) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
-		
+		//(:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :inCategoie);";
 		map.addValue("nomArticle", article.getNomArticle());
-		map.addValue("description", map)
+		map.addValue("description", article.getDescription());
+		map.addValue("dateDebut", article.getDateDebutEnchere());
+		map.addValue("dateFin", article.getDateFinEncheres());
+		map.addValue("prixInitial", article.getPrixInitial());
+		map.addValue("prixVente", article.getPrixVente());
+		map.addValue("idUtilisateur", article.getVendeur().getId());
+		map.addValue("idCategorie", article.getCategorieArticle().getId());
 		
 	}
 	public class ArticleRowMapper implements RowMapper<ArticleVendu> {
