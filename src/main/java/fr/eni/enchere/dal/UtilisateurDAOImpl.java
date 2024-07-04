@@ -22,6 +22,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private static final String TROUVE_AVEC_PSEUDO = "SELECT id, pseudo, nom, prenom, email, telephone, rue,code_postal,ville, mot_de_passe, credit FROM UTILISATEURS WHERE pseudo = :pseudo";
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (:pseudo,:nom,:prenom,:email,:telephone,:rue,:code_postal,:ville,:mot_de_passe,0,0)";
 	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET pseudo = :pseudo, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :code_postal, ville = :ville WHERE id = :id";
+	private static final String SUPPRIMER_COMPTE = "DELETE FROM UTILISATEURS WHERE id = :id";
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -115,6 +116,13 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		mapSqlParameterSource.addValue("ville", utilisateur.getVille());
 		
 		jdbcTemplate.update(UPDATE_UTILISATEUR, mapSqlParameterSource);
+	}
+
+	@Override
+	public void supprimerUnUtilisateur(int id) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id);
+		jdbcTemplate.update(SUPPRIMER_COMPTE, mapSqlParameterSource);
 	}
 
 	

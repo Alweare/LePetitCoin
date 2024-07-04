@@ -19,4 +19,5 @@ public interface UtilisateurDAO {
 
 	void miseAjourUtilisateur(Utilisateur utilisateur);
 	
+	void supprimerUnUtilisateur(int id);
 }
