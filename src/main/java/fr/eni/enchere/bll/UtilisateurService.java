@@ -22,4 +22,5 @@ public interface UtilisateurService {
 	
 	Utilisateur trouverUtilisateurParPseudo(String pseudo);
 
+	void supprimerUtilisateur(int id);
 }
