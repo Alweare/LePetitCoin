@@ -32,7 +32,6 @@ public class ArticleServiceImpl implements ArticleService {
 	public void CreerArticle(ArticleVendu article, String ville, String rue, String cp) {
 		//********************zone de test à supprimer************************************
 		//********************************************************************************
-		System.out.println(article);
 		article.setCategorieArticle(new Categorie());
 		article.getCategorieArticle().setId(1);
 		//*******************************************************************************
