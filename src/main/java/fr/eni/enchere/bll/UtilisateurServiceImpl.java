@@ -52,6 +52,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 				System.out.println(motDePasseCrypte);
 				utilisateur.setMotDePasse(motDePasseCrypte);
 				utilisateur.setCredit(200);
+				System.out.println("ici user doit avoir 200 credit");
 				
 				utilisateurDAO.creerUtilisateur(utilisateur);
 				
