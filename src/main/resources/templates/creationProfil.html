@@ -13,39 +13,49 @@
 	<h2>Mon profil</h2>
 	
 	<form th:action="@{/creationProfil}"  method="POST" th:object="${newUtilisateur}">
+	<div data-th-replace="~{/fragments/errors/fragment-errors :: frag-errors}" ></div>
 		<ul >
 			<li><label for="inputPseudo">Pseudo :</label>
 				<input id="inputPseudo" type="text" th:field="*{pseudo}" />
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('pseudo')}" ></div>
 
 	
 			</li>
 			<li><label for="inputNom">Nom :</label>
 				<input id="inputNom" type="text"  th:field="*{nom}"/>
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('nom')}" ></div>
 			</li>
 			<li><label for="inputPrenom">Prénom :</label>
 				<input id="inputPrenom" type="text"  th:field="*{prenom}"/>
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('prenom')}" ></div>
 			</li>
 			<li><label for="inputEmail">Email :</label>
 				<input id="inputEmail" type="email"  th:field="*{email}"/>
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('email')}" ></div>
 
 			</li>
 			<li><label for="inputTelephone">Téléphone :</label>
 				<input id="inputTelephone" type="text"  th:field="*{telephone}"/>
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('telephone')}" ></div>
 			</li>
 			<li><label for="inputRue">Rue :</label>
 				<input id="inputRue" type="text"  th:field="*{rue}"/>
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('rue')}" ></div>
 			</li>
 			<li><label for="inputCP">Code Postal :</label>
 				<input id="inputCP" type="text"  th:field="*{codePostal}"/>
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('codePostal')}" ></div>
 			</li>
 			<li><label for="inputVille">Ville :</label>
 				<input id="inputVille" type="text" th:field="*{ville}" />
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('ville')}" ></div>
 			</li>
 			<li><label for="inputPassword">Mot de passe :</label>
 				<input id="inputPassword" type="password"  th:field="*{motDePasse}"/>
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('motDePasse')}" ></div>
 			</li>
-			<li><label for="inputPassword">Confirmation :</label>
-				<input id="inputPassword" type="password"  />
+			<li><label for="inputPasswordConfirm">Confirmation :</label>
+				<input id="inputPasswordConfirm" type="password" th:field="*{motDePasseCOnfirm}" />
 			</li>
 		
 		</ul>

@@ -44,9 +44,9 @@ public class UtilisateurController {
 	}
 
 	@PostMapping("/creationProfil")
-	public String inscriptionUtilisateur (Utilisateur utilisateur, BindingResult bindingResult)throws BusinessException {
+	public String inscriptionUtilisateur (@Valid  @ModelAttribute("newUtilisateur") Utilisateur utilisateur, BindingResult bindingResult)throws BusinessException {
 		if(bindingResult.hasErrors()) {
-			return "view-creationProfil";
+			return "creationProfil";
 		}
 
 		try {
@@ -57,9 +57,12 @@ public class UtilisateurController {
 			e.getErreurs().forEach(err -> {
 				ObjectError error = new ObjectError("globalError", err);
 				bindingResult.addError(error);
+				
 
 			});
-			return "view-index";}
+			return "creationProfil";
+			}
+		
 
 		}
 
