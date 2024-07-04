@@ -20,7 +20,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public void CreerArticle(ArticleVendu article) {
-		// TODO Auto-generated method stub
+		this.articleDao.creer(article);
 		
 	}
 

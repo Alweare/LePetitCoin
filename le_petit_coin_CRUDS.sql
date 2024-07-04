@@ -87,7 +87,7 @@ INSERT INTO ENCHERES (idUtilisateur, idArticle, dateEnchere,montantEnchere) VALU
 INSERT INTO RETRAITS (idArticle, rue, code_postal,ville) VALUES (1, 'MenilMontant Mais oui mesdames', '46544', 'Saint-Jean-du-doigts');
 --UPDATE RETRAITS SET rue = 'chez ta mere', code_postal= '95786', ville= 'Quimper' WHERE idArticle = 1;
 --DELETE RETRAITS WHERE idUtilisateur=1 AND idArticle = 1;
-SELECT * FROM RETRAITS
+
 
 
 SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES;
@@ -164,22 +164,22 @@ SELECT
 		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) 
 	WHERE C.id = 1;
 
-	--select by acquereur
-	SELECT 
-	AV.id, AV.nomArticle, 
-	AV.description, 
-	AV.prixInitial, 
-	AV.prixVente,
-	AV.dateDebutEncheres, 
-	AV.dateFinEncheres, 
-	C.id, C.libelle, 
-	E.dateEnchere, 
-	E.montantEnchere, 
-	U.id, U.pseudo
-	FROM ENCHERES as E 
-		INNER JOIN UTILISATEURS as U ON (e.idUtilisateur = u.id) 
-		INNER JOIN ARTICLES_VENDUS as AV ON (AV.idUtilisateur = u.id) 
-		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) 
-	WHERE E.idUtilisateur = 1 AND AV.dateDebutEncheres < CURRENT_TIMESTAMP AND E.montantEnchere = MAX(e.montantEnchere) ;
+	----select by acquereur
+	--SELECT 
+	--AV.id, AV.nomArticle, 
+	--AV.description, 
+	--AV.prixInitial, 
+	--AV.prixVente,
+	--AV.dateDebutEncheres, 
+	--AV.dateFinEncheres, 
+	--C.id, C.libelle, 
+	--E.dateEnchere, 
+	--E.montantEnchere, 
+	--U.id, U.pseudo
+	--FROM ENCHERES as E 
+	--	INNER JOIN UTILISATEURS as U ON (e.idUtilisateur = u.id) 
+	--	INNER JOIN ARTICLES_VENDUS as AV ON (AV.idUtilisateur = u.id) 
+	--	INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) 
+	--WHERE E.idUtilisateur = 1 AND AV.dateDebutEncheres < CURRENT_TIMESTAMP AND E.montantEnchere = MAX(e.montantEnchere) ;
 
 
