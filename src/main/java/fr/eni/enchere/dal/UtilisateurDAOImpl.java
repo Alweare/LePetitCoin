@@ -48,7 +48,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
  * */
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) {
-		System.out.println(utilisateur);
+
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 		mapSqlParameterSource.addValue("pseudo", utilisateur.getPseudo());
 		mapSqlParameterSource.addValue("nom", utilisateur.getNom());
