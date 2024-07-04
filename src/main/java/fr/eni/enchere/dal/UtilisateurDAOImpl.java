@@ -58,7 +58,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		mapSqlParameterSource.addValue("ville", utilisateur.getVille());
 		mapSqlParameterSource.addValue("mot_de_passe", utilisateur.getMotDePasse());
 		mapSqlParameterSource.addValue("credit", utilisateur.getCredit());
-		
+
 		jdbcTemplate.update(INSERT_UTILISATEUR, mapSqlParameterSource);
 	}
 	

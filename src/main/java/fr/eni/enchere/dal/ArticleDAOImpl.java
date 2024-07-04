@@ -7,6 +7,7 @@ import java.util.List;
 
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -45,6 +46,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateFinEncheres > CURRENT_TIMESTAMP;";
 	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
 			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :idCategoie);";
+	private static final String TROUVE_CATEGORIES = "SELECT id, libelle FROM categories";
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
@@ -150,6 +152,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 			
 			return article;
 		}
+	}
+	@Override
+	public List<ArticleVendu> trouverCategories() {
+		
+		return this.jdbc.query(TROUVE_CATEGORIES, new BeanPropertyRowMapper<>(ArticleVendu.class));
 	}
 }
 

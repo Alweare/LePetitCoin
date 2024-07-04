@@ -5,12 +5,15 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.dal.ArticleDAO;
+import fr.eni.enchere.exceptions.BusinessException;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
 	private ArticleDAO articleDao;
+	
 	
 	
 	
@@ -20,6 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public void CreerArticle(ArticleVendu article) {
+
 		this.articleDao.creer(article);
 		
 	}
@@ -45,6 +49,12 @@ public class ArticleServiceImpl implements ArticleService {
 	public ArticleVendu RecupererArticle(int idArticle) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<ArticleVendu> recupererCategorie() {
+		
+		return articleDao.trouverCategories();
 	}
 	
 }
