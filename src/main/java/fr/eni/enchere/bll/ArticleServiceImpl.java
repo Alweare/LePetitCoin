@@ -23,7 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public void CreerArticle(ArticleVendu article) {
-		
+
 		this.articleDao.creer(article);
 		
 	}
