@@ -60,6 +60,7 @@ public class EnchereSecurityConfig {
 				.requestMatchers("/css/*").permitAll()
 				.requestMatchers("/images/*").permitAll()
 				.requestMatchers("/creationProfil").permitAll()
+				.requestMatchers("/nouveauMDP").permitAll()
 				.anyRequest().permitAll());
 
 		http.formLogin(form->{

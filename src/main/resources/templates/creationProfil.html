@@ -7,6 +7,7 @@
 <title>Le Petit Coin</title>
 </head>
 <body>
+		<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
 
 
 	
@@ -55,7 +56,6 @@
 				<div data-th-replace="~{/fragments/errors/error :: frag-error('motDePasse')}" ></div>
 			</li>
 			<li><label for="inputPasswordConfirm">Confirmation :</label>
-
 				<input id="inputPasswordConfirm" type="password"  />
 			</li>
 		
