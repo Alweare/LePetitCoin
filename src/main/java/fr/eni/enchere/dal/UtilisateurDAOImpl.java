@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 
 @Repository
@@ -126,6 +127,12 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 		mapSqlParameterSource.addValue("id", id);
 		jdbcTemplate.update(SUPPRIMER_COMPTE, mapSqlParameterSource);
+	}
+
+	@Override
+	public Retrait trouveAdressParId(int idUtilistaueur) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
