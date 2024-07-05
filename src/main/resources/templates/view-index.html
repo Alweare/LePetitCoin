@@ -15,8 +15,10 @@
 	<form action="POST" >
 		<label  th:if="0>1">Filtres</label> 
 			<input type="text" id="recherche" />
-			<select name="categories" id="categories"></select>
-			<button type="submit">Rechercher</button>
+ 		<select id="categories" th:field="*{categorieEnSession}">
+            <option th:each="item : ${categorieEnSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
+        </select>
+   			<button type="submit">Rechercher</button>
 	
 		<!-- boutons ne doivent apparaitre que pour les utilisateurs connectés -->
 		<input type="radio" id="choix1" name="choix" value="achats" />
@@ -57,6 +59,9 @@
 			</li>
 			</ul>
 			</fieldset>
+			
+			
+			
 	</form>	
 		
 		

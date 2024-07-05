@@ -79,10 +79,10 @@ public class ArticleServiceImpl implements ArticleService {
 	public void changerID(int ancienId, int nouveauId) {
 		articleDao.changerIdDansEnchere(ancienId, nouveauId);
 	}
-	public List<ArticleVendu> recupererCategorie() {
+
+	public List<Categorie> recupererCategories() {
 		
 		return articleDao.trouverCategories();
 
-	}
-	
+	}	
 }

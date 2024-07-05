@@ -16,7 +16,7 @@ public interface ArticleService {
 	ArticleVendu RecupererArticle(int idArticle);
 	Enchere trouverEnchereParID(int id);
 	void changerID(int ancienId, int nouveauId);
-	List<ArticleVendu> recupererCategorie();
+	List<Categorie> recupererCategories();
 
 
 }
