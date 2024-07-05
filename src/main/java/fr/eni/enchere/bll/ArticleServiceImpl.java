@@ -22,10 +22,18 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public void CreerArticle(ArticleVendu article) {
-		System.out.println(article);
-		this.articleDao.creer(article);
-		
+
+	@Transactional(rollbackFor = Exception.class)
+	public void CreerArticle(ArticleVendu article, String ville, String rue, String cp) {
+		//System.err.println(article);
+		Retrait retrait = new Retrait(rue, cp, ville);
+		article.setLieuretrait(retrait);
+		if (article.getLieuretrait().getRue().isEmpty()) {
+			article.setLieuRetrait(this.utilisateurDao.trouveAdressParId(article.getVendeur().getId()));
+		}
+		int idArticle = this.articleDao.creer(article);
+		this.retraitDao.creer(article.getLieuRetrait(), idArticle);
+
 	}
 
 	@Override
@@ -79,6 +87,12 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+
+	public Categorie consulterCategorieParId(int idCategorie) {
+		return this.articleDao.trouveCategorieParIdint(idCategorie);
+	}
+  
+@Override
 	public List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id, String recherche) {
 		return articleDao.rechercherArticlesParCategorieEtNom(id, recherche);
 	}
