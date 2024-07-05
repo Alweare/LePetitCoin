@@ -128,6 +128,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 		
 		this.jdbc.update(CREER, map, keyHolder);
 		
+
 		 if (keyHolder != null && !keyHolder.getKey().equals(0)) {
 			 return keyHolder.getKey().intValue();
 		 }
@@ -159,6 +160,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	@Override
 	public List<Categorie> chercheTout() {
 		return jdbc.query(CHERCHE_TOUT_CATEGORIE, new BeanPropertyRowMapper<>(Categorie.class));
+
 	}
 
 	@Override
@@ -210,6 +212,22 @@ public class ArticleDAOImpl implements ArticleDAO {
 		}
 	}
 
+
+
+	@Override
+	public void changerIdDansEnchere(int ancienId, int nouveauId) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("ancienId",ancienId);
+		mapSqlParameterSource.addValue("nouveauId", nouveauId);
+		jdbc.update(CHANGER_ID_ENCHERES, mapSqlParameterSource);
+	}
+		
+
+	public List<ArticleVendu> trouverCategories() {
+		
+		return this.jdbc.query(TROUVE_CATEGORIES, new BeanPropertyRowMapper<ArticleVendu>(ArticleVendu.class));
+
+	}
 
 }
 
