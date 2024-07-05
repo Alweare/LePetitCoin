@@ -14,43 +14,34 @@
 	
 		<img src="" alt="" />
 		<form th:action="@{/creationVente}" method="POST" th:object="${nouvelleEnchere}">
-		<ul>
-		
-			<li><label for="inputNom">Article :</label>
+				<label for="inputNom">Article :</label>
 				<input th:field="*{nomArticle}" id="inputNom" type="text"  />
-			</li>
-			<li><label for="inputDescription">Description :</label>
+				<label for="inputDescription">Description :</label>
 				<textarea th:field="*{description}" id="inputDescription" cols="30" rows="10" ></textarea>
-			</li>
-			<li><label for="inputCategorie">Catégorie :</label>
-				<select id="inputCategorie"  multiple="multiple">
-						<option ></option>
-					</select>				
-			</li>
-			<li><label for="inputFile">Photo de l'article :</label>
+				<label for="inputCategorie">Catégorie :</label>
+				<select id="categories" th:field="*{categorieArticle}">
+            		<option th:each="item : ${categorieEnSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
+        		</select>				
+				<label for="inputFile">Photo de l'article :</label>
 				<input type="file" id="profile_pic" name="profile_pic" accept=".jpg, .jpeg, .png" />
-			</li>
-			<li><label for="inputMAP">Mise à prix :</label>
+				<label for="inputMAP">Mise à prix :</label>
 				<input type="number" id="inputMAP" name="inputMAP" min="1"  th:field="*{prixInitial}"/>
-			</li>
-			<li><label for="inputDebut">Début de l'enchère :</label>
+				<label for="inputDebut">Début de l'enchère :</label>
 				<input id="inputDebut" type="datetime-local" value=""  th:field="*{dateDebutEnchere}"/>
-			</li>
-			<li><label for="inputFin">Fin de l'enchère :</label>
+				<label for="inputFin">Fin de l'enchère :</label>
 				<input id="inputFin" type="datetime-local" value=""  th:field="*{dateFinEncheres}"/>
-			</li>
-			</ul>
+			
 			<fieldset>
 			<legend>Retrait </legend>
 			<ul>
 			<li><label for="inputRue">Rue :</label>
-				<input id="inputRue" type="text"  />
+				<input id="inputRue" type="text" th:name="rue" />
 			</li>
 			<li><label for="inputCP">Code Postal :</label>
-				<input id="inputCP" type="text"  />
+				<input id="inputCP" type="text" th:name="codePostal"  />
 			</li>
 			<li><label for="inputVille">Ville :</label>
-				<input id="inputVille" type="text"  />
+				<input id="inputVille" type="text" th:name="ville"  />
 			</li>
 			</ul>
 			</fieldset>

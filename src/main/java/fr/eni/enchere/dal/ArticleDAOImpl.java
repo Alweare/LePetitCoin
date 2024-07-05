@@ -46,7 +46,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)";
 	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateFinEncheres > CURRENT_TIMESTAMP";
 	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
-			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :inCategoie);";
+			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
 	private static final String TROUVE_ENCHERE_PAR_ID="SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES where idUtilisateur = :id";
 	private static final String CHANGER_ID_ENCHERES="ALTER TABLE ENCHERES DROP enchere_pk;\r\n"
 			+ "UPDATE ENCHERES SET idUtilisateur=:nouveauId WHERE idUtilisateur=:ancienId;\r\n"
@@ -113,7 +113,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 
 	@Override
-	public void creer(ArticleVendu article) {
+	public int creer(ArticleVendu article) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		//(:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :inCategoie);";
@@ -124,9 +124,14 @@ public class ArticleDAOImpl implements ArticleDAO {
 		map.addValue("prixInitial", article.getPrixInitial());
 		map.addValue("prixVente", article.getPrixVente());
 		map.addValue("idUtilisateur", article.getVendeur().getId());
-		map.addValue("idCategorie", article.getCategorieArticle().getId());
+		map.addValue("idCategorie", article.getCategorieArticle().getId()); 
 		
 		this.jdbc.update(CREER, map, keyHolder);
+		
+		 if (keyHolder != null && !keyHolder.getKey().equals(0)) {
+			 return keyHolder.getKey().intValue();
+		 }
+		 return 0;
 	}
 
 	@Override

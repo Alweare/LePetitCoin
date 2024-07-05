@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
 
 import fr.eni.enchere.bll.ArticleService;
 import fr.eni.enchere.bll.UtilisateurService;
@@ -44,6 +46,7 @@ public class EnchereController {
 	 @GetMapping("/")
 	 public String acceuil(Model model) {
 		 model.addAttribute("listeEncheres", articleService.recupererEnchereEnCours());
+		 
 		 return "view-index";
 	 }
 
@@ -51,8 +54,10 @@ public class EnchereController {
 
 	@GetMapping("/creationVente")
 	public String creationVente(Model model, Principal principal) {
+		
 		ArticleVendu articleVendu = new ArticleVendu();
 		model.addAttribute("nouvelleEnchere", articleVendu);
+//		model.addAttribute("categories", articleService.recupererCategorie());
 		System.out.println(principal.getName());
 		return "creationVente";
 	}
@@ -61,10 +66,18 @@ public class EnchereController {
 
 	
 	@PostMapping("/creationVente")
-	public String creerVente(@ModelAttribute("nouvelleEnchere") ArticleVendu article, Principal principal) {
+
+	public String creerVente(
+			@ModelAttribute("nouvelleEnchere") ArticleVendu article, 
+			Principal principal, 
+			@ModelAttribute("ville") String ville,
+			@ModelAttribute("rue") String rue,
+			@ModelAttribute("codePostal") String cp
+			) {
+
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
 		article.setCategorieArticle(new Categorie());
-		articleService.CreerArticle(article);
+		articleService.CreerArticle(article, ville, rue, cp);
 
 		return "listeEnchere";
 	}
@@ -89,9 +102,6 @@ public class EnchereController {
 			}
 			return "view-index";
 		}
-	
-	
-	
-	
+
 	
 }
