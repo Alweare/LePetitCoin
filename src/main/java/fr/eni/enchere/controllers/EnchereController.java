@@ -21,13 +21,13 @@ import fr.eni.enchere.bo.Utilisateur;
 @Controller
 @SessionAttributes({"categoriesSession"})
 public class EnchereController {
-	
+
 	private ArticleService articleService;
 	private UtilisateurService utilisateurService;
-	
-	
-	
-	
+
+
+
+
 
 
 	public EnchereController(ArticleService articleService, UtilisateurService utilisateurService) {
@@ -39,33 +39,33 @@ public class EnchereController {
 	@GetMapping("/listeEnchere")
 	public String listeEnchere(Model model, Principal principal) {
 		model.addAttribute("listeEncheresEncours", articleService.recupererEnchereEnCours());
-		
+
 		return "listeEnchere";
 	}
-	
-	 @GetMapping("/")
-	 public String acceuil(Model model, Principal principal) {
 
-		 model.addAttribute("listeEncheres", articleService.recupererEnchereEnCours());
+	@GetMapping("/")
+	public String acceuil(Model model, Principal principal) {
 
-		 return "view-index";
-	 }
+		model.addAttribute("listeEncheres", articleService.recupererEnchereEnCours());
 
- 
+		return "view-index";
+	}
+
+
 
 	@GetMapping("/creationVente")
 	public String creationVente(Model model, Principal principal) {
-		
+
 		ArticleVendu articleVendu = new ArticleVendu();
 		model.addAttribute("nouvelleEnchere", articleVendu);
-//		model.addAttribute("categories", articleService.recupererCategorie());
+		//		model.addAttribute("categories", articleService.recupererCategorie());
 		System.out.println(principal.getName());
 		return "creationVente";
 	}
-	
-	
 
-	
+
+
+
 	@PostMapping("/creationVente")
 
 	public String creerVente(
@@ -82,47 +82,47 @@ public class EnchereController {
 
 		return "listeEnchere";
 	}
-	
+
 	@GetMapping("/encherir")
 	public String afficherEncherir(@RequestParam("idArticle") int idArticle ,Model model) {
-		
+
 		return "encherir";
 	}
 	@PostMapping("/enchere")
 	public String Encherir() {
-		
+
 		return "encherir";
 	}
-	
-	
-	
+
+
+
 	@ModelAttribute("creationVente")
 	public String ajouteEnchere(Model model) {
 		model.addAttribute("ajoutVente", new Enchere());
 		return "creationVente";
 	}
-	
 
-//	@ModelAttribute("enchere")
-	
-	
-	
+
+	//	@ModelAttribute("enchere")
+
+
+
 
 	@ModelAttribute("categoriesSession")
 	public List<Categorie> chargerCategorieSession(){
 		return articleService.consulterCategorie();
 	}
 
-	
-	@PostMapping("/categories")
-		public String afficherCategorieFiltrer(@RequestParam("categories") int id,@RequestParam(name="recherche",required= false)String recherche ,Model model){
-			if(recherche !=null && !recherche.isEmpty()) {
-				model.addAttribute("listeEncheres", articleService.rechercherArticlesParCategorieEtNom(id, recherche));
-			}else {
-			model.addAttribute("listeEncheres", articleService.afficherCategorieFiltrer(id));
-			}
-			return "view-index";
-		}
 
-	
+	@PostMapping("/categories")
+	public String afficherCategorieFiltrer(@RequestParam("categories") int id,@RequestParam(name="recherche",required= false)String recherche ,Model model){
+		if(recherche !=null && !recherche.isEmpty()) {
+			model.addAttribute("listeEncheres", articleService.rechercherArticlesParCategorieEtNom(id, recherche));
+		}else {
+			model.addAttribute("listeEncheres", articleService.afficherCategorieFiltrer(id));
+		}
+		return "view-index";
+	}
+
+
 }

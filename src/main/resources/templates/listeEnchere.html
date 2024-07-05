@@ -14,10 +14,8 @@
 	
 	<form action="POST">
 		<label th:if="0>1">Filtres</label> 
-			<label for="categories">Catégories : </label>
-			<select id="categories" th:field="*{categorieEnSession}">
-            <option th:each="item : ${categorieEnSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
-        </select>
+			<input type="text" id="recherche" />
+			<select name="categories" id="categories"></select>
 			<button type="submit">Rechercher</button>
 	</form>
 	
@@ -36,6 +34,7 @@
 			<li><label for="inputVendeur">Vendeur :</label>
 				<input id="inputVendeur" type="text" th:value="${enchere.vendeur.pseudo}"  readonly/>
 			</li>
+			
 			</ul>
 			</fieldset>
 
