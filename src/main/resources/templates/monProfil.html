@@ -37,7 +37,15 @@
 			</li>
 			<li><label for="inputVille">Ville :</label>
 				<input id="inputVille" type="text" data-th-field="*{ville}" />
+			</li>	
+			<li><label for="inputPassword">Mot de passe :</label>
+				<input id="inputPassword" type="password"  th:field="*{motDePasse}"/>
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('motDePasse')}" ></div>
+			</li>
+			<li><label for="inputPasswordConfirm">Confirmation :</label>
+				<input id="inputPasswordConfirm" type="password"  />
 			</li>			
+					
 		</ul>
 		<!-- boutons à activer -->
 			<button type="submit">Modifier mes information</button>

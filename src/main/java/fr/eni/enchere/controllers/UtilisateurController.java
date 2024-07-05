@@ -125,7 +125,10 @@ public class UtilisateurController {
 		return "/view-index";
 	}
 	
-	
+	@GetMapping("/nouveauMDP")
+	public String modifierMDP() {
+		return "/nouveauMDP";
+	}
 
 }
 
