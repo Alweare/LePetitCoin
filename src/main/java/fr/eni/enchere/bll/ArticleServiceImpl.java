@@ -61,7 +61,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public void changerID(int ancienId, int nouveauId) {
 		articleDao.changerIdDansEnchere(ancienId, nouveauId);
-		
+	}
 	public List<ArticleVendu> recupererCategorie() {
 		
 		return articleDao.trouverCategories();

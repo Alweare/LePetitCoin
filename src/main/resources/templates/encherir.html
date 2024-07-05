@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h2>Détail</h2>
+	
+		<img src="" alt="" />
+		<form th:action="@{/enchere}" method="POST" th:object="${encherir}">
+		<ul>
+		
+			<li><label for="inputNom">Article :</label>
+				<input th:field="*{nomArticle}" id="inputNom" type="text"  />
+			</li>
+			<li><label for="inputDescription">Description :</label>
+				<textarea th:field="*{description}" id="inputDescription" cols="30" rows="10" ></textarea>
+			</li>
+			<li><label for="inputCategorie">Catégorie :</label>
+				<select id="inputCategorie"  multiple="multiple">
+						<option ></option>
+					</select>				
+			</li>
+			<li><label for="inputMAP">Mise à prix :</label>
+				<input type="number" id="inputMAP" name="inputMAP" min="1"  th:field="*{prixInitial}"/>
+			</li>
+			<li><label for="inputFin">Fin de l'enchère :</label>
+				<input id="inputFin" type="datetime-local" value=""  th:field="*{dateFinEncheres}"/>
+			</li>
+			</ul>
+			<fieldset>
+						<fieldset>
+			<legend>Retrait </legend>
+			<ul>
+			<li><input type="text"><label for="">Retrait</label></input>
+			<label for="inputRue"></label>
+				<input id="inputRue" type="text"  />
+				<label for="inputCP"></label>
+				<input id="inputCP" type="text"  />
+				<label for="inputVille"></label>
+				<input id="inputVille" type="text"  />
+			</li>
+			</ul>
+			</fieldset>
+</body>
+</html>
