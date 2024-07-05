@@ -19,5 +19,6 @@ public interface ArticleService {
   List<Categorie> recupererCategories();
 	List<Categorie>consulterCategorie();
 	List<ArticleVendu> afficherCategorieFiltrer(int idUtilisateur);
+	List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id, String recherche);
 
 }

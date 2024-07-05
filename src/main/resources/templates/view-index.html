@@ -14,16 +14,14 @@
 	
 	<form  data-th-action="@{/categories}" method="POST" >
 		<label >Filtres</label> 
-			<input type="text" id="recherche" />
-
+			<input type="text" id="recherche" name="recherche" />
 			<select  name="categories" id="categories" data-th-value="${categorie}">
 			<option th:each="item : ${categoriesSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
 			</select>
 			<button type="submit">Rechercher</button>
 	</form>
 	<form><!-- EN attendant peux étre pas utilise de lui mettre un form -->
-
-		<!-- boutons ne doivent apparaitre que pour les utilisateurs connectés  ==> th:block -->
+		<!-- boutons ne doivent apparaitre que pour les utilisateurs connectés -->
 		<input type="radio" id="choix1" name="choix" value="achats" />
 		<label for="choix1">Achats</label>		
 		<input type="checkbox" name="enchèresOuvertes" value="enchèresOuvertes" />
@@ -62,9 +60,6 @@
 			</li>
 			</ul>
 			</fieldset>
-			
-			
-			
 	</form>	
 		
 		
