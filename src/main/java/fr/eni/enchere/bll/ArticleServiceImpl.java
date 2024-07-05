@@ -3,22 +3,33 @@ package fr.eni.enchere.bll;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
+import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.dal.ArticleDAO;
+import fr.eni.enchere.dal.RetraitDAO;
+import fr.eni.enchere.dal.UtilisateurDAO;
 import fr.eni.enchere.exceptions.BusinessException;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
 	private ArticleDAO articleDao;
+	private UtilisateurDAO utilisateurDao;
+	private RetraitDAO retraitDao;
 	
 	
 	
 	
-	public ArticleServiceImpl(ArticleDAO enchereDao) {
-		this.articleDao = enchereDao;
+
+
+
+	public ArticleServiceImpl(ArticleDAO articleDao, UtilisateurDAO utilisateurDao, RetraitDAO retraitDao) {
+		this.articleDao = articleDao;
+		this.utilisateurDao = utilisateurDao;
+		this.retraitDao = retraitDao;
 	}
 
 	@Override
@@ -70,7 +81,9 @@ public class ArticleServiceImpl implements ArticleService {
 	public void changerID(int ancienId, int nouveauId) {
 		articleDao.changerIdDansEnchere(ancienId, nouveauId);
 	}
-	public List<ArticleVendu> recupererCategorie() {
+	
+	@Override
+	public List<Categorie> recupererCategories() {
 		
 		return articleDao.trouverCategories();
 
@@ -87,7 +100,6 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-
 	public Categorie consulterCategorieParId(int idCategorie) {
 		return this.articleDao.trouveCategorieParIdint(idCategorie);
 	}
@@ -96,5 +108,5 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id, String recherche) {
 		return articleDao.rechercherArticlesParCategorieEtNom(id, recherche);
 	}
-	
+
 }
