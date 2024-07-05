@@ -20,6 +20,7 @@ public interface ArticleService {
 	List<Categorie>consulterCategorie();
 	Categorie consulterCategorieParId(int idCategorie);
 	List<ArticleVendu> afficherCategorieFiltrer(int idUtilisateur);
-	
+	List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id, String recherche);
+
 
 }
