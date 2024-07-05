@@ -23,5 +23,6 @@ public interface ArticleDAO {
 	List<ArticleVendu> trouverCategories();
 	List<Categorie> chercheTout();
 	List<ArticleVendu> filtrerArticle(int idUtilisateur);
+	List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id,String recherche);
 
 }

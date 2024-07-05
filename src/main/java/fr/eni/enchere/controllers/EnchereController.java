@@ -81,9 +81,12 @@ public class EnchereController {
 	}
 	
 	@PostMapping("/categories")
-		public String afficherCategorieFiltrer(@RequestParam("categories") int id ,Model model){
+		public String afficherCategorieFiltrer(@RequestParam("categories") int id,@RequestParam(name="recherche",required= false)String recherche ,Model model){
+			if(recherche !=null && !recherche.isEmpty()) {
+				model.addAttribute("listeEncheres", articleService.rechercherArticlesParCategorieEtNom(id, recherche));
+			}else {
 			model.addAttribute("listeEncheres", articleService.afficherCategorieFiltrer(id));
-			System.out.println(id);
+			}
 			return "view-index";
 		}
 	

@@ -55,6 +55,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String TROUVE_CATEGORIES = "SELECT id, libelle FROM categories";
 	private static final String CHERCHE_TOUT_CATEGORIE="SELECT id,libelle FROM CATEGORIES";
 	private static final String TROUVE_ARTICLE_FILTRER=TROUVE_ACTIVES + " AND c.id = :idCategorie";
+	private static final String TROUVE_ARTICLE_FILTRER_AVEC_NOM=TROUVE_ARTICLE_FILTRER + " AND av.nomArticle = :nomArticle";
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
@@ -161,6 +162,13 @@ public class ArticleDAOImpl implements ArticleDAO {
 		mapSqlParameterSource.addValue("idCategorie", idUtilisateur);
 		return jdbc.query(TROUVE_ARTICLE_FILTRER, mapSqlParameterSource, new ArticleRowMapper());
 	}
+	@Override
+	public List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id, String recherche) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("idCategorie", id);
+		mapSqlParameterSource.addValue("nomArticle", recherche);
+		return jdbc.query(TROUVE_ARTICLE_FILTRER_AVEC_NOM, mapSqlParameterSource,new ArticleRowMapper());
+	}
 	
 	public class ArticleRowMapper implements RowMapper<ArticleVendu> {
 
@@ -196,5 +204,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			return article;
 		}
 	}
+
+
 }
 

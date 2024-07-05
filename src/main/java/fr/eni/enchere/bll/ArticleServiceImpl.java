@@ -77,5 +77,10 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<ArticleVendu> afficherCategorieFiltrer(int idUtilisateur) {
 		return articleDao.filtrerArticle(idUtilisateur);
 	}
+
+	@Override
+	public List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id, String recherche) {
+		return articleDao.rechercherArticlesParCategorieEtNom(id, recherche);
+	}
 	
 }

@@ -14,7 +14,7 @@
 	
 	<form  data-th-action="@{/categories}" method="POST" >
 		<label >Filtres</label> 
-			<input type="text" id="recherche" />
+			<input type="text" id="recherche" name="recherche" />
 			<select  name="categories" id="categories" data-th-value="${categorie}">
 			<option th:each="item : ${categoriesSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
 			</select>
