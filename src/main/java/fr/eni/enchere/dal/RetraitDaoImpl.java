@@ -7,9 +7,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import fr.eni.enchere.bo.Retrait;
-
+@Repository
 public class RetraitDaoImpl implements RetraitDAO{
 	private static final String TROUVE_PAR_ID_ARTICLE = "SELECT idArticle, rue, code_postal, ville FROM RETRAITS WHERE idArticle = :idArticle";
 	private static final String CREER_RETRAIT= "INSERT INTO RETRAITS (idArticle, rue, code_postal,ville) VALUES (:idArticle, :rue, :codePostal, :ville);";
@@ -23,10 +24,10 @@ public class RetraitDaoImpl implements RetraitDAO{
 	}
 
 	@Override
-	public void creer(Retrait retrait) {
+	public void creer(Retrait retrait, int idArticle) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		
-		map.addValue("idArticle", retrait.getIdArticle());
+		map.addValue("idArticle", idArticle);
 		map.addValue("rue", retrait.getRue());
 		map.addValue("codePostal", retrait.getCode_postal());
 		map.addValue("ville", retrait.getVille());

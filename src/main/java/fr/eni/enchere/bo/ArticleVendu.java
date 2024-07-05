@@ -22,6 +22,7 @@ public class ArticleVendu {
 	private Utilisateur vendeur;
 	private List<Enchere> encheres;
 	
+
 	
 
 	public Retrait getLieuRetrait() {
@@ -45,7 +46,6 @@ public class ArticleVendu {
 	public ArticleVendu(int id, String nomArticle, String description, LocalDateTime dateDebutEnchere,
 			LocalDateTime dateFinEncheres, int prixInitial, int prixVente, String etatVente, Retrait lieuRetrait,
 			Categorie categorieArticle, Utilisateur acheteur, Utilisateur vendeur) {
-		super();
 		this.id = id;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -126,8 +126,9 @@ public class ArticleVendu {
 		CategorieArticle = categorieArticle;
 	}
 
+
 	
-	
+
 	public int getId() {
 		return id;
 	}

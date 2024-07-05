@@ -9,14 +9,14 @@ import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 
 public interface ArticleService {
-	void CreerArticle(ArticleVendu article);
+	void CreerArticle(ArticleVendu article, String ville, String rue, String cp);
 	List<ArticleVendu> recupererEnchereEnCours();
 	List<ArticleVendu> recupererParParticipant(int idParticipant);
 	List<ArticleVendu> recupererEnchereGagnee(int idAcquereur);
 	ArticleVendu RecupererArticle(int idArticle);
 	Enchere trouverEnchereParID(int id);
 	void changerID(int ancienId, int nouveauId);
-	List<ArticleVendu> recupererCategorie();
+  List<Categorie> recupererCategories();
 	List<Categorie>consulterCategorie();
 	List<ArticleVendu> afficherCategorieFiltrer(int idUtilisateur);
 
