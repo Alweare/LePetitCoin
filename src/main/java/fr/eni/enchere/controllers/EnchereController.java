@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import fr.eni.enchere.bll.ArticleService;
 import fr.eni.enchere.bll.UtilisateurService;
@@ -61,6 +62,7 @@ public class EnchereController {
 
 	
 	@PostMapping("/creationVente")
+
 	public String creerVente(
 			@ModelAttribute("nouvelleEnchere") ArticleVendu article, 
 			Principal principal, 
@@ -68,6 +70,7 @@ public class EnchereController {
 			@ModelAttribute("rue") String rue,
 			@ModelAttribute("codePostal") String cp
 			) {
+
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
 		article.setCategorieArticle(new Categorie());
 		articleService.CreerArticle(article, ville, rue, cp);
@@ -83,7 +86,7 @@ public class EnchereController {
 	
 	@ModelAttribute("categorieEnSession")
 	public List<Categorie> chargerCategorie() {
-		return articleService.recupererCategorie();
+		return articleService.recupererCategories();
 	}
 	
 	

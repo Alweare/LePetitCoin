@@ -80,8 +80,9 @@ public class ArticleServiceImpl implements ArticleService {
 		articleDao.changerIdDansEnchere(ancienId, nouveauId);
 	}
 
-	public List<Categorie> recupererCategorie() {
+	public List<Categorie> recupererCategories() {
+		
 		return articleDao.trouverCategories();
-	}
-	
+
+	}	
 }
