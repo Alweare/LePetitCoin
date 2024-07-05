@@ -48,12 +48,13 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
 			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
 	private static final String TROUVE_ENCHERE_PAR_ID="SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES where idUtilisateur = :id";
-	private static final String CHANGER_ID_ENCHERES="ALTER TABLE ENCHERES DROP enchere_pk;\r\n"
-			+ "UPDATE ENCHERES SET idUtilisateur=:nouveauId WHERE idUtilisateur=:ancienId;\r\n"
+	private static final String CHANGER_ID_ENCHERES="ALTER TABLE ENCHERES DROP enchere_pk;"
+			+ "UPDATE ENCHERES SET idUtilisateur=:nouveauId WHERE idUtilisateur=:ancienId;"
 			+ "ALTER TABLE ENCHERES ADD CONSTRAINT enchere_pk PRIMARY KEY (idUtilisateur,idArticle)"
 			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
 	private static final String TROUVE_CATEGORIES = "SELECT id, libelle FROM categories";
 	private static final String CHERCHE_TOUT_CATEGORIE="SELECT id,libelle FROM CATEGORIES";
+	private static final String TROUVE_CATEGORIE_PAR_ID= TROUVE_CATEGORIES + "WHERE id = :id";
 	private static final String TROUVE_ARTICLE_FILTRER=TROUVE_ACTIVES + " AND c.id = :idCategorie";
 	
 	private NamedParameterJdbcTemplate jdbc;
@@ -149,9 +150,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 		jdbc.update(CHANGER_ID_ENCHERES, mapSqlParameterSource);
 	}	
 
-	public List<ArticleVendu> trouverCategories() {
+	public List<Categorie> trouverCategories() {
 		
-		return this.jdbc.query(TROUVE_CATEGORIES, new BeanPropertyRowMapper<ArticleVendu>(ArticleVendu.class));
+		return this.jdbc.query(TROUVE_CATEGORIES, new BeanPropertyRowMapper<Categorie>(Categorie.class));
 
 	}
 
@@ -160,6 +161,14 @@ public class ArticleDAOImpl implements ArticleDAO {
 		return jdbc.query(CHERCHE_TOUT_CATEGORIE, new BeanPropertyRowMapper<>(Categorie.class));
 	}
 
+	
+	@Override
+	public Categorie trouveCategorieParIdint(int id) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		
+		map.addValue("id", id);
+		return this.jdbc.queryForObject(TROUVE_CATEGORIE_PAR_ID, map, new BeanPropertyRowMapper<Categorie>(Categorie.class));
+	}
 	@Override
 	public List<ArticleVendu> filtrerArticle(int idUtilisateur) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
@@ -201,5 +210,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			return article;
 		}
 	}
+
+	
 }
 

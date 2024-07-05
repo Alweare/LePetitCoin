@@ -30,12 +30,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void CreerArticle(ArticleVendu article, String ville, String rue, String cp) {
-		//********************zone de test à supprimer************************************
-		//********************************************************************************
-		article.setCategorieArticle(new Categorie());
-		article.getCategorieArticle().setId(1);
-		//*******************************************************************************
-		//********************************************************************************
+		//System.err.println(article);
 		Retrait retrait = new Retrait(rue, cp, ville);
 		article.setLieuretrait(retrait);
 		if (article.getLieuretrait().getRue().isEmpty()) {
@@ -95,6 +90,11 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public List<ArticleVendu> afficherCategorieFiltrer(int idUtilisateur) {
 		return articleDao.filtrerArticle(idUtilisateur);
+	}
+
+	@Override
+	public Categorie consulterCategorieParId(int idCategorie) {
+		return this.articleDao.trouveCategorieParIdint(idCategorie);
 	}
 
 }
