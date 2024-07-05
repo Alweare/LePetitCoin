@@ -1,6 +1,7 @@
 package fr.eni.enchere.controllers;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import fr.eni.enchere.bll.ArticleService;
 import fr.eni.enchere.bll.UtilisateurService;
 import fr.eni.enchere.bo.ArticleVendu;
@@ -17,6 +19,7 @@ import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 
 @Controller
+@SessionAttributes({"categoriesSession"})
 public class EnchereController {
 	
 	private ArticleService articleService;
@@ -44,7 +47,7 @@ public class EnchereController {
 	 public String acceuil(Model model, Principal principal) {
 
 		 model.addAttribute("listeEncheres", articleService.recupererEnchereEnCours());
-		
+
 		 return "view-index";
 	 }
 
@@ -52,8 +55,10 @@ public class EnchereController {
 
 	@GetMapping("/creationVente")
 	public String creationVente(Model model, Principal principal) {
+		
 		ArticleVendu articleVendu = new ArticleVendu();
 		model.addAttribute("nouvelleEnchere", articleVendu);
+//		model.addAttribute("categories", articleService.recupererCategorie());
 		System.out.println(principal.getName());
 		return "creationVente";
 	}
@@ -62,10 +67,18 @@ public class EnchereController {
 
 	
 	@PostMapping("/creationVente")
-	public String creerVente(@ModelAttribute("nouvelleEnchere") ArticleVendu article, Principal principal) {
+
+	public String creerVente(
+			@ModelAttribute("nouvelleEnchere") ArticleVendu article, 
+			Principal principal, 
+			@ModelAttribute("ville") String ville,
+			@ModelAttribute("rue") String rue,
+			@ModelAttribute("codePostal") String cp
+			) {
+
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
 		article.setCategorieArticle(new Categorie());
-		articleService.CreerArticle(article);
+		articleService.CreerArticle(article, ville, rue, cp);
 
 		return "listeEnchere";
 	}
@@ -89,15 +102,27 @@ public class EnchereController {
 		return "creationVente";
 	}
 	
+
 //	@ModelAttribute("enchere")
 	
 	
 	
+
+	@ModelAttribute("categoriesSession")
+	public List<Categorie> chargerCategorieSession(){
+		return articleService.consulterCategorie();
+	}
+
 	
-	
-	
-	
-	
-	
+	@PostMapping("/categories")
+		public String afficherCategorieFiltrer(@RequestParam("categories") int id,@RequestParam(name="recherche",required= false)String recherche ,Model model){
+			if(recherche !=null && !recherche.isEmpty()) {
+				model.addAttribute("listeEncheres", articleService.rechercherArticlesParCategorieEtNom(id, recherche));
+			}else {
+			model.addAttribute("listeEncheres", articleService.afficherCategorieFiltrer(id));
+			}
+			return "view-index";
+		}
+
 	
 }

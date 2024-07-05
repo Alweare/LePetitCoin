@@ -14,8 +14,10 @@
 	
 	<form action="POST">
 		<label th:if="0>1">Filtres</label> 
-			<input type="text" id="recherche" />
-			<select name="categories" id="categories"></select>
+			<label for="categories">Catégories : </label>
+			<select id="categories" th:field="*{categorieEnSession}">
+            <option th:each="item : ${categorieEnSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
+        </select>
 			<button type="submit">Rechercher</button>
 	</form>
 	

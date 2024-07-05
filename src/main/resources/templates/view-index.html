@@ -12,10 +12,15 @@
 
 	<h2>Liste des enchères</h2>
 
-	<form action="POST">
-		<label th:if="0>1">Filtres</label> <input type="text" id="recherche" />
-		<select name="categories" id="categories"></select>
-		<button type="submit">Rechercher</button>
+	<form  data-th-action="@{/categories}" method="POST" >
+		<label >Filtres</label> 
+			<input type="text" id="recherche" name="recherche" />
+			<select  name="categories" id="categories" data-th-value="${categorie}">
+			<option th:each="item : ${categoriesSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
+			</select>
+			<button type="submit">Rechercher</button>
+	</form>
+	<form><!-- EN attendant peux étre pas utilise de lui mettre un form -->
 
 		<!-- boutons ne doivent apparaitre que pour les utilisateurs connectés -->
 		<input type="radio" id="choix1" name="choix" value="achats" /> <label

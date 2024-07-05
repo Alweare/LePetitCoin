@@ -46,7 +46,7 @@ UPDATE ARTICLES_VENDUS SET
 
 --SELECT id, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie FROM ARTICLES_VENDUS;
 
---SELECT *fROM ARTICLES_VENDUS
+--SELECT * FROM ARTICLES_VENDUS
 
 		--select in progress
 	SELECT 

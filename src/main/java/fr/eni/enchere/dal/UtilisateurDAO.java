@@ -2,6 +2,7 @@ package fr.eni.enchere.dal;
 
 import java.util.List;
 
+import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 
 public interface UtilisateurDAO {
@@ -20,4 +21,6 @@ public interface UtilisateurDAO {
 	void miseAjourUtilisateur(Utilisateur utilisateur);
 	
 	void supprimerUnUtilisateur(int id);
+	
+	Retrait trouveAdressParId(int idUtilistaueur);
 }
