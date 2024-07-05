@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
+import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 
@@ -43,16 +44,17 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "		INNER JOIN UTILISATEURS as UV ON (UV.id = AV.idUtilisateur)"
 			+ "		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) "
 			+ "		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)";
-	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateFinEncheres > CURRENT_TIMESTAMP;";
+	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateFinEncheres > CURRENT_TIMESTAMP";
 	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
 			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :inCategoie);";
 	private static final String TROUVE_ENCHERE_PAR_ID="SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES where idUtilisateur = :id";
 	private static final String CHANGER_ID_ENCHERES="ALTER TABLE ENCHERES DROP enchere_pk;\r\n"
 			+ "UPDATE ENCHERES SET idUtilisateur=:nouveauId WHERE idUtilisateur=:ancienId;\r\n"
-			+ "ALTER TABLE ENCHERES ADD CONSTRAINT enchere_pk PRIMARY KEY (idUtilisateur,idArticle);";
+			+ "ALTER TABLE ENCHERES ADD CONSTRAINT enchere_pk PRIMARY KEY (idUtilisateur,idArticle)"
 			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
 	private static final String TROUVE_CATEGORIES = "SELECT id, libelle FROM categories";
-
+	private static final String CHERCHE_TOUT_CATEGORIE="SELECT id,libelle FROM CATEGORIES";
+	private static final String TROUVE_ARTICLE_FILTRER=TROUVE_ACTIVES + " AND c.id = :idCategorie";
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
@@ -125,6 +127,41 @@ public class ArticleDAOImpl implements ArticleDAO {
 		
 		this.jdbc.update(CREER, map, keyHolder);
 	}
+
+	@Override
+
+	public Enchere trouverEnchereParID(int id) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id);
+		return jdbc.queryForObject(TROUVE_ENCHERE_PAR_ID, mapSqlParameterSource, new BeanPropertyRowMapper<>(Enchere.class));
+	}
+
+	@Override
+	public void changerIdDansEnchere(int ancienId, int nouveauId) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("ancienId",ancienId);
+		mapSqlParameterSource.addValue("nouveauId", nouveauId);
+		jdbc.update(CHANGER_ID_ENCHERES, mapSqlParameterSource);
+	}	
+
+	public List<ArticleVendu> trouverCategories() {
+		
+		return this.jdbc.query(TROUVE_CATEGORIES, new BeanPropertyRowMapper<ArticleVendu>(ArticleVendu.class));
+
+	}
+
+	@Override
+	public List<Categorie> chercheTout() {
+		return jdbc.query(CHERCHE_TOUT_CATEGORIE, new BeanPropertyRowMapper<>(Categorie.class));
+	}
+
+	@Override
+	public List<ArticleVendu> filtrerArticle(int idUtilisateur) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("idCategorie", idUtilisateur);
+		return jdbc.query(TROUVE_ARTICLE_FILTRER, mapSqlParameterSource, new ArticleRowMapper());
+	}
+	
 	public class ArticleRowMapper implements RowMapper<ArticleVendu> {
 
 		@Override
@@ -158,27 +195,6 @@ public class ArticleDAOImpl implements ArticleDAO {
 			
 			return article;
 		}
-	}
-	@Override
-
-	public Enchere trouverEnchereParID(int id) {
-		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-		mapSqlParameterSource.addValue("id", id);
-		return jdbc.queryForObject(TROUVE_ENCHERE_PAR_ID, mapSqlParameterSource, new BeanPropertyRowMapper<>(Enchere.class));
-	}
-
-	@Override
-	public void changerIdDansEnchere(int ancienId, int nouveauId) {
-		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-		mapSqlParameterSource.addValue("ancienId",ancienId);
-		mapSqlParameterSource.addValue("nouveauId", nouveauId);
-		jdbc.update(CHANGER_ID_ENCHERES, mapSqlParameterSource);
-		
-
-	public List<ArticleVendu> trouverCategories() {
-		
-		return this.jdbc.query(TROUVE_CATEGORIES, new BeanPropertyRowMapper<ArticleVendu>(ArticleVendu.class));
-
 	}
 }
 
