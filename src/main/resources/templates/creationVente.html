@@ -19,7 +19,7 @@
 				<label for="inputDescription">Description :</label>
 				<textarea th:field="*{description}" id="inputDescription" cols="30" rows="10" ></textarea>
 				<label for="inputCategorie">Catégorie :</label>
-				<select id="categories" th:field="*{categorieEnSession}">
+				<select id="categories" th:field="*{categorieArticle}">
             		<option th:each="item : ${categorieEnSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
         		</select>				
 				<label for="inputFile">Photo de l'article :</label>
