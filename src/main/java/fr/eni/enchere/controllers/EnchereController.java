@@ -1,6 +1,7 @@
 package fr.eni.enchere.controllers;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +41,7 @@ public class EnchereController {
 	 @GetMapping("/")
 	 public String acceuil(Model model) {
 		 model.addAttribute("listeEncheres", articleService.recupererEnchereEnCours());
+		 
 		 return "view-index";
 	 }
 
@@ -50,6 +52,7 @@ public class EnchereController {
 		
 		ArticleVendu articleVendu = new ArticleVendu();
 		model.addAttribute("nouvelleEnchere", articleVendu);
+//		model.addAttribute("categories", articleService.recupererCategorie());
 		System.out.println(principal.getName());
 		return "creationVente";
 	}
@@ -78,7 +81,10 @@ public class EnchereController {
 		return "creationVente";
 	}
 	
-	
+	@ModelAttribute("categorieEnSession")
+	public List<Categorie> chargerCategorie() {
+		return articleService.recupererCategorie();
+	}
 	
 	
 	

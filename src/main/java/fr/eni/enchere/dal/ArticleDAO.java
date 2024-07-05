@@ -3,6 +3,7 @@ package fr.eni.enchere.dal;
 import java.util.List;
 
 import fr.eni.enchere.bo.ArticleVendu;
+import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 
@@ -19,6 +20,6 @@ public interface ArticleDAO {
 	int creer(ArticleVendu enchere);
 	Enchere trouverEnchereParID(int id);
 	void changerIdDansEnchere(int ancienId, int nouveauId);
-	List<ArticleVendu> trouverCategories();
+	List<Categorie> trouverCategories();
 
 }

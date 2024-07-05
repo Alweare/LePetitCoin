@@ -79,10 +79,9 @@ public class ArticleServiceImpl implements ArticleService {
 	public void changerID(int ancienId, int nouveauId) {
 		articleDao.changerIdDansEnchere(ancienId, nouveauId);
 	}
-	public List<ArticleVendu> recupererCategorie() {
-		
-		return articleDao.trouverCategories();
 
+	public List<Categorie> recupererCategorie() {
+		return articleDao.trouverCategories();
 	}
 	
 }

@@ -50,7 +50,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String TROUVE_ENCHERE_PAR_ID="SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES where idUtilisateur = :id";
 	private static final String CHANGER_ID_ENCHERES="ALTER TABLE ENCHERES DROP enchere_pk;\r\n"
 			+ "UPDATE ENCHERES SET idUtilisateur=:nouveauId WHERE idUtilisateur=:ancienId;\r\n"
-			+ "ALTER TABLE ENCHERES ADD CONSTRAINT enchere_pk PRIMARY KEY (idUtilisateur,idArticle);"
+
+			+ "ALTER TABLE ENCHERES ADD CONSTRAINT enchere_pk PRIMARY KEY (idUtilisateur,idArticle)"
+
 			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
 	private static final String TROUVE_CATEGORIES = "SELECT id, libelle FROM categories";
 
@@ -179,11 +181,13 @@ public class ArticleDAOImpl implements ArticleDAO {
 		mapSqlParameterSource.addValue("ancienId",ancienId);
 		mapSqlParameterSource.addValue("nouveauId", nouveauId);
 		jdbc.update(CHANGER_ID_ENCHERES, mapSqlParameterSource);
-	}	
 
-	public List<ArticleVendu> trouverCategories() {
+	}
+
+
+	public List<Categorie> trouverCategories() {
 		
-		return this.jdbc.query(TROUVE_CATEGORIES, new BeanPropertyRowMapper<ArticleVendu>(ArticleVendu.class));
+		return this.jdbc.query(TROUVE_CATEGORIES, new BeanPropertyRowMapper<Categorie>(Categorie.class));
 
 	}
 }

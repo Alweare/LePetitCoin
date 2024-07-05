@@ -21,7 +21,8 @@ public class ArticleVendu {
 	private Utilisateur acheteur;
 	private Utilisateur vendeur;
 	private List<Enchere> encheres;
-	
+	private Categorie categorieEnSession;
+
 	
 
 	public Retrait getLieuRetrait() {
@@ -126,8 +127,15 @@ public class ArticleVendu {
 		CategorieArticle = categorieArticle;
 	}
 
+
+	public Categorie getCategorieEnSession() {
+	    return categorieEnSession;
+	}
 	
-	
+	public void setCategorieEnSession(Categorie categorieEnSession) {
+		this.categorieEnSession = categorieEnSession;
+	}
+
 	public int getId() {
 		return id;
 	}
