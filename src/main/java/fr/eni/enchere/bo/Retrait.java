@@ -42,7 +42,7 @@ public class Retrait {
 
 	@Override
 	public String toString() {
-		return String.format("Retrait [rue=%s, code_postal=%s, ville=%s]", rue, code_postal, ville);
+		return String.format("%s%n%s%n%s", rue, code_postal, ville);
 	}
 	
 	

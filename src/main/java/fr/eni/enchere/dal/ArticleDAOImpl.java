@@ -53,6 +53,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String TROUVE_CATEGORIE_PAR_ID= TROUVE_CATEGORIES + " WHERE id = :id";
 	private static final String TROUVE_ARTICLE_FILTRER=TROUVE_ACTIVES + " AND c.id = :idCategorie";
 	private static final String TROUVE_ARTICLE_FILTRER_AVEC_NOM=TROUVE_ARTICLE_FILTRER + " AND av.nomArticle = :nomArticle";
+	private static final String TROUVE_ENCHERE_PAR_ID_ARTICLE=TROUVE_TOUT + " WHERE AV.id = :id";
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
@@ -87,8 +88,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 	@Override
 	public ArticleVendu lire(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id); 
+		return this.jdbc.queryForObject(TROUVE_ENCHERE_PAR_ID_ARTICLE, mapSqlParameterSource, new ArticleRowMapper());
 	}
 
 	@Override
@@ -216,6 +218,5 @@ public class ArticleDAOImpl implements ArticleDAO {
 			return article;
 		}
 	}
-
 }
-
+	

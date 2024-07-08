@@ -43,32 +43,34 @@
 	</form>
 	<!-- insérer les annonces -->
 
+	
 	<fieldset th:each="enchere: ${listeEncheres}">
-		<img src="" alt="" />
-		<ul>
-			<li><label for="inputArticle"></label> <input id="inputArticle"
-				type="text" th:value="${enchere.nomArticle}" readonly /></li>
-			<li><label for="inputPrix">Prix :</label> <input id="inputPrix"
-				type="text" th:value="${enchere.prixVente}" readonly /></li>
-			<li><label for="inputFin">Fin de l'enchère :</label> <input
-				id="inputFin" type="text" th:value="${enchere.dateFinEncheres}"
-				readonly /></li>
-			<li><label for="inputVendeur">Vendeur :</label> <input
-				id="inputVendeur" type="text" th:value="${enchere.vendeur.pseudo}"
-				readonly /></li>
-				<li>
-				<form th:action="@{/encherir}" method="get">
-					<input type="hidden" name="id" value="${enchere.id}" />
-					<button type="submit">Enchérir</button>
-				</form>
-
-
-
-			</li>
 		
-		</ul>
+	    <div class="enchere-details">
+	    <a th:href="@{/encherir(idArticle=${enchere.id})}" class="link-wrapper">
+	
+	        <img src="" alt="" />
+	        <ul>
+	            <li><label for="inputArticle"></label> <input id="inputArticle"
+	                type="text" th:value="${enchere.nomArticle}" readonly /></li>
+	            <li><label for="inputPrix">Prix :</label> <input id="inputPrix"
+	                type="text" th:value="${enchere.prixVente}" readonly /></li>
+	            <li><label for="inputFin">Fin de l'enchère :</label> <input
+	                id="inputFin" type="text" th:value="${enchere.dateFinEncheres}"
+	                readonly /></li>
+	            <li><label for="inputVendeur">Vendeur :</label> <input
+	                id="inputVendeur" type="text" th:value="${enchere.vendeur.pseudo}"
+	                readonly /></li>
+	            <li th:if="${param.encherir}">
+	                <form th:action="@{/encherir}" method="get">
+	                
+	                    <input type="hidden" name="id" th:value="${enchere.id}" />
+	                    <button type="submit">Enchérir</button>
+	                </form>
+	            </li>
+	        </ul>
+	    </div></a>
 	</fieldset>
-
 
 
 

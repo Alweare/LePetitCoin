@@ -26,5 +26,4 @@ public interface ArticleDAO {
 	Categorie trouveCategorieParIdint(int id);
 	List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id,String recherche);
 
-
 }

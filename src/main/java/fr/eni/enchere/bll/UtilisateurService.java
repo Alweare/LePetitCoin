@@ -2,7 +2,6 @@ package fr.eni.enchere.bll;
 
 import java.util.List;
 
-import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.exceptions.BusinessException;
 

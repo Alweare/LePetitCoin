@@ -24,6 +24,13 @@ public class ConnexionController {
 	
 	
 	
+	public ConnexionController(UtilisateurService utilisateurService, ContexteService contexteService) {
+		super();
+		this.utilisateurService = utilisateurService;
+		this.contexteService = contexteService;
+	}
+
+
 	@GetMapping("/index")
 	public String acceuil() {
 		
