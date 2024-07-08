@@ -13,6 +13,11 @@ public interface ArticleDAO {
 	List<ArticleVendu> touveToutEnCours();
 	List<ArticleVendu>  trouveEnCoursParCategorie(int idCat);
 	List<ArticleVendu>  trouveEnchereGagneeParUtilisateur(int id);
+	List<ArticleVendu> trouveMesEncheresEnCours(int id);
+	List<ArticleVendu> trouveMesEncheresRemporter(int id);
+	List<ArticleVendu> trouveMesVentesEnCour(int id);
+	List<ArticleVendu> trouveMesVentesNonDebutées(int id);
+	List<ArticleVendu> trouveMesVentesTerminer(int id);
 	ArticleVendu lire(int id);
 	Utilisateur trouverAcquereurParProduit(int id);
 	List<ArticleVendu>  trouverParVendeur(int id);

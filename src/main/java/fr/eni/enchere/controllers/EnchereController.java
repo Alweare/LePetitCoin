@@ -111,11 +111,68 @@ public class EnchereController {
 
 
 	@PostMapping("/categories")
-	public String afficherCategorieFiltrer(@RequestParam("categories") int id,@RequestParam(name="recherche",required= false)String recherche ,Model model){
-		if(recherche !=null && !recherche.isEmpty()) {
-			model.addAttribute("listeEncheres", articleService.rechercherArticlesParCategorieEtNom(id, recherche));
+	public String afficherCategorieFiltrer(@RequestParam("categories") int id,
+										@RequestParam(name="recherche",required= false)String recherche,
+										@RequestParam(name="choixAchat", required = false) String choixAchat,
+										@RequestParam(name="encheresOuvertes", required =false)String encheresOuvertes,
+										@RequestParam(name="encheresEnCours", required=false)String encheresEnCours,
+										@RequestParam(name="encheresRemportees",required=false)String encheresRemportees,
+										@RequestParam(name="choixVente",required=false)String choixVente,
+										@RequestParam(name="ventesEnCours", required=false)String ventesEnCours,
+										@RequestParam(name="ventesNonDebutees",required=false)String ventesNonDebutees,
+										@RequestParam(name="ventesTerminees", required=false)String ventesTerminees,
+										Principal principal,
+										Model model){
+		
+		String pseudo = principal.getName();
+		Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(pseudo);
+		int idUtilisateur = utilisateur.getId();
+		
+		if(id != 0) {
+			if(recherche !=null && !recherche.isEmpty()) {
+				model.addAttribute("listeEncheres", articleService.rechercherArticlesParCategorieEtNom(id, recherche));
+			}else {
+				model.addAttribute("listeEncheres", articleService.afficherCategorieFiltrer(id));
+				if(encheresOuvertes !=null) {
+					model.addAttribute("listeEncheres", articleService.recupererEnchereEnCours());
+				}
+				if(encheresEnCours !=null) {
+					model.addAttribute("listeEncheres", articleService.recupereMesEncheresEnCours(idUtilisateur));
+				}
+				if(encheresRemportees != null) {
+					model.addAttribute("listeEncheres", articleService.recupereMesEncheresRemporter(idUtilisateur));
+				}
+				if(ventesEnCours !=null) {
+					model.addAttribute("listeEncheres", articleService.recupereMesVentesEnCours(idUtilisateur));
+				}
+				if(ventesNonDebutees != null) {
+					model.addAttribute("listeEncheres", articleService.recupereMesVentesNonDebuter(idUtilisateur));
+				}
+				if(ventesTerminees != null) {
+					model.addAttribute("listeEncheres", articleService.recupereMesVentesTerminee(idUtilisateur));
+				}
+				
+			}
+
 		}else {
-			model.addAttribute("listeEncheres", articleService.afficherCategorieFiltrer(id));
+			if(encheresOuvertes !=null) {
+				model.addAttribute("listeEncheres", articleService.recupererEnchereEnCours());
+			}
+			if(encheresEnCours !=null) {
+				model.addAttribute("listeEncheres", articleService.recupereMesEncheresEnCours(idUtilisateur));
+			}
+			if(encheresRemportees != null) {
+				model.addAttribute("listeEncheres", articleService.recupereMesEncheresRemporter(idUtilisateur));
+			}
+			if(ventesEnCours !=null) {
+				model.addAttribute("listeEncheres", articleService.recupereMesVentesEnCours(idUtilisateur));
+			}
+			if(ventesNonDebutees != null) {
+				model.addAttribute("listeEncheres", articleService.recupereMesVentesNonDebuter(idUtilisateur));
+			}
+			if(ventesTerminees != null) {
+				model.addAttribute("listeEncheres", articleService.recupereMesVentesTerminee(idUtilisateur));
+			}
 		}
 		return "view-index";
 	}
