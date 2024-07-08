@@ -15,7 +15,6 @@ import fr.eni.enchere.bll.UtilisateurService;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
-import fr.eni.enchere.bo.Utilisateur;
 
 @Controller
 @SessionAttributes({"categoriesSession"})
@@ -80,7 +79,9 @@ public class EnchereController {
 
 	@GetMapping("/encherir")
 	public String afficherEncherir(@RequestParam("idArticle") int idArticle ,Model model) {
-
+		ArticleVendu a = this.articleService.RecupererArticleParId(idArticle);
+		model.addAttribute("a", a);
+		
 		return "encherir";
 	}
 	@PostMapping("/enchere")
@@ -89,6 +90,11 @@ public class EnchereController {
 		return "encherir";
 	}
 
+	@ModelAttribute("encherir")
+		public String enchere() {
+
+		    return "encherir";
+		}
 
 
 	@ModelAttribute("creationVente")
@@ -98,9 +104,7 @@ public class EnchereController {
 	}
 
 
-	//	@ModelAttribute("enchere")
-
-
+	
 
 
 	@ModelAttribute("categoriesSession")

@@ -49,3 +49,7 @@ footer {
 	background-color:  #E5E7E9;
 	position: relative;
 }
+ fieldset {
+            cursor: pointer; /* Change le curseur pour indiquer que le fieldset est cliquable */
+        }
+        
