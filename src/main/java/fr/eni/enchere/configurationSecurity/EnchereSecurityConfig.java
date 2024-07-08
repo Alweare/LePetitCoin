@@ -74,7 +74,6 @@ public class EnchereSecurityConfig {
 				.clearAuthentication(true)
 				.deleteCookies("JSESSIONID")
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
 				.logoutSuccessUrl("/").permitAll());
 		
 		return http.build();

@@ -103,11 +103,7 @@ public class UtilisateurController {
 		}
 		
 	}
-	///VOIR DEMAIN POUR LA REDIRECTION APRES DECONNEXION 
-	@GetMapping("/logout")
-	public String deconnexion() {
-		return "/view-index";
-	}
+
 	
 	@PostMapping("/supprimerCompte")
 	public String supprimerCompte(Principal principal) {

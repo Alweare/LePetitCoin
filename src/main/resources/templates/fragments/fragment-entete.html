@@ -1,16 +1,21 @@
 <header th:fragment="fragment-entete">
 <h1>
-	<a href="/">
-	<img src="/img/logo.png" alt="Logo du site" />
-	</a></h1>
+    <span sec:authorize="isAuthenticated()">
+        <a href="/">
+            <img src="/img/logo.png" alt="Logo du site" />
+        </a>
+    </span>
+    <span sec:authorize="!isAuthenticated()">
+        <img src="/img/logo.png" alt="Logo du site" />
+    </span>
+</h1>
 		<nav>
 			<ul>
-				<li><a href="/connexion">Se connecter</a></li>
-				<li><a href="/creationProfil">S'inscrire</a></li>	
-				<li><a href="/monProfil">Mon Profil</a></li>				
-				<li><a href="/creationVente">Vendre un article</a></li>				
-							
-				<li><a href="/logout">Se déconnecter</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/connexion">Se connecter</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/creationProfil">S'inscrire</a></li>	
+				<li sec:authorize="isAuthenticated()"><a href="/monProfil">Mon Profil</a></li>				
+				<li sec:authorize="isAuthenticated()"><a href="/creationVente">Vendre un article</a></li>					
+				<li sec:authorize="isAuthenticated()"><a href="/logout">Se déconnecter</a></li>
 			</ul>
 		</nav>
 			

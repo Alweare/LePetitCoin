@@ -1,6 +1,7 @@
 	package fr.eni.enchere.controllers;
 
 
+import java.lang.ProcessBuilder.Redirect;
 import java.security.Principal;
 
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,7 @@ public class ConnexionController {
 		    public String connexion() {
 		        return "connexion";
 		    }
-
+		 
 	
 	 
 	 
@@ -85,7 +86,7 @@ public class ConnexionController {
 		return "redirect:/";
 
 	}
-	 
+
 	 
 
 	 
