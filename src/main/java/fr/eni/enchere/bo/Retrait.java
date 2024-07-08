@@ -30,6 +30,9 @@ public class Retrait {
 
 	public void setCode_postal(String code_postal) {
 		this.code_postal = code_postal;
+		
+		//coucou
+		
 	}
 
 	public String getVille() {
