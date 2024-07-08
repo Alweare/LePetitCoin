@@ -109,4 +109,31 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleDao.rechercherArticlesParCategorieEtNom(id, recherche);
 	}
 
+@Override
+public List<ArticleVendu> recupereMesEncheresEnCours(int id) {
+	return articleDao.trouveMesEncheresEnCours(id);
+}
+
+@Override
+public List<ArticleVendu> recupereMesEncheresRemporter(int id) {
+	return articleDao.trouveMesEncheresRemporter(id);
+}
+
+@Override
+public List<ArticleVendu> recupereMesVentesEnCours(int id) {
+	return articleDao.trouveMesVentesEnCour(id);
+}
+
+@Override
+public List<ArticleVendu> recupereMesVentesNonDebuter(int id) {
+	return articleDao.trouveMesVentesNonDebutées(id);
+}
+
+@Override
+public List<ArticleVendu> recupereMesVentesTerminee(int id) {
+	return articleDao.trouveMesVentesTerminer(id);
+}
+
+
+
 }
