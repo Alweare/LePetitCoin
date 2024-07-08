@@ -16,35 +16,58 @@
 		<label >Filtres</label> 
 			<input type="text" id="recherche" name="recherche" />
 			<select  name="categories" id="categories" data-th-value="${categorie}">
+			<option  value="0">Toutes</option>
 			<option th:each="item : ${categoriesSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
 			</select>
 			<button type="submit">Rechercher</button>
-	</form>
-	<form><!-- EN attendant peux étre pas utilise de lui mettre un form -->
+
+	
 
 		<!-- boutons ne doivent apparaitre que pour les utilisateurs connectés -->
-		<input type="radio" id="choix1" name="choix" value="achats" /> <label
-			for="choix1">Achats</label> <input type="checkbox"
-			name="enchèresOuvertes" value="enchèresOuvertes" /> <label
-			for="enchèresOuvertes">enchères ouvertes</label> <input
-			type="checkbox" value="enchèresEnCours" /> <label
-			for="enchèresEnCours">mes enchères en cours</label> <input
-			type="checkbox" value="enchèresRemportees" /> <label
-			for="enchèresRemportees">mes enchères remportées</label> <input
-			type="radio" id="choix2" name="choix" value="mesVentes" /> <label
-			for="choix2">Mes ventes</label> <input type="checkbox"
-			name="ventesEnCours" value="mes ventes en cours" /> <label
-			for="ventesEnCours">mes ventes en cours</label> <input
-			type="checkbox" name="ventesNonDebutees" value="ventes non débutées" />
-		<label for="ventesNonDebutees">mes ventes non débutées</label> <input
-			type="checkbox" name="ventesTerminees" value="ventes terminées" /> <label
-			for="ventesTerminees">mes enchères terminées</label>
-
+		<input type="radio" id="choix1" name="choixAchat" value="achats" /> 
+			<label for="choix1">Achats</label> 
+		<input type="checkbox" name="encheresOuvertes" value="enchèresOuvertes" /> 
+			<label for="enchèresOuvertes">enchères ouvertes</label> 
+		<input type="checkbox" name ="encheresEnCours" value="enchèresEnCours" /> 
+			<label for="enchèresEnCours">mes enchères en cours</label> 
+		<input type="checkbox" name="encheresRemportees" value="enchèresRemportees" /> 
+			<label for="enchèresRemportees">mes enchères remportées</label> 
+		<input type="radio" id="choix2" name="choixVente" value="mesVentes" /> 
+			<label for="choix2">Mes ventes</label> 
+		<input type="checkbox" name="ventesEnCours" value="mes ventes en cours" /> 
+			<label for="ventesEnCours">mes ventes en cours</label> 
+		<input type="checkbox" name="ventesNonDebutees" value="ventes non débutées" />
+			<label for="ventesNonDebutees">mes ventes non débutées</label> 
+		<input type="checkbox" name="ventesTerminees" value="ventes terminées" /> 
+			<label for="ventesTerminees">mes ventes terminées</label>
 	</form>
+
 	<!-- insérer les annonces -->
 
 	
 	<fieldset th:each="enchere: ${listeEncheres}">
+		<img src="" alt="" />
+		<ul>
+			<li><label for="inputArticle"></label> <input id="inputArticle"
+				type="text" th:value="${enchere.nomArticle}" readonly /></li>
+			<li><label for="inputPrix">Prix :</label> <input id="inputPrix"
+				type="text" th:value="${enchere.prixVente}" readonly /></li>
+			<li><label for="inputFin">Fin de l'enchère :</label> <input
+				id="inputFin" type="text" th:value="${enchere.dateFinEncheres.toLocalDate()}"
+				readonly /> à <input type="text" th:value="${enchere.dateFinEncheres.toLocalTime()}" readonly>
+			</li>
+			<li><label for="inputVendeur">Vendeur :</label> <input
+				id="inputVendeur" type="text" th:value="${enchere.vendeur.pseudo}"
+				readonly /></li>
+				<li>
+				<form th:action="@{/encherir}" method="get">
+					<input type="hidden" name="id" value="${enchere.id}" />
+					<button type="submit">Enchérir</button>
+				</form>
+
+
+			</li>
+
 		
 	    <div class="enchere-details">
 	    <a th:href="@{/encherir(idArticle=${enchere.id})}" class="link-wrapper">

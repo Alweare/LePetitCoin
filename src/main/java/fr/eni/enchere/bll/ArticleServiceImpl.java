@@ -36,15 +36,15 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(rollbackFor = Exception.class)
 	public void CreerArticle(ArticleVendu article, String ville, String rue, String cp) {
-		//System.err.println(article);
 		Retrait retrait = new Retrait(rue, cp, ville);
 		article.setLieuretrait(retrait);
+		
 		if (article.getLieuretrait().getRue().isEmpty()) {
+			System.err.println(this.utilisateurDao.trouveAdressParId(article.getVendeur().getId()));
 			article.setLieuRetrait(this.utilisateurDao.trouveAdressParId(article.getVendeur().getId()));
 		}
 		int idArticle = this.articleDao.creer(article);
 		this.retraitDao.creer(article.getLieuRetrait(), idArticle);
-
 	}
 
 	@Override
@@ -114,5 +114,32 @@ public class ArticleServiceImpl implements ArticleService {
 		ArticleVendu article =  articleDao.lire(id);
 		return article;
 	}
+
+@Override
+public List<ArticleVendu> recupereMesEncheresEnCours(int id) {
+	return articleDao.trouveMesEncheresEnCours(id);
+}
+
+@Override
+public List<ArticleVendu> recupereMesEncheresRemporter(int id) {
+	return articleDao.trouveMesEncheresRemporter(id);
+}
+
+@Override
+public List<ArticleVendu> recupereMesVentesEnCours(int id) {
+	return articleDao.trouveMesVentesEnCour(id);
+}
+
+@Override
+public List<ArticleVendu> recupereMesVentesNonDebuter(int id) {
+	return articleDao.trouveMesVentesNonDebutées(id);
+}
+
+@Override
+public List<ArticleVendu> recupereMesVentesTerminee(int id) {
+	return articleDao.trouveMesVentesTerminer(id);
+}
+
+
 
 }

@@ -9,6 +9,7 @@ go
 ----UPDATE UTILISATEURS SET credit=156 WHERE id = 1;
 --UPDATE UTILISATEURS SET administrateur = 1 WHERE id = 7;
 --DELETE FROM UTILISATEURS WHERE id= 7;
+--SELECT rue, code_postal, ville FROM UTILISATEURS WHERE id = 1;
 --SELECT * FROM UTILISATEURS
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------CATEGORIES--------------------------------------------------------------------------
@@ -73,7 +74,7 @@ UPDATE ARTICLES_VENDUS SET
 		INNER JOIN UTILISATEURS as UV ON (UV.id = AV.idUtilisateur)
 		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) 
 		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)
-	WHERE AV.dateFinEncheres > CURRENT_TIMESTAMP;
+	WHERE AV.dateDebutEncheres <= GETDATE() AND AV.dateFinEncheres > GETDate();
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------ENCHERE--------------------------------------------------------------------------
@@ -105,7 +106,8 @@ SELECT
 		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) 
 		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)
 		INNER JOIN ENCHERES as E on (AV.idUtilisateur = E.idUtilisateur)
-	WHERE AV.dateFinEncheres <= CURRENT_TIMESTAMP AND E.idUtilisateur= 1 AND E.montantEnchere = (SELECT MAX(montantEnchere) FROM ENCHERES WHERE idArticle = AV.id);
+	WHERE AV.dateFinEncheres <= CURRENT_TIMESTAMP AND E.idUtilisateur= 1 
+	--AND E.montantEnchere = (SELECT MAX(montantEnchere) FROM ENCHERES WHERE idArticle = AV.id);
 
 
 

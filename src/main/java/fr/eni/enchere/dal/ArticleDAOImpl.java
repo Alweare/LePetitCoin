@@ -40,7 +40,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "		INNER JOIN UTILISATEURS as UV ON (UV.id = AV.idUtilisateur)"
 			+ "		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) "
 			+ "		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)";
-	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateFinEncheres > CURRENT_TIMESTAMP";
+	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateDebutEncheres <= GETDATE() AND AV.dateFinEncheres > GETDate()";
 	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
 			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
 	private static final String TROUVE_ENCHERE_PAR_ID="SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES where idUtilisateur = :id";
@@ -54,11 +54,38 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String TROUVE_ARTICLE_FILTRER=TROUVE_ACTIVES + " AND c.id = :idCategorie";
 	private static final String TROUVE_ARTICLE_FILTRER_AVEC_NOM=TROUVE_ARTICLE_FILTRER + " AND av.nomArticle = :nomArticle";
 	private static final String TROUVE_ENCHERE_PAR_ID_ARTICLE=TROUVE_TOUT + " WHERE AV.id = :id";
+	private static final String TROUVE_MES_VENTES_EN_COURS = TROUVE_ACTIVES +" AND av.idUtilisateur =:id";
+	private static final String TROUVE_ENCHERES_EN_COURS = "SELECT\r\n"
+			+ "	AV.id,\r\n"
+			+ "	AV.nomArticle, \r\n"
+			+ "	AV.description, \r\n"
+			+ "	AV.dateDebutEncheres, \r\n"
+			+ "	AV.dateFinEncheres,\r\n"
+			+ "	AV.prixVente,\r\n"
+			+ "	AV.prixInitial,\r\n"
+			+ "	AV.idUtilisateur AS idVendeur,\r\n"
+			+ "	C.id AS idCategorie, \r\n"
+			+ "	C.libelle, \r\n"
+			+ "	R.rue,\r\n"
+			+ "	R.code_postal,\r\n"
+			+ "	R.ville,\r\n"
+			+ "	UV.id AS idVendeur,\r\n"
+			+ "	UV.pseudo AS vendeurPseudo,\r\n"
+			+ "	E.montantEnchere\r\n"
+			+ "		FROM ARTICLES_VENDUS as AV\r\n"
+			+ "		INNER JOIN UTILISATEURS as UV ON (UV.id = AV.idUtilisateur)\r\n"
+			+ "		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) \r\n"
+			+ "		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)\r\n"
+			+ "		INNER JOIN ENCHERES as E on (AV.idUtilisateur = E.idUtilisateur)\r\n"
+			+ "	WHERE AV.dateFinEncheres <= CURRENT_TIMESTAMP AND E.idUtilisateur=:id";
+	private static final String TROUVE_ENCHERES_REMPORTER=TROUVE_ENCHERES_EN_COURS+ " AND E.montantEnchere = (SELECT MAX(montantEnchere) FROM ENCHERES WHERE idArticle = AV.id);";
+	private static final String TROUVE_MES_VENTES_NON_DEBUTER = TROUVE_TOUT + " WHERE AV.dateDebutEncheres > CURRENT_TIMESTAMP AND AV.idUtilisateur =:id;";
+	private static final String TROUVE_MES_VENTES_TERMINER = TROUVE_TOUT + "WHERE AV.dateFinEncheres < CURRENT_TIMESTAMP AND AV.idUtilisateur =:id";
+
+	
+	
 	
 	private NamedParameterJdbcTemplate jdbc;
-	
-	
-	
 	
 	public ArticleDAOImpl(NamedParameterJdbcTemplate jdbc) {
 		this.jdbc = jdbc;
@@ -73,7 +100,20 @@ public class ArticleDAOImpl implements ArticleDAO {
 	public List<ArticleVendu> touveToutEnCours() {
 		return this.jdbc.query(TROUVE_ACTIVES, new ArticleRowMapper());
 	}
+	@Override
+	public List<ArticleVendu> trouveMesEncheresEnCours(int id) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id);
+		return jdbc.query(TROUVE_ENCHERES_EN_COURS,mapSqlParameterSource ,new ArticleRowMapper());
+	}
+	@Override
+	public List<ArticleVendu> trouveMesVentesEnCour(int id) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id);
+		return jdbc.query(TROUVE_MES_VENTES_EN_COURS,mapSqlParameterSource ,new ArticleRowMapper());
+	}
 
+	
 	@Override
 	public List<ArticleVendu> trouveEnCoursParCategorie(int idCat) {
 		// TODO Auto-generated method stub
@@ -92,6 +132,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 		mapSqlParameterSource.addValue("id", id); 
 		return this.jdbc.queryForObject(TROUVE_ENCHERE_PAR_ID_ARTICLE, mapSqlParameterSource, new ArticleRowMapper());
 	}
+	
 
 	@Override
 	public Utilisateur trouverAcquereurParProduit(int id) {
@@ -183,6 +224,26 @@ public class ArticleDAOImpl implements ArticleDAO {
 		mapSqlParameterSource.addValue("nomArticle", recherche);
 		return jdbc.query(TROUVE_ARTICLE_FILTRER_AVEC_NOM, mapSqlParameterSource,new ArticleRowMapper());
 	}
+	@Override
+	public List<ArticleVendu> trouveMesEncheresRemporter(int id) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id);
+		return jdbc.query(TROUVE_ENCHERES_REMPORTER,mapSqlParameterSource, new ArticleRowMapper());
+	}
+	@Override
+	public List<ArticleVendu> trouveMesVentesNonDebutées(int id) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id);
+		return jdbc.query(TROUVE_MES_VENTES_NON_DEBUTER,mapSqlParameterSource, new ArticleRowMapper());
+	}
+
+	@Override
+	public List<ArticleVendu> trouveMesVentesTerminer(int id) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id);
+		return jdbc.query(TROUVE_MES_VENTES_TERMINER,mapSqlParameterSource, new ArticleRowMapper());
+	}
+
 	
 	public class ArticleRowMapper implements RowMapper<ArticleVendu> {
 
