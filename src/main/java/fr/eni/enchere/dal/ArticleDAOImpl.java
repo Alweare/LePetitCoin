@@ -53,6 +53,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String TROUVE_CATEGORIE_PAR_ID= TROUVE_CATEGORIES + " WHERE id = :id";
 	private static final String TROUVE_ARTICLE_FILTRER=TROUVE_ACTIVES + " AND c.id = :idCategorie";
 	private static final String TROUVE_ARTICLE_FILTRER_AVEC_NOM=TROUVE_ARTICLE_FILTRER + " AND av.nomArticle = :nomArticle";
+	private static final String TROUVE_ENCHERE_PAR_ID_ARTICLE=TROUVE_TOUT + " WHERE AV.id = :id";
 	private static final String TROUVE_MES_VENTES_EN_COURS = TROUVE_ACTIVES +" AND av.idUtilisateur =:id";
 	private static final String TROUVE_ENCHERES_EN_COURS = "SELECT\r\n"
 			+ "	AV.id,\r\n"
@@ -80,6 +81,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String TROUVE_ENCHERES_REMPORTER=TROUVE_ENCHERES_EN_COURS+ " AND E.montantEnchere = (SELECT MAX(montantEnchere) FROM ENCHERES WHERE idArticle = AV.id);";
 	private static final String TROUVE_MES_VENTES_NON_DEBUTER = TROUVE_TOUT + " WHERE AV.dateDebutEncheres > CURRENT_TIMESTAMP AND AV.idUtilisateur =:id;";
 	private static final String TROUVE_MES_VENTES_TERMINER = TROUVE_TOUT + "WHERE AV.dateFinEncheres < CURRENT_TIMESTAMP AND AV.idUtilisateur =:id";
+
 	
 	
 	
@@ -126,8 +128,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 	@Override
 	public ArticleVendu lire(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id); 
+		return this.jdbc.queryForObject(TROUVE_ENCHERE_PAR_ID_ARTICLE, mapSqlParameterSource, new ArticleRowMapper());
 	}
 	
 
@@ -276,15 +279,5 @@ public class ArticleDAOImpl implements ArticleDAO {
 			return article;
 		}
 	}
-
-
-
-
-
-
-
-
-
-
 }
-
+	

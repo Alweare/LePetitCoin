@@ -65,7 +65,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public ArticleVendu RecupererArticle(int idArticle) {
+	public Enchere RecupererArticle(int idArticle) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -104,9 +104,15 @@ public class ArticleServiceImpl implements ArticleService {
 		return this.articleDao.trouveCategorieParIdint(idCategorie);
 	}
   
-@Override
-	public List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id, String recherche) {
-		return articleDao.rechercherArticlesParCategorieEtNom(id, recherche);
+	@Override
+		public List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id, String recherche) {
+			return articleDao.rechercherArticlesParCategorieEtNom(id, recherche);
+		}
+	
+	@Override
+	public ArticleVendu RecupererArticleParId(int id) {
+		ArticleVendu article =  articleDao.lire(id);
+		return article;
 	}
 
 @Override
