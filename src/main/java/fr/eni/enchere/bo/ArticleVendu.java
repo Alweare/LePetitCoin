@@ -1,6 +1,7 @@
 package fr.eni.enchere.bo;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -163,6 +164,22 @@ public class ArticleVendu {
 
 	public void setVendeur(Utilisateur vendeur) {
 		this.vendeur = vendeur;
+	}
+	
+	public String getDateDebut() {
+		return this.dateDebutEnchere.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	}
+	
+	public String getHeureDebut() {
+		return this.dateDebutEnchere.format(DateTimeFormatter.ofPattern("HH'h'mm"));
+	}
+	
+	public String getDateFin() {
+		return this.dateFinEncheres.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	}
+	
+	public String getHeureFin() {
+		return this.dateFinEncheres.format(DateTimeFormatter.ofPattern("HH'h'mm"));
 	}
 
 	@Override
