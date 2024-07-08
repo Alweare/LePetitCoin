@@ -27,13 +27,14 @@ CREATE TABLE CATEGORIES (
 ALTER TABLE CATEGORIES ADD constraint categorie_pk PRIMARY KEY (id)
 
 CREATE TABLE ENCHERES (
+	id				INTEGER NOT NULL,
     idUtilisateur   INTEGER NOT NULL,
     idArticle      INTEGER NOT NULL,
     dateEnchere     datetime NOT NULL,
 	montantEnchere  INTEGER NOT NULL
 );
 
-ALTER TABLE ENCHERES ADD constraint enchere_pk PRIMARY KEY (idUtilisateur, idArticle)
+ALTER TABLE ENCHERES ADD constraint enchere_pk PRIMARY KEY (id);
 
 CREATE TABLE RETRAITS (
 	idArticle       INTEGER NOT NULL,

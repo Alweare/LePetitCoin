@@ -1,13 +1,11 @@
 package fr.eni.enchere.dal;
 
-import java.security.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -26,8 +24,6 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "	AV.id,"
 			+ "	AV.nomArticle, "
 			+ "	AV.description,"
-			+ "	AV.prixInitial,"
-			+ "	AV.prixVente,"
 			+ "	AV.dateDebutEncheres,"
 			+ "	AV.dateFinEncheres,"
 			+ "	AV.prixVente,"
@@ -52,9 +48,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "UPDATE ENCHERES SET idUtilisateur=:nouveauId WHERE idUtilisateur=:ancienId;"
 			+ "ALTER TABLE ENCHERES ADD CONSTRAINT enchere_pk PRIMARY KEY (idUtilisateur,idArticle)"
 			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
-	private static final String TROUVE_CATEGORIES = "SELECT id, libelle FROM categories";
+	private static final String TROUVE_CATEGORIES = "SELECT id, libelle FROM CATEGORIES";
 	private static final String CHERCHE_TOUT_CATEGORIE="SELECT id,libelle FROM CATEGORIES";
-	private static final String TROUVE_CATEGORIE_PAR_ID= TROUVE_CATEGORIES + "WHERE id = :id";
+	private static final String TROUVE_CATEGORIE_PAR_ID= TROUVE_CATEGORIES + " WHERE id = :id";
 	private static final String TROUVE_ARTICLE_FILTRER=TROUVE_ACTIVES + " AND c.id = :idCategorie";
 	private static final String TROUVE_ARTICLE_FILTRER_AVEC_NOM=TROUVE_ARTICLE_FILTRER + " AND av.nomArticle = :nomArticle";
 	

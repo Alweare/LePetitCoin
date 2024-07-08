@@ -75,7 +75,7 @@ public class EnchereController {
 			) {
 //		System.out.println(article);
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
-		article.setCategorieArticle(new Categorie());
+	//	article.setCategorieArticle(new Categorie());
 		articleService.CreerArticle(article, ville, rue, cp);
 
 		return "listeEnchere";

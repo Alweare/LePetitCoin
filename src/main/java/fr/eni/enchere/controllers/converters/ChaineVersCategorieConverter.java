@@ -10,7 +10,7 @@ import fr.eni.enchere.bo.Categorie;
 @Component
 public class ChaineVersCategorieConverter implements Converter<String, Categorie> {
 	
-	ArticleService as;
+	private ArticleService as;
 
 	public ChaineVersCategorieConverter(ArticleService as) {
 		this.as = as;
@@ -18,9 +18,14 @@ public class ChaineVersCategorieConverter implements Converter<String, Categorie
 
 	@Override
 	public Categorie convert(String idCategorie) {
-		return this.as.consulterCategorieParId(Integer.parseInt(idCategorie));
+		System.err.println("laaaaaaaaaaaaaaaaaaaaaaaaaaaaallllllllllllllllllllllllaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		System.out.println(this.as.consulterCategorieParId(1));
+		return this.as.consulterCategorieParId(1);
+//		System.out.println(Integer.parseInt(idCategorie));
+//		
+//		int id = Integer.parseInt(idCategorie);
+//		return this.as.consulterCategorieParId(id);
 	}
-
 
 }
 
