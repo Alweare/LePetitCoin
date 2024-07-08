@@ -5,9 +5,11 @@ go
 --------------------------------------------------------------------UTILISATEURS--------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES ('Alwear','Rougail','Saucisse','yanis.renard@campus','0633134552','kervegan','44000','Nantes','Pa$$W0rd',0,0);
---UPDATE UTILISATEURS SET credit=156 WHERE id = 1;
-SELECT * FROM UTILISATEURS
+--INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES ('bob','Rougail','Saucisse','y@campus','0633134552','kervegan','44000','Nantes','Pa$$W0rd',0,0);
+----UPDATE UTILISATEURS SET credit=156 WHERE id = 1;
+--UPDATE UTILISATEURS SET administrateur = 1 WHERE id = 7;
+--DELETE FROM UTILISATEURS WHERE id= 7;
+--SELECT * FROM UTILISATEURS
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------CATEGORIES--------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -80,6 +82,34 @@ INSERT INTO ENCHERES (idUtilisateur, idArticle, dateEnchere,montantEnchere) VALU
 --UPDATE ENCHERES SET dateEnchere = CURRENT_TIMESTAMP, montantEnchere= 150 WHERE idUtilisateur = 1 AND montantEnchere = 1;
 --DELETE ENCHERES WHERE idUtilisateur=1 AND idArticle = 1;
 
+--Remportée
+SELECT
+	AV.id,
+	AV.nomArticle, 
+	AV.description, 
+	AV.dateDebutEncheres, 
+	AV.dateFinEncheres,
+	AV.prixVente,
+	AV.prixInitial,
+	AV.idUtilisateur AS idVendeur,
+	C.id AS idCategorie, 
+	C.libelle, 
+	R.rue,
+	R.code_postal,
+	R.ville,
+	UV.id AS idVendeur,
+	UV.pseudo AS vendeurPseudo,
+	E.montantEnchere
+		FROM ARTICLES_VENDUS as AV
+		INNER JOIN UTILISATEURS as UV ON (UV.id = AV.idUtilisateur)
+		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) 
+		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)
+		INNER JOIN ENCHERES as E on (AV.idUtilisateur = E.idUtilisateur)
+	WHERE AV.dateFinEncheres <= CURRENT_TIMESTAMP AND E.idUtilisateur= 1 AND E.montantEnchere = (SELECT MAX(montantEnchere) FROM ENCHERES WHERE idArticle = AV.id);
+
+
+
+SELECT * FROM ENCHERES
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------RETRAIT--------------------------------------------------------------------------
@@ -87,10 +117,10 @@ INSERT INTO ENCHERES (idUtilisateur, idArticle, dateEnchere,montantEnchere) VALU
 INSERT INTO RETRAITS (idArticle, rue, code_postal,ville) VALUES (1, 'MenilMontant Mais oui mesdames', '46544', 'Saint-Jean-du-doigts');
 --UPDATE RETRAITS SET rue = 'chez ta mere', code_postal= '95786', ville= 'Quimper' WHERE idArticle = 1;
 --DELETE RETRAITS WHERE idUtilisateur=1 AND idArticle = 1;
+SELECT * FROM RETRAITS;
 
 
-
-SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES;
+SELECT * FROM ENCHERES;
 
 SELECT 
 	AV.id, AV.nomArticle, 
