@@ -5,8 +5,10 @@ go
 --------------------------------------------------------------------UTILISATEURS--------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES ('Alwear','Rougail','Saucisse','yanis.renard@campus','0633134552','kervegan','44000','Nantes','Pa$$W0rd',0,0);
+INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES ('bob','Rougail','Saucisse','y@campus','0633134552','kervegan','44000','Nantes','Pa$$W0rd',0,0);
 --UPDATE UTILISATEURS SET credit=156 WHERE id = 1;
+UPDATE UTILISATEURS SET administrateur = 1 WHERE id = 7;
+DELETE FROM UTILISATEURS WHERE id= 5;
 SELECT * FROM UTILISATEURS
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------CATEGORIES--------------------------------------------------------------------------
