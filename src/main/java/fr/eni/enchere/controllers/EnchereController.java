@@ -5,16 +5,21 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 import fr.eni.enchere.bll.ArticleService;
 import fr.eni.enchere.bll.UtilisateurService;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
+import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.enchere.exceptions.BusinessException;
+import jakarta.validation.Valid;
 
 @Controller
 @SessionAttributes({"categoriesSession"})
@@ -65,12 +70,13 @@ public class EnchereController {
 	@PostMapping("/creationVente")
 
 	public String creerVente(
-			@ModelAttribute("nouvelleEnchere") ArticleVendu article, 
+			@Valid @ModelAttribute("nouvelleEnchere") ArticleVendu article, 
+			BindingResult bindingResult,
 			Principal principal, 
 			@ModelAttribute("ville") String ville,
 			@ModelAttribute("rue") String rue,
 			@ModelAttribute("codePostal") String cp
-			) {
+			) throws BusinessException {
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
 		articleService.CreerArticle(article, ville, rue, cp);
 
