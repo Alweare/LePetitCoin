@@ -17,7 +17,8 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	private static final String TROUVE_TOUT = "SELECT id, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS";
 	private static final String TROUVE_AVEC_ID ="SELECT id, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM UTILISATEURS WHERE id = :id";
-
+	private static final String TROUVE_ADDRESSE_PAR_ID = "SELECT rue, code_postal, ville FROM UTILISATEURS WHERE id = :id";
+	
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (:pseudo,:nom,:prenom,:email,:telephone,:rue,:code_postal,:ville,:mot_de_passe,:credit,0)";
 
 	private static final String TROUVE_AVEC_PSEUDO = "SELECT id, pseudo, nom, prenom, email, telephone, rue,code_postal,ville, mot_de_passe, credit FROM UTILISATEURS WHERE pseudo = :pseudo";
@@ -130,9 +131,10 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public Retrait trouveAdressParId(int idUtilistaueur) {
-		// TODO Auto-generated method stub
-		return null;
+	public Retrait trouveAdressParId(int idUtilisateur) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("id", idUtilisateur);
+		return this.jdbcTemplate.queryForObject(TROUVE_ADDRESSE_PAR_ID, map, new BeanPropertyRowMapper<Retrait>(Retrait.class));
 	}
 
 	

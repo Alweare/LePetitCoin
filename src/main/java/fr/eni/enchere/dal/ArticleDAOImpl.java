@@ -40,7 +40,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "		INNER JOIN UTILISATEURS as UV ON (UV.id = AV.idUtilisateur)"
 			+ "		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) "
 			+ "		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)";
-	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateFinEncheres > CURRENT_TIMESTAMP";
+	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateDebutEncheres <= GETDATE() AND AV.dateFinEncheres > GETDate()";
 	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
 			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
 	private static final String TROUVE_ENCHERE_PAR_ID="SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES where idUtilisateur = :id";
@@ -84,9 +84,6 @@ public class ArticleDAOImpl implements ArticleDAO {
 	
 	
 	private NamedParameterJdbcTemplate jdbc;
-	
-	
-	
 	
 	public ArticleDAOImpl(NamedParameterJdbcTemplate jdbc) {
 		this.jdbc = jdbc;
