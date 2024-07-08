@@ -73,9 +73,7 @@ public class EnchereController {
 			@ModelAttribute("rue") String rue,
 			@ModelAttribute("codePostal") String cp
 			) {
-//		System.out.println(article);
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
-	//	article.setCategorieArticle(new Categorie());
 		articleService.CreerArticle(article, ville, rue, cp);
 
 		return "listeEnchere";

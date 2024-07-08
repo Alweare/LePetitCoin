@@ -101,7 +101,6 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public Categorie consulterCategorieParId(int idCategorie) {
-		System.err.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa56+56+56+56+56+56+");
 		return this.articleDao.trouveCategorieParIdint(idCategorie);
 	}
   
