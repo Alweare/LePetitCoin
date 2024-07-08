@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" data-th-href="@{/css/general.css}">
+
+<title>Le Petit Coin</title>
 </head>
 <body>
 
-	<h2>Détail</h2>
+	<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
+
+
 	
 		<img src="" alt="" />
 		<form th:each="a : ${a}" >
@@ -41,7 +45,15 @@
 			<li><label for="inputVendeur">Vendeur :</label>
 				<input id="inputVendeur" type="text"   th:value="${a.vendeur.pseudo}"/>
 			</li>
+			<li><label for="inputTelephone">Téléphone :</label>
+				<input id="inputTelephone" type="text"   th:value="${a.vendeur.telephone}"/>
+			</li>
+			
 			</ul>
 		</form>
+		
+		
+		<div class="footer"
+		th:replace="~{/fragments/fragment-piedpage :: fragment-piedpage}"></div>
 </body>
 </html>
