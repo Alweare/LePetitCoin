@@ -36,15 +36,15 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Transactional(rollbackFor = Exception.class)
 	public void CreerArticle(ArticleVendu article, String ville, String rue, String cp) {
-		//System.err.println(article);
 		Retrait retrait = new Retrait(rue, cp, ville);
 		article.setLieuretrait(retrait);
+		
 		if (article.getLieuretrait().getRue().isEmpty()) {
+			System.err.println(this.utilisateurDao.trouveAdressParId(article.getVendeur().getId()));
 			article.setLieuRetrait(this.utilisateurDao.trouveAdressParId(article.getVendeur().getId()));
 		}
 		int idArticle = this.articleDao.creer(article);
 		this.retraitDao.creer(article.getLieuRetrait(), idArticle);
-
 	}
 
 	@Override
