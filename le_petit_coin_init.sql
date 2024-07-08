@@ -27,7 +27,7 @@ CREATE TABLE CATEGORIES (
 ALTER TABLE CATEGORIES ADD constraint categorie_pk PRIMARY KEY (id)
 
 CREATE TABLE ENCHERES (
-	id				INTEGER NOT NULL,
+	id				INTEGER NOT NULL IDENTITY,
     idUtilisateur   INTEGER NOT NULL,
     idArticle      INTEGER NOT NULL,
     dateEnchere     datetime NOT NULL,
