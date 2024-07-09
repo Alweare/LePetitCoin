@@ -6,13 +6,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 public class ArticleVendu {
 	
 	private int id;
+	@NotBlank
 	private String nomArticle;
+	@NotBlank
 	private String description;
+	@NotBlank
+	@FutureOrPresent(message = "Le début de l'enchère ne peut être dans le passé")
 	private LocalDateTime dateDebutEnchere;
+	@NotBlank
+	@Future(message = "La fin de l'enchère doit être dans le future")
 	private LocalDateTime dateFinEncheres;
+	@NotBlank
+	@Min(1)
 	private int prixInitial;
 	private int prixVente;
 	private String etatVente;
