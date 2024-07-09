@@ -3,20 +3,23 @@
 header li {
 	list-style: none;
 	display: inline-block;
-	padding: 0 20px;
+	justify-content: flex-end;
+  width: 200%vw;
 }
 header {
 	display: flex;
-	justify-content: flex-end;
 	align-items: center;
-	padding: 20px 50px;
-	box-shadow: 0 1px 8px #ddd;
+ 	width: 100%vw;
+ 	height: 10%vh;
+ 	 
 }
 #nav-title {
+	display: flex;	
 	margin-right: auto;
-	font-size: 1.1em;
+	font-size: 50%vh;	
 }
 header a {
+	
 	text-decoration: none;
 	color: #555;
 	transition: all 0.3s ease 0s;
@@ -26,30 +29,36 @@ header a:hover {
 	color: rgb(0, 128, 192);
 }
 main {
-	margin-top: 15px;
-	margin-left: 15px;
+	margin-top: 15em;
+	margin-left: 15em;
 }
 
-main h1 {
-	margin: 10px;
-}
 
-.center-main {
-	display: flex;
-	width: 100%;
-	height: 300px;
-	margin: auto;
-}
 
-.center-section {
-	margin: auto;
-	text-align: center;
-}
+/* body{ */
+/* 	display: flex; */
+/* 	flex-direction: column; */
+/* 	justify-content: center; */
+/* 	align-items: center; */
+/* 	width: 100%; */
+/* 	height: 95%; */
+/* 	margin: auto; */
+/* } */
+
+
 footer {
-	background-color:  #E5E7E9;
-	position: relative;
+	position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #c0c0c0;
+  color: #3a3a3a;
+  text-align: center;
 }
  fieldset {
-            cursor: pointer; /* Change le curseur pour indiquer que le fieldset est cliquable */
-        }
+    cursor: pointer; /* Change le curseur pour indiquer que le fieldset est cliquable */
+}
+
+ 
+ 
         

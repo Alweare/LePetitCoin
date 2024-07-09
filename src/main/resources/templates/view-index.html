@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" data-th-href="@{/css/general.css}">
+<link rel="stylesheet" data-th-href="@{/css/enchere.css}">
+
 
 <title>Le Petit Coin</title>
 </head>
@@ -13,27 +15,36 @@
 	<h2>Liste des enchères</h2>
 
 	<form  data-th-action="@{/categories}" method="POST" >
-		<label >Filtres</label> 
-			<input type="text" id="recherche" name="recherche" />
-			<select  name="categories" id="categories" data-th-value="${categorie}">
-			<option  value="0">Toutes</option>
+		<label >Filtres</label> <br>
+			<input type="text" id="recherche" name="recherche" /><br><br>
+			<select  name="categories" id="categories" data-th-value="${categorie}"><br>
+			<option  value="0">Toutes</option><br>
 			<option th:each="item : ${categoriesSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
-			</select>
+			</select><br>
+			<div class="button-container">
 			<button type="submit">Rechercher</button>
-
-	
-
+		</div>
+	<div class="form-grid">
+	<div class="radio-section">
 		<th:block sec:authorize="isAuthenticated()">
 		<input  type="radio" id="choix1" name="choixAchat" value="achats" /> 
 			<label for="choix1">Achats</label> 
+			<input type="radio" id="choix2" name="choixVente" value="mesVentes" /> 
+			<label for="choix2">Mes ventes</label> 
+	</div>		
+			
+		<div class="checkbox-group">
 		<input type="checkbox" name="encheresOuvertes" value="enchèresOuvertes" /> 
 			<label for="enchèresOuvertes">enchères ouvertes</label> 
 		<input type="checkbox" name ="encheresEnCours" value="enchèresEnCours" /> 
 			<label for="enchèresEnCours">mes enchères en cours</label> 
 		<input type="checkbox" name="encheresRemportees" value="enchèresRemportees" /> 
 			<label for="enchèresRemportees">mes enchères remportées</label> 
-		<input type="radio" id="choix2" name="choixVente" value="mesVentes" /> 
-			<label for="choix2">Mes ventes</label> 
+		</div>		
+		
+			
+		
+			<div class="checkbox-group">
 		<input type="checkbox" name="ventesEnCours" value="mes ventes en cours" /> 
 			<label for="ventesEnCours">mes ventes en cours</label> 
 		<input type="checkbox" name="ventesNonDebutees" value="ventes non débutées" />
@@ -41,12 +52,14 @@
 		<input type="checkbox" name="ventesTerminees" value="ventes terminées" /> 
 			<label for="ventesTerminees">mes ventes terminées</label>
 		</th:block>
+		</div>	
+	</div>
 	</form>
 
 	<!-- insérer les annonces -->
 
 	
-	<fieldset th:each="enchere: ${listeEncheres}">
+	<fieldset  th:each="enchere: ${listeEncheres}">
 	<a th:href="@{/encherir(idArticle=${enchere.id})}" class="link-wrapper">
 		<img src="" alt="" />
 		
@@ -64,16 +77,7 @@
 			<li><label for="inputVendeur">Vendeur :</label> <input
 				id="inputVendeur" type="text" th:value="${enchere.vendeur.pseudo}"
 				readonly /></li>
-				<li>
-				<form th:action="@{/encherir}" method="get">
-					<input type="hidden" name="id" value="${enchere.id}" />
-					<button type="submit">Enchérir</button>
-				</form>
-			</li>
-
-			
-
-		
+				
 	   </ul>
 	  </a>
 	</fieldset>

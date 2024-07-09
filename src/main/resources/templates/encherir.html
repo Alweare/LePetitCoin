@@ -48,7 +48,15 @@
 			<li><label for="inputTelephone">Téléphone :</label>
 				<input id="inputTelephone" type="text"   th:value="${a.vendeur.telephone}"/>
 			</li>
-			
+			<li sec:authorize="isAuthenticated()" th:if="${!isVendeur}"><label for="inputEnchere">Ma proposition</label>
+			<input type="number" th:attr="min=${a.prixVente + 1}"/>
+			</li>
+			<li sec:authorize="isAuthenticated()" th:if="${!isVendeur}"><button type="submit">Enchérir</button>
+			</li>
+			<li><input type="reset" value="Back" /><br />
+			</li>
+			<li th:if="${isVendeur}"><button type="submit" >Retrait effectué</button>
+			</li>
 			</ul>
 		</form>
 		
