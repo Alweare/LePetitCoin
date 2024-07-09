@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Enchere {
 	private LocalDate dateEnchere;
 	private int montantEnchere;
+	private  ArticleVendu articleVendu;
 	
 	public Enchere() {
 		
@@ -32,6 +33,14 @@ public class Enchere {
 
 	public void setMontantEnchere(int montantEnchere) {
 		this.montantEnchere = montantEnchere;
+	}
+
+	public ArticleVendu getArticleVendu() {
+		return articleVendu;
+	}
+
+	public void setArticleVendu(ArticleVendu articleVendu) {
+		this.articleVendu = articleVendu;
 	}
 
 	@Override

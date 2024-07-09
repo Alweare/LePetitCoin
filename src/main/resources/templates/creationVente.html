@@ -9,13 +9,17 @@
 <body>
 
 	<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
-	
+	<form th:action="@{/creationVente}" method="POST" th:object="${nouvelleEnchere}" enctype="multipart/form-data">
 	<h2>Nouvelle vente</h2>
 	
 		<img src="" alt="" />
+<<<<<<< Updated upstream
 		<form th:action="@{/creationVente}" method="POST" th:object="${nouvelleEnchere}">
 		
 			<div data-th-replace="~{/fragments/errors/fragment-errors :: frag-errors}" ></div>
+=======
+		
+>>>>>>> Stashed changes
 				<label for="inputNom">Article :</label>
 				<input th:field="*{nomArticle}" id="inputNom" type="text"  /> 
 				<div data-th-replace="~{/fragments/errors/error :: frag-error('nomArticle')}" ></div>
@@ -31,9 +35,13 @@
         		<div data-th-replace="~{/fragments/errors/error :: frag-error('categorieArticle')}" ></div>
 				
 				<label for="inputFile">Photo de l'article :</label>
+<<<<<<< Updated upstream
 				<input type="file" id="profile_pic" name="profile_pic" accept=".jpg, .jpeg, .png" />
 				<!-- div data-th-replace="~{/fragments/errors/error :: frag-error('profile_pic')}" ></div>-->
 				
+=======
+				<input type="file" id="photo" name="photo" accept="image/png, image/jpeg" />
+>>>>>>> Stashed changes
 				<label for="inputMAP">Mise à prix :</label>
 				<input type="number" id="inputMAP" th:field="*{prixInitial}"/>
 				<div data-th-replace="~{/fragments/errors/error :: frag-error('prixInitial')}" ></div>
