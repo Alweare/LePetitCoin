@@ -45,7 +45,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateDebutEncheres <= GETDATE() AND AV.dateFinEncheres > GETDate()";
 	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
 			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
-	private static final String TROUVE_ENCHERE_PAR_ID="SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES where idUtilisateur = :id";
+	private static final String TROUVE_ENCHERE ="SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES";
+	private static final String TROUVE_ENCHERE_PAR_ID=TROUVE_ENCHERE + " where idUtilisateur = :id";
 	private static final String CHANGER_ID_ENCHERES="ALTER TABLE ENCHERES DROP enchere_pk;"
 			+ "UPDATE ENCHERES SET idUtilisateur=:nouveauId WHERE idUtilisateur=:ancienId;"
 			+ "ALTER TABLE ENCHERES ADD CONSTRAINT enchere_pk PRIMARY KEY (idUtilisateur,idArticle)"
@@ -86,7 +87,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 	private static final String CREER_ENCHERE ="INSERT INTO ENCHERES( idUtilisateur, idArticle,dateEnchere,montantEnchere) VALUES (:idUtilisateur,:idArticle,CURRENT_TIMESTAMP , :montantEnchere)";
 	private static final String COUNT_ENCHERE_ARTICLE = "SELECT COUNT(*) FROM ENCHERES WHERE idArticle = :idArticle";
-	private static final String ENCHERE_PAR_ARTICLE = "SELECT id,idUtilisateur,idArticle,dateEnchere,montantEnchere FROM ENCHERES WHERE idArticle = :idArticle";
+	private static final String ENCHERE_PAR_ARTICLE_PAR_DATE = TROUVE_ENCHERE_PAR_ID_ARTICLE +  " ORDER BY dateEnchere LIMIT 1";
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
@@ -305,11 +306,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 
 	@Override
-	public List<Enchere> enchereArticle(int idArticle) {
+	public ArticleVendu enchereArticle(int idArticle) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 		mapSqlParameterSource.addValue("idArticle", idArticle);
 		
-		return jdbc.query(ENCHERE_PAR_ARTICLE, mapSqlParameterSource, new BeanPropertyRowMapper<>(Enchere.class));
+		return jdbc.queryForObject(ENCHERE_PAR_ARTICLE_PAR_DATE, mapSqlParameterSource, new BeanPropertyRowMapper<>(ArticleVendu.class));
 	}
 
 
