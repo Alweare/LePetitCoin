@@ -1,5 +1,6 @@
 package fr.eni.enchere.bll;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Retrait;
+import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.ArticleDAO;
 import fr.eni.enchere.dal.RetraitDAO;
 import fr.eni.enchere.dal.UtilisateurDAO;
@@ -147,6 +149,71 @@ public List<ArticleVendu> recupereMesVentesTerminee(int id) {
 	return articleDao.trouveMesVentesTerminer(id);
 }
 
+@Override
+public void encherir(int idUtilisateur, int idArticle, int montantEnchere) throws BusinessException {
+	BusinessException be = new BusinessException();
+//	TODO : Si l'utilisateur en cours enchéri sur une enchère existante. Recredité l'encherisseur précédent 
+	//du montant de son enchere.
+	
+	ArticleVendu enchere = articleDao.enchereArticle(idArticle);
+	
+			if(!utilisateurExiste(idUtilisateur, be)) {
+				throw be;
+			}
+			if(!enchereExiste(idArticle) && creditSuffisant(idUtilisateur, montantEnchere, be)) {
+				int nouveauCreditAcheteur = utilisateurDao.lire(idUtilisateur).getCredit() - montantEnchere;
+				utilisateurDao.modifierCreditParId(idUtilisateur, nouveauCreditAcheteur);
+				int nouveauCreditVendeur = articleDao.lire(idArticle).getVendeur().getCredit() + montantEnchere;
+				utilisateurDao.modifierCreditParId(idUtilisateur, nouveauCreditVendeur);
+				articleDao.creerEnchere(utilisateurDao.lire(idUtilisateur).getId(), articleDao.lire(idArticle).getId(), montantEnchere);
+			}
+			if(enchereExiste(idArticle)) {
+				if(enchere.getEncheres().stream().anyMatch(e -> e.getMontantEnchere()< montantEnchere) && enchere.getDateFinEncheres().isAfter(LocalDateTime.now()) ) {
+					int nouveauCreditEncherisseur = enchere.getAcheteur().getCredit()+ enchere.getEncheres().stream()
+	                        .mapToInt(Enchere::getMontantEnchere)
+	                        .max()
+	                        .orElse(0)   ;
+					utilisateurDao.modifierCreditParId(enchere.getVendeur().getId(), nouveauCreditEncherisseur);
+					articleDao.creerEnchere(idUtilisateur, idArticle, montantEnchere);
+					int nouveauCreditAcheteur = utilisateurDao.lire(idUtilisateur).getCredit() - montantEnchere;
+					utilisateurDao.modifierCreditParId(idUtilisateur, nouveauCreditAcheteur);
+				}
+			}
+}
+
+// est ce que l'utilisateur à assez d'argent sur son compte pour faire une enchère ?
+private boolean creditSuffisant(int idUtilisateur,int montantEnchere,BusinessException be) {
+	boolean estValid = false;
+	Utilisateur utilisateur = utilisateurDao.lire(idUtilisateur);
+	if(utilisateur.getCredit() >= montantEnchere ) {
+		estValid = true;
+	}else {
+		be.add("credit insuffisant");
+	}
+	return estValid;
+}
+// test enchere  existe
+private boolean enchereExiste(int idArticle) {
+	boolean estValid = true;
+	if(articleDao.nbEnchereArticle(idArticle) == 0) {
+		estValid = false;	
+	}
+	
+	return estValid;
+	
+}
+// utilisateur en base
+private boolean utilisateurExiste(int idUtilisateur,BusinessException be) {
+	boolean estValid = false;
+	if(utilisateurDao.lire(idUtilisateur) != null) {
+		estValid = true;
+	}else {
+		be.add("Connectez-vous svp !");
+	}
+	return estValid;
+	
+}
+//private boolean 
 
 
 }
