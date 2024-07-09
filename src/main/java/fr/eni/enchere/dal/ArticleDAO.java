@@ -32,6 +32,6 @@ public interface ArticleDAO {
 	List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id,String recherche);
 	void creerEnchere(int idUtilisateur,int idArticle, int montantEnchere);
 	int nbEnchereArticle(int idArticle);
-	List<Enchere> enchereArticle (int idArticle); 
+	ArticleVendu enchereArticle (int idArticle); 
 
 }

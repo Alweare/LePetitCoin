@@ -5,6 +5,7 @@ import java.util.List;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
+import fr.eni.enchere.exceptions.BusinessException;
 
 public interface ArticleService {
 	void CreerArticle(ArticleVendu article, String ville, String rue, String cp);
@@ -25,7 +26,7 @@ public interface ArticleService {
 	List<ArticleVendu> recupereMesVentesEnCours(int id);
 	List<ArticleVendu> recupereMesVentesNonDebuter(int id);
 	List<ArticleVendu> recupereMesVentesTerminee(int id);
-	void encherir(int idUtilisateur, int idArticle, int montantEnchere);
+	void encherir(int idUtilisateur, int idArticle, int montantEnchere) throws BusinessException ;
 
 
 }
