@@ -33,7 +33,7 @@
 			<label for="choix2">Mes ventes</label> 
 	</div>		
 			
-		<div class="checkbox-group">
+		<div class="checkbox-group" sec:authorize="isAuthenticated()">
 		<input type="checkbox" name="encheresOuvertes" value="enchèresOuvertes" /> 
 			<label for="enchèresOuvertes">enchères ouvertes</label> 
 		<input type="checkbox" name ="encheresEnCours" value="enchèresEnCours" /> 
@@ -44,7 +44,7 @@
 		
 			
 		
-			<div class="checkbox-group">
+			<div class="checkbox-group" sec:authorize="isAuthenticated()">
 		<input type="checkbox" name="ventesEnCours" value="mes ventes en cours" /> 
 			<label for="ventesEnCours">mes ventes en cours</label> 
 		<input type="checkbox" name="ventesNonDebutees" value="ventes non débutées" />
