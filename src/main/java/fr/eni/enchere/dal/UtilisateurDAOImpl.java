@@ -24,6 +24,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private static final String TROUVE_AVEC_PSEUDO = "SELECT id, pseudo, nom, prenom, email, telephone, rue,code_postal,ville, mot_de_passe, credit FROM UTILISATEURS WHERE pseudo = :pseudo";
 	private static final String UPDATE_UTILISATEUR = "UPDATE UTILISATEURS SET pseudo = :pseudo, nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :code_postal, ville = :ville WHERE id = :id";
 	private static final String SUPPRIMER_COMPTE = "DELETE FROM UTILISATEURS WHERE id = :id";
+	private static final String MODIF_CREDIT ="UPDATE UTILISATEURS SET credit = :credit WHERE id = :id";
 
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
@@ -81,8 +82,12 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public void modifierCreditParId(int id) {
-		// TODO Auto-generated method stub
+	public void modifierCreditParId(int id, int credit) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id);
+		mapSqlParameterSource.addValue("credit", credit);
+		
+		jdbcTemplate.update(MODIF_CREDIT, mapSqlParameterSource);
 		
 	}
 	class UtilisateurRowMapper implements org.springframework.jdbc.core.RowMapper<Utilisateur>{

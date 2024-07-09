@@ -3,8 +3,10 @@ package fr.eni.enchere.dal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -82,8 +84,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String TROUVE_MES_VENTES_NON_DEBUTER = TROUVE_TOUT + " WHERE AV.dateDebutEncheres > CURRENT_TIMESTAMP AND AV.idUtilisateur =:id;";
 	private static final String TROUVE_MES_VENTES_TERMINER = TROUVE_TOUT + "WHERE AV.dateFinEncheres < CURRENT_TIMESTAMP AND AV.idUtilisateur =:id";
 
-	
-	
+	private static final String CREER_ENCHERE ="INSERT INTO ENCHERES( idUtilisateur, idArticle,dateEnchere,montantEnchere) VALUES (:idUtilisateur,:idArticle,CURRENT_TIMESTAMP , :montantEnchere)";
+	private static final String COUNT_ENCHERE_ARTICLE = "SELECT COUNT(*) FROM ENCHERES WHERE idArticle = :idArticle";
+	private static final String ENCHERE_PAR_ARTICLE = "SELECT id,idUtilisateur,idArticle,dateEnchere,montantEnchere FROM ENCHERES WHERE idArticle = :idArticle";
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
@@ -279,5 +282,36 @@ public class ArticleDAOImpl implements ArticleDAO {
 			return article;
 		}
 	}
+
+
+	@Override
+	public void creerEnchere(int idUtilisateur,int idArticle, int montantEnchere) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("idUtilisateur", idUtilisateur);
+		mapSqlParameterSource.addValue("idArticle", idArticle);
+		mapSqlParameterSource.addValue("montantEnchere", montantEnchere);
+		
+		jdbc.queryForObject(CREER_ENCHERE, mapSqlParameterSource, new BeanPropertyRowMapper<>(Enchere.class));
+
+		
+	}
+
+	@Override
+	public int nbEnchereArticle(int idArticle) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("idArticle", idArticle);
+		
+		return jdbc.queryForObject(COUNT_ENCHERE_ARTICLE,mapSqlParameterSource, Integer.class);
+	}
+
+	@Override
+	public List<Enchere> enchereArticle(int idArticle) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("idArticle", idArticle);
+		
+		return jdbc.query(ENCHERE_PAR_ARTICLE, mapSqlParameterSource, new BeanPropertyRowMapper<>(Enchere.class));
+	}
+
+
 }
 	

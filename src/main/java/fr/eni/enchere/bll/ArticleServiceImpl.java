@@ -1,5 +1,6 @@
 package fr.eni.enchere.bll;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Retrait;
+import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.dal.ArticleDAO;
 import fr.eni.enchere.dal.RetraitDAO;
 import fr.eni.enchere.dal.UtilisateurDAO;
@@ -138,6 +140,19 @@ public List<ArticleVendu> recupereMesVentesNonDebuter(int id) {
 @Override
 public List<ArticleVendu> recupereMesVentesTerminee(int id) {
 	return articleDao.trouveMesVentesTerminer(id);
+}
+
+@Override
+public void encherir(int idUtilisateur, int idArticle, int montantEnchere) {
+	BusinessException be = new BusinessException();
+	
+	Utilisateur utilisateur = utilisateurDao.lire(idUtilisateur);
+	
+	articleDao.creerEnchere(utilisateur.getId(), articleDao.lire(idArticle).getId(), montantEnchere);
+	
+
+	
+	
 }
 
 
