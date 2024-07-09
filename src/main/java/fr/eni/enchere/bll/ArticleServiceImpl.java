@@ -1,5 +1,6 @@
 package fr.eni.enchere.bll;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -33,9 +34,16 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-
 	@Transactional(rollbackFor = Exception.class)
-	public void CreerArticle(ArticleVendu article, String ville, String rue, String cp) {
+	public void CreerArticle(ArticleVendu article, String ville, String rue, String cp) throws BusinessException {
+		BusinessException be = new BusinessException();
+		
+		if (article.getDateFinEncheres().isBefore(article.getDateDebutEnchere().plusHours(24))) {
+			
+			be.add("La date de fin doit être postérieur de 24h à la date de début de l'enchère");
+			throw be;
+		}
+		
 		Retrait retrait = new Retrait(rue, cp, ville);
 		article.setLieuretrait(retrait);
 		
