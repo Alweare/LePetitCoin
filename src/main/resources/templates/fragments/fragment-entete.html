@@ -6,16 +6,16 @@
         </a>
     </span>
     <span sec:authorize="!isAuthenticated()">
-        <img src="/img/logo.png" alt="Logo du site" />
+        <img src="/img/logo.png" id="logo" alt="Logo du site" />
     </span>
 </h1>
 		<nav>
 			<ul>
-				<li sec:authorize="!isAuthenticated()"><a href="/connexion">Se connecter</a></li>
-				<li sec:authorize="!isAuthenticated()"><a href="/creationProfil">S'inscrire</a></li>	
-				<li sec:authorize="isAuthenticated()"><a href="/monProfil">Mon Profil</a></li>				
-				<li sec:authorize="isAuthenticated()"><a href="/creationVente">Vendre un article</a></li>					
-				<li sec:authorize="isAuthenticated()"><a href="/logout">Se déconnecter</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/connexion" class="nav-title">Se connecter</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/creationProfil" class="nav-title">S'inscrire</a></li>	
+				<li sec:authorize="isAuthenticated()"><a href="/monProfil" class="nav-title">Mon Profil</a></li>				
+				<li sec:authorize="isAuthenticated()"><a href="/creationVente" class="nav-title">Vendre un article</a></li>					
+				<li sec:authorize="isAuthenticated()"><a href="/logout" class="nav-title">Se déconnecter</a></li>
 			</ul>
 		</nav>
 			
