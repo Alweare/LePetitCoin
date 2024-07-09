@@ -2,7 +2,12 @@ package fr.eni.enchere.bo;
 
 import java.io.Serializable;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public class Utilisateur implements Serializable{
 
@@ -12,22 +17,42 @@ public class Utilisateur implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int id;
 	@NotBlank(message ="Saisir pseudo")
+	@NotNull
+	@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Le pseudo ne doit contenir que des caractères alphanumériques")
 	private String pseudo;
 	@NotBlank(message ="saisir nom")
+	@NotNull
+	@Pattern(regexp = "^[a-zA-Z]*$", message="Le nom ne doit contenir que des lettres")
 	private String nom;
 	@NotBlank(message ="saisir prenom")
+	@NotNull
+	@Pattern(regexp = "^[a-zA-Z]*$", message="Le prenom ne doit contenir que des lettres")
 	private String prenom;
 	@NotBlank(message ="saisir email")
+	@NotNull
+	@Pattern(regexp = "^[a-zA-Z]*$", message="Email non valide")
+	@Email
 	private String email;
 	@NotBlank(message ="saisir telephone")
+	@NotNull
+	@Size(min=10)
+	@Pattern(regexp = "^[0-9]*$", message="Le numero de téléphone doit contenir 10 chiffres")
 	private String telephone;
 	@NotBlank(message ="saisir rue")
+	@NotNull
 	private String rue;
 	@NotBlank(message ="saisir code postal")
+	@NotNull
+	@Pattern(regexp = "^[0-9]*$", message="Le code postal ne doit contenir que des chiffres")
+	@Size(min=5, max=5, message="Le code postal doit avoir 5 chiffres")
 	private String codePostal;
 	@NotBlank(message ="saisir ville")
+	@NotNull
+	@Pattern(regexp = "^[a-zA-Z]*$", message="La ville ne doit contenir que des caractères alphanumériques")
 	private String ville;
 	@NotBlank(message ="saisir mot de passe")
+	@NotNull
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$",message = "Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial")
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
