@@ -30,5 +30,8 @@ public interface ArticleDAO {
 	List<ArticleVendu> filtrerArticle(int idUtilisateur);
 	Categorie trouveCategorieParIdint(int id);
 	List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id,String recherche);
+	void creerEnchere(int idUtilisateur,int idArticle, int montantEnchere);
+	int nbEnchereArticle(int idArticle);
+	ArticleVendu enchereArticle (int idArticle); 
 
 }

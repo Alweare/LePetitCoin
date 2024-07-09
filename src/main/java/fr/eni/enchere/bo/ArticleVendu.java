@@ -6,13 +6,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 public class ArticleVendu {
 	
 	private int id;
+	
+	@NotBlank
 	private String nomArticle;
+	
+	@NotBlank
+	@Size(min= 15, max = 500, message= "La description doit avoir entre 15 et 500 caractères")
 	private String description;
+	
+	@NotNull
+	@FutureOrPresent
 	private LocalDateTime dateDebutEnchere;
+	
+	@Future
+	@NotNull
 	private LocalDateTime dateFinEncheres;
+	@Min(value = 1, message = "La mise à prix doit être au minimum de 1")
 	private int prixInitial;
 	private int prixVente;
 	private String etatVente;

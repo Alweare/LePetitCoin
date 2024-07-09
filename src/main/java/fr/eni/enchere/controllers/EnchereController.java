@@ -5,16 +5,23 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 import fr.eni.enchere.bll.ArticleService;
 import fr.eni.enchere.bll.UtilisateurService;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
+import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.enchere.exceptions.BusinessException;
+import jakarta.validation.Valid;
 
 @Controller
 @SessionAttributes({"categoriesSession"})
@@ -22,11 +29,6 @@ public class EnchereController {
 
 	private ArticleService articleService;
 	private UtilisateurService utilisateurService;
-
-
-
-
-
 
 	public EnchereController(ArticleService articleService, UtilisateurService utilisateurService) {
 		super();
@@ -59,31 +61,42 @@ public class EnchereController {
 		return "creationVente";
 	}
 
-
-
-
 	@PostMapping("/creationVente")
-
 	public String creerVente(
-			@ModelAttribute("nouvelleEnchere") ArticleVendu article, 
+			@Valid @ModelAttribute("nouvelleEnchere") ArticleVendu article, 
+			BindingResult bindingResult,
 			Principal principal, 
 			@ModelAttribute("ville") String ville,
 			@ModelAttribute("rue") String rue,
 			@ModelAttribute("codePostal") String cp
 			) {
+		
+		if(bindingResult.hasErrors()) {
+			return "creationVente";
+		}
+		
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
-		articleService.CreerArticle(article, ville, rue, cp);
+		try {
+			articleService.CreerArticle(article, ville, rue, cp);
+		} catch (BusinessException e) {
+			e.getErreurs().forEach(err -> {
+				
+				ObjectError error = new ObjectError("globalError", err);
+				bindingResult.addError(error);
 
+			});
+			return "creationVente";
+			}
 		return "listeEnchere";
 	}
 
-	@GetMapping("/encherir")
-	public String afficherEncherir(@RequestParam("idArticle") int idArticle ,Model model) {
-		ArticleVendu a = this.articleService.RecupererArticleParId(idArticle);
-		model.addAttribute("a", a);
-		
-		return "encherir";
-	}
+//	@GetMapping("/encherir")
+//	public String afficherEncherir(@RequestParam("idArticle") int idArticle ,Model model) {
+//		ArticleVendu a = this.articleService.RecupererArticleParId(idArticle);
+//		model.addAttribute("a", a);
+//		
+//		return "encherir";
+//	}
 	@PostMapping("/enchere")
 	public String Encherir() {
 
@@ -180,5 +193,21 @@ public class EnchereController {
 		return "view-index";
 	}
 
+	 @GetMapping("/encherir")
+	    public String verifierVendeur(@RequestParam("idArticle") int id, Model model, Principal principal) {
+	        ArticleVendu article = articleService.RecupererArticleParId(id);
+	        String currentUsername = principal != null ? principal.getName() : null;
+	        boolean isVendeur = false;
+System.out.println("username LAAAAAAA : "+article);
+	        if (currentUsername != null) {
+	            Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(currentUsername);
+	            isVendeur = article.getVendeur().getId() == utilisateur.getId();
 
+	        }
+	        
+	        model.addAttribute("a", article);
+	        model.addAttribute("isVendeur", isVendeur);
+
+	        return "encherir";
+	    }
 }

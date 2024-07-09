@@ -10,7 +10,9 @@ public class StringToLocalDateTimeFinConverter implements Converter<String, Loca
 
 	@Override
 	public LocalDateTime convert(String timeStamp) {
-		
+		if (timeStamp.isEmpty() || timeStamp.isBlank()) {
+			return null;
+		}
 		return LocalDateTime.parse(timeStamp);
 	}
 

@@ -9,6 +9,8 @@ public class Enchere {
 	
 	public Enchere() {
 		
+		
+		
 	}
 	
 	public Enchere(LocalDate dateEnchere, int montantEnchere) {

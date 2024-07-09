@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" data-th-href="@{/css/general.css}">
+
+<title>Le Petit Coin</title>
 </head>
 <body>
 
-	<h2>Détail</h2>
+	<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
+
+
 	
 		<img src="" alt="" />
 		<form th:each="a : ${a}" >
@@ -41,7 +45,23 @@
 			<li><label for="inputVendeur">Vendeur :</label>
 				<input id="inputVendeur" type="text"   th:value="${a.vendeur.pseudo}"/>
 			</li>
+			<li><label for="inputTelephone">Téléphone :</label>
+				<input id="inputTelephone" type="text"   th:value="${a.vendeur.telephone}"/>
+			</li>
+			<li sec:authorize="isAuthenticated()" th:if="${!isVendeur}"><label for="inputEnchere">Ma proposition</label>
+			<input type="number" th:attr="min=${a.prixVente + 1}"/>
+			</li>
+			<li sec:authorize="isAuthenticated()" th:if="${!isVendeur}"><button type="submit">Enchérir</button>
+			</li>
+			<li><input type="reset" value="Back" /><br />
+			</li>
+			<li th:if="${isVendeur}"><button type="submit" >Retrait effectué</button>
+			</li>
 			</ul>
 		</form>
+		
+		
+		<div class="footer"
+		th:replace="~{/fragments/fragment-piedpage :: fragment-piedpage}"></div>
 </body>
 </html>

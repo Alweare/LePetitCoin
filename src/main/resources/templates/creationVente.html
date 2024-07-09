@@ -14,22 +14,37 @@
 	
 		<img src="" alt="" />
 		<form th:action="@{/creationVente}" method="POST" th:object="${nouvelleEnchere}">
+		
+			<div data-th-replace="~{/fragments/errors/fragment-errors :: frag-errors}" ></div>
 				<label for="inputNom">Article :</label>
-				<input th:field="*{nomArticle}" id="inputNom" type="text"  />
+				<input th:field="*{nomArticle}" id="inputNom" type="text"  /> 
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('nomArticle')}" ></div>
+				
 				<label for="inputDescription">Description :</label>
 				<textarea th:field="*{description}" id="inputDescription" cols="30" rows="10" ></textarea>
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('description')}" ></div>
+				
 				<label for="inputCategorie">Catégorie :</label>
 				<select id="categories" th:field="*{categorieArticle}">
             		<option th:each="item : ${categoriesSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
         		</select>				
+        		<div data-th-replace="~{/fragments/errors/error :: frag-error('categorieArticle')}" ></div>
+				
 				<label for="inputFile">Photo de l'article :</label>
 				<input type="file" id="profile_pic" name="profile_pic" accept=".jpg, .jpeg, .png" />
+				<!-- div data-th-replace="~{/fragments/errors/error :: frag-error('profile_pic')}" ></div>-->
+				
 				<label for="inputMAP">Mise à prix :</label>
-				<input type="number" id="inputMAP" name="inputMAP" min="1"  th:field="*{prixInitial}"/>
+				<input type="number" id="inputMAP" th:field="*{prixInitial}"/>
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('prixInitial')}" ></div>
+				
 				<label for="inputDebut">Début de l'enchère :</label>
 				<input id="inputDebut" type="datetime-local" value=""  th:field="*{dateDebutEnchere}"/>
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('dateDebutEnchere')}" ></div>
+				
 				<label for="inputFin">Fin de l'enchère :</label>
 				<input id="inputFin" type="datetime-local" value=""  th:field="*{dateFinEncheres}"/>
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('dateFinEncheres')}" ></div>
 			
 			<fieldset>
 			<legend>Retrait </legend>
