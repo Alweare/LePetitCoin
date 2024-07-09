@@ -25,6 +25,7 @@ public interface ArticleService {
 	List<ArticleVendu> recupereMesVentesEnCours(int id);
 	List<ArticleVendu> recupereMesVentesNonDebuter(int id);
 	List<ArticleVendu> recupereMesVentesTerminee(int id);
+	void encherir(int idUtilisateur, int idArticle, int montantEnchere);
 
 
 }
