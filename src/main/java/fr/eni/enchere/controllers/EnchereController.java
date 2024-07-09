@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -89,13 +90,13 @@ public class EnchereController {
 		return "listeEnchere";
 	}
 
-	@GetMapping("/encherir")
-	public String afficherEncherir(@RequestParam("idArticle") int idArticle ,Model model) {
-		ArticleVendu a = this.articleService.RecupererArticleParId(idArticle);
-		model.addAttribute("a", a);
-		
-		return "encherir";
-	}
+//	@GetMapping("/encherir")
+//	public String afficherEncherir(@RequestParam("idArticle") int idArticle ,Model model) {
+//		ArticleVendu a = this.articleService.RecupererArticleParId(idArticle);
+//		model.addAttribute("a", a);
+//		
+//		return "encherir";
+//	}
 	@PostMapping("/enchere")
 	public String Encherir() {
 
@@ -192,5 +193,21 @@ public class EnchereController {
 		return "view-index";
 	}
 
+	 @GetMapping("/encherir")
+	    public String verifierVendeur(@RequestParam("idArticle") int id, Model model, Principal principal) {
+	        ArticleVendu article = articleService.RecupererArticleParId(id);
+	        String currentUsername = principal != null ? principal.getName() : null;
+	        boolean isVendeur = false;
+System.out.println("username LAAAAAAA : "+article);
+	        if (currentUsername != null) {
+	            Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(currentUsername);
+	            isVendeur = article.getVendeur().getId() == utilisateur.getId();
 
+	        }
+	        
+	        model.addAttribute("a", article);
+	        model.addAttribute("isVendeur", isVendeur);
+
+	        return "encherir";
+	    }
 }

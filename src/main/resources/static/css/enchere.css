@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+fieldset {
+	display: inline-block;
+	width: 45%; 
+    margin: 1vw;
+    box-sizing: border-box;    
+}
+
+#radio {
+	display: flex;
+	flex-direction: row;
+	
+}
+#checkbox {
+	display: flex;
+	flex-direction: column;
+	
+}
+
+.filtre-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5vw;
+}
+
+.checkbox-group {
+	display : flex;
+	flex-direction: column;
+	align-items:flex-start;
+    margin-left: 5vw;
+     
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-bottom: 5px; 
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+    max-width: 800px;
+    padding: 20px;
+    
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.radio-section {
+    display: flex;
+    justify-content: flex-start;
+    grid-column: span 2;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;    
+    align-items: flex-start;
+}
+
+.checkbox-group label {  
+    display: inline-block; 
+    margin-left: 1px;
+}
+.checkbox-group input[type="checkbox"] {
+    display: inline-block; 
+    margin-right: 5px; 
+    vertical-align: middle;
+}
+
+
+button {
+	display: flex;
+	justify-content: center;
+	
+}
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;    
+    margin-top: -80px;
+    margin-left: -80px;
+}
+
+
+button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 1.8em;
+    background-color: #58a956; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #36ba5e; 
+}

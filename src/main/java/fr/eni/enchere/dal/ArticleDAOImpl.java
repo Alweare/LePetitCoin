@@ -37,7 +37,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "	R.code_postal,"
 			+ "	R.ville,"
 			+ "	UV.id AS idVendeur,"
-			+ "	UV.pseudo AS vendeurPseudo\r\n"
+			+ "	UV.pseudo AS vendeurPseudo"
 			+ "		FROM ARTICLES_VENDUS as AV\r\n"
 			+ "		INNER JOIN UTILISATEURS as UV ON (UV.id = AV.idUtilisateur)"
 			+ "		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) "
