@@ -8,7 +8,7 @@ import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.exceptions.BusinessException;
 
 public interface ArticleService {
-	void CreerArticle(ArticleVendu article, String ville, String rue, String cp);
+	void CreerArticle(ArticleVendu article, String ville, String rue, String cp) throws BusinessException;
 	List<ArticleVendu> recupererEnchereEnCours();
 	List<ArticleVendu> recupererParParticipant(int idParticipant);
 	List<ArticleVendu> recupererEnchereGagnee(int idAcquereur);

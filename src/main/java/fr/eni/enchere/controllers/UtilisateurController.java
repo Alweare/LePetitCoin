@@ -60,7 +60,6 @@ public class UtilisateurController {
 			e.getErreurs().forEach(err -> {
 				ObjectError error = new ObjectError("globalError", err);
 				bindingResult.addError(error);
-				
 
 			});
 			return "creationProfil";

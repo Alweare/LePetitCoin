@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,11 +29,6 @@ public class EnchereController {
 
 	private ArticleService articleService;
 	private UtilisateurService utilisateurService;
-
-
-
-
-
 
 	public EnchereController(ArticleService articleService, UtilisateurService utilisateurService) {
 		super();
@@ -65,11 +61,7 @@ public class EnchereController {
 		return "creationVente";
 	}
 
-
-
-
 	@PostMapping("/creationVente")
-
 	public String creerVente(
 			@Valid @ModelAttribute("nouvelleEnchere") ArticleVendu article, 
 			BindingResult bindingResult,
@@ -77,10 +69,24 @@ public class EnchereController {
 			@ModelAttribute("ville") String ville,
 			@ModelAttribute("rue") String rue,
 			@ModelAttribute("codePostal") String cp
-			) throws BusinessException {
+			) {
+		
+		if(bindingResult.hasErrors()) {
+			return "creationVente";
+		}
+		
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
-		articleService.CreerArticle(article, ville, rue, cp);
+		try {
+			articleService.CreerArticle(article, ville, rue, cp);
+		} catch (BusinessException e) {
+			e.getErreurs().forEach(err -> {
+				
+				ObjectError error = new ObjectError("globalError", err);
+				bindingResult.addError(error);
 
+			});
+			return "creationVente";
+			}
 		return "listeEnchere";
 	}
 

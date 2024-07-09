@@ -6,26 +6,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class ArticleVendu {
 	
 	private int id;
+	
 	@NotBlank
 	private String nomArticle;
+	
 	@NotBlank
+	@Size(min= 15, max = 500, message= "La description doit avoir entre 15 et 500 caractères")
 	private String description;
-	@NotBlank
-	@FutureOrPresent(message = "Le début de l'enchère ne peut être dans le passé")
+	
+	@NotNull
+	@FutureOrPresent
 	private LocalDateTime dateDebutEnchere;
-	@NotBlank
-	@Future(message = "La fin de l'enchère doit être dans le future")
+	
+	@Future
+	@NotNull
 	private LocalDateTime dateFinEncheres;
-	@NotBlank
-	@Min(1)
+	@Min(value = 1, message = "La mise à prix doit être au minimum de 1")
 	private int prixInitial;
 	private int prixVente;
 	private String etatVente;
