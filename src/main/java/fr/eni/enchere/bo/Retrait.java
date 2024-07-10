@@ -1,9 +1,14 @@
 package fr.eni.enchere.bo;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class Retrait {
 	
+	@NotBlank
 	private String rue;
+	@NotBlank
 	private String code_postal;
+	@NotBlank
 	private String ville;
 	
 		
