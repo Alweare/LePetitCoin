@@ -13,10 +13,9 @@
 
 	
 		<img src="" alt="" />
-		<form th:each="a : ${a}" >
-		<ul >
-		
-			<li><label for="inputNom">Article :</label>
+		<form th:action="@{/enchere}" method="POST">
+		<ul>
+			<li th:each="a : ${a}" ><label for="inputNom">Article :</label>
 				<input th:value="${a.nomArticle}" id="inputNom" type="text"  />
 			</li>
 			<li><label for="inputDescription">Description :</label>
@@ -27,10 +26,10 @@
 										
 			</li>
 			<li><label for="inputPrix">Meilleure offre :</label>
-				<input type="number" id="inputPrix" name="inputMAP" min="1"  th:value="${a.prixVente}" readonly="readonly"/>
+				<input type="number" id="inputPrix"  min="1"  th:value="${a.prixVente}" readonly="readonly"/>
 			</li>
 			<li><label for="inputMAP">Mise à prix :</label>
-				<input type="number" id="inputMAP" name="inputMAP" min="1"  th:value="${a.prixInitial}"/>
+				<input type="number" id="inputMAP"  min="1"  th:value="${a.prixInitial}"/>
 			</li>
 			
 			<li><label for="inputFin">Fin de l'enchère :</label>
@@ -49,7 +48,8 @@
 				<input id="inputTelephone" type="text"   th:value="${a.vendeur.telephone}"/>
 			</li>
 			<li sec:authorize="isAuthenticated()" th:if="${!isVendeur}"><label for="inputEnchere">Ma proposition</label>
-			<input type="number" th:attr="min=${a.prixVente + 1}"/>
+			<input type="number" th:attr="min=${a.prixVente + 1}" name="proposition"/>
+			<input type="hidden" name="id" th:value="${a.id}" />
 			</li>
 			<li sec:authorize="isAuthenticated()" th:if="${!isVendeur}"><button type="submit">Enchérir</button>
 			</li>

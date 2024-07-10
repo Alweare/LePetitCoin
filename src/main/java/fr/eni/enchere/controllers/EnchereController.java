@@ -85,16 +85,32 @@ public class EnchereController {
 		return "listeEnchere";
 	}
 
-
 	@PostMapping("/enchere")
-	public String Encherir() {
+	public String Encherir(@RequestParam("id") int id, @RequestParam("proposition") int proposition, Principal principal, Model model) {
+		Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(principal.getName());
+		ArticleVendu article = articleService.RecupererArticleParId(id);
+		
+		try {
+			articleService.encherir(utilisateur.getId(), id, proposition);
+	
+		} catch (BusinessException e) {
+		
+			e.printStackTrace();
+		}
+		String currentUsername = principal != null ? principal.getName() : null;
+        boolean isVendeur = false;
+        if (currentUsername != null) {
+            Utilisateur utilisateur1 = utilisateurService.trouverUtilisateurParPseudo(currentUsername);
+            isVendeur = article.getVendeur().getId() == utilisateur1.getId();
+
+        }
+        
+        model.addAttribute("a", article);
+        model.addAttribute("isVendeur", isVendeur);
+		 
+
 		return "encherir";
 	}
-
-	@ModelAttribute("encherir")
-		public String enchere() {
-		    return "encherir";
-		}
 
 
 	@ModelAttribute("creationVente")

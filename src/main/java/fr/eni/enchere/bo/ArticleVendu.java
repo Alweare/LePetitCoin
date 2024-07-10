@@ -46,8 +46,8 @@ public class ArticleVendu {
 	private Categorie CategorieArticle;
 	private Utilisateur acheteur;
 	private Utilisateur vendeur;
-	private List<Enchere> encheres;
-	private String photo;
+
+	private Enchere encheres;
 	
 
 	public Retrait getLieuRetrait() {
@@ -58,18 +58,25 @@ public class ArticleVendu {
 		this.lieuRetrait = lieuRetrait;
 	}
 
-	public List<Enchere> getEncheres() {
+
+	public Enchere getEncheres() {
 		return encheres;
 	}
 
-	public void setEncheres(List<Enchere> encheres) {
+	public void setEncheres(Enchere encheres) {
 		this.encheres = encheres;
 	}
+
 	public ArticleVendu() {
 	}
-	public ArticleVendu(int id, String nomArticle, String description, LocalDateTime dateDebutEnchere,
-			LocalDateTime dateFinEncheres, int prixInitial, int prixVente, String etatVente, Retrait lieuRetrait,
-			Categorie categorieArticle, Utilisateur acheteur, Utilisateur vendeur, String photo) {
+
+	public ArticleVendu(int id, @NotBlank String nomArticle,
+			@NotBlank @Size(min = 15, max = 500, message = "La description doit avoir entre 15 et 500 caractères") String description,
+			@NotNull @FutureOrPresent LocalDateTime dateDebutEnchere, @Future @NotNull LocalDateTime dateFinEncheres,
+			@Min(value = 1, message = "La mise à prix doit être au minimum de 1") int prixInitial, int prixVente,
+			String etatVente, Retrait lieuRetrait, Categorie categorieArticle, Utilisateur acheteur,
+			Utilisateur vendeur, Enchere encheres) {
+
 		this.id = id;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -82,9 +89,8 @@ public class ArticleVendu {
 		CategorieArticle = categorieArticle;
 		this.acheteur = acheteur;
 		this.vendeur = vendeur;
-		this.photo = photo;
-		
-		this.encheres= new ArrayList<Enchere>();
+		this.encheres = encheres;
+
 	}
 
 	public String getNomArticle() {
@@ -205,13 +211,6 @@ public class ArticleVendu {
 	}
 	
 
-	public String getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
 
 	@Override
 	public int hashCode() {
