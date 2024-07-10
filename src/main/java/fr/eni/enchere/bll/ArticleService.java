@@ -9,10 +9,8 @@ import fr.eni.enchere.exceptions.BusinessException;
 
 public interface ArticleService {
 	void CreerArticle(ArticleVendu article) throws BusinessException;
-	List<ArticleVendu> recupererEnchereEnCours();
-	List<ArticleVendu> recupererParParticipant(int idParticipant);
-	List<ArticleVendu> recupererEnchereGagnee(int idAcquereur);
-	Enchere RecupererArticle(int idArticle);
+	List<ArticleVendu> recupererEnchereEnCours();	
+	
 	Enchere trouverEnchereParID(int id);
 	void changerID(int ancienId, int nouveauId);
 	List<Categorie> recupererCategories();

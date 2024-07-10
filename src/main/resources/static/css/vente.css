@@ -16,8 +16,7 @@ fieldset {
     width: 15vw;    
     margin-top: 1vh;
     margin-left: 1vw;
-    margin-right: 1vw;
-    
+    margin-right: 1vw;    
 }
 button[type="reset"] {
 	padding: 10px 20px;
@@ -49,7 +48,6 @@ form {
     line-height: 1em;	
 /*     margin-left: 40%;     */
 }
-
 form label {
 	display: flex;
 	flex-direction: row;

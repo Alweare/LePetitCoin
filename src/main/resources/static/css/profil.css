@@ -36,12 +36,10 @@ form input {
 	font-size:  1em;
 	width: 150%;
 }
-
 button {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	
+	justify-content: center;	
 }
 .button-container {
     display: flex;
@@ -49,11 +47,8 @@ button {
     justify-content: center;
     width: 20vw;    
     margin-top: 1vh;
-    margin-left: 1vw;
-    
+    margin-left: 1vw;    
 }
-
-
 button[type="submit"] {	
     padding: 1em 2em;
     font-size: 1.8em;
@@ -66,7 +61,6 @@ button[type="submit"] {
     margin-top: 5vh;
     margin-right: 2vw;
 }
-
 button[type="submit"]:hover {
     background-color: #36ba5e;    
     transform: scale(1.2); 

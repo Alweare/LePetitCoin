@@ -56,24 +56,6 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<ArticleVendu> recupererParParticipant(int idParticipant) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ArticleVendu> recupererEnchereGagnee(int idAcquereur) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Enchere RecupererArticle(int idArticle) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 
 	public Enchere trouverEnchereParID(int id) {
 		Enchere article =  articleDao.trouverEnchereParID(id);

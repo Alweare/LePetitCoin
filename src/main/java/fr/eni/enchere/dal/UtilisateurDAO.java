@@ -9,8 +9,7 @@ public interface UtilisateurDAO {
 
 	List<Utilisateur> trouveTout();
 	
-	Utilisateur lire(int id);
-	
+	Utilisateur lire(int id);	
 	
 	void creerUtilisateur(Utilisateur utilisateur);
 	

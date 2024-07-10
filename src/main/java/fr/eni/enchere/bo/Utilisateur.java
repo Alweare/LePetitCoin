@@ -11,9 +11,7 @@ import jakarta.validation.constraints.Size;
 
 public class Utilisateur implements Serializable{
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private int id;
 	@NotBlank(message ="Saisir pseudo")
@@ -207,9 +205,5 @@ public class Utilisateur implements Serializable{
 				id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit,
 				administrateur);
 	}
-	
-	
-	
-	
 	
 }

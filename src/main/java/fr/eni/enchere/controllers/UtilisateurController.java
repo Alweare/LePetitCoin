@@ -37,12 +37,10 @@ public class UtilisateurController {
 		this.articleService = articleService;
 	}
 
-
 	@GetMapping("/creationProfil")
 	public String creationProfil(Model model) {
 		Utilisateur newUtilisateur = new Utilisateur();
 		model.addAttribute("newUtilisateur", newUtilisateur);
-
 		return "creationProfil";
 	}
 
@@ -51,7 +49,6 @@ public class UtilisateurController {
 		if(bindingResult.hasErrors()) {
 			return "creationProfil";
 		}
-
 		try {
 			this.utilisateurService.creerUtilisateur(utilisateur);
 			return "redirect:/";
@@ -60,14 +57,10 @@ public class UtilisateurController {
 			e.getErreurs().forEach(err -> {
 				ObjectError error = new ObjectError("globalError", err);
 				bindingResult.addError(error);
-
 			});
 			return "creationProfil";
 			}
-		
-
 		}
-
 
 
 	@GetMapping("/monProfil")
@@ -87,8 +80,7 @@ public class UtilisateurController {
 		if(bindingResult.hasErrors()) {
 			return "monProfil";
 		}
-		try {
-			
+		try {			
 			Utilisateur utilisateurExist = utilisateurService.trouverUtilisateurParPseudo(principal.getName());
 			utilisateur.setId(utilisateurExist.getId());
 			utilisateurService.mettreAJourUtilisateur(utilisateur);
@@ -101,13 +93,10 @@ public class UtilisateurController {
 		} catch (BusinessException e) {
 			e.getErreurs().forEach(err -> {
 				ObjectError error = new ObjectError("globalError", err);
-				bindingResult.addError(error);
-				
-
+				bindingResult.addError(error);	
 			});
 			return "monProfil";
-		}
-		
+		}		
 	}
 
 	
@@ -115,22 +104,17 @@ public class UtilisateurController {
 	public String supprimerCompte(Principal principal) {
 		Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(principal.getName());
 		int idUtilisateur = utilisateur.getId();
-		Enchere enchere = articleService.trouverEnchereParID(idUtilisateur);
-		
+		Enchere enchere = articleService.trouverEnchereParID(idUtilisateur);		
 		if(enchere == null) {
 			utilisateurService.supprimerUtilisateur(idUtilisateur);
 		}else {
 			articleService.changerID(idUtilisateur,100);
 			utilisateurService.supprimerUtilisateur(idUtilisateur);
-		}
-		
+		}		
 		return "/view-index";
 	}
 	
-	@GetMapping("/nouveauMDP")
-	public String modifierMDP() {
-		return "/nouveauMDP";
-	}
+	
 
 }
 
