@@ -16,31 +16,39 @@
 		<ul>
 			<li><label for="inputPseudo">Pseudo :</label>
 				<input id="inputPseudo" type="text" data-th-field="*{pseudo}"  />
+				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('pseudo')}"></ul>
 			</li>
 			<li><label for="inputNom">Nom :</label>
 				<input id="inputNom" type="text" data-th-field="*{nom}" />
+				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('nom')}"></ul>
 			</li>
 			<li><label for="inputPrenom">Prénom :</label>
 				<input id="inputPrenom" type="text" data-th-field="*{prenom}" />
+				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('prenom')}"></ul>
 			</li>
 			<li><label for="inputEmail">Email :</label>
 				<input id="inputEmail" type="email" data-th-field="*{email}" />
+				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('email')}"></ul>
 			</li>
 			<li><label for="inputTelephone">Téléphone :</label>
 				<input id="inputTelephone" type="text" data-th-field="*{telephone}" />
+				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('telephone')}"></ul>
 			</li>
 			<li><label for="inputRue">Rue :</label>
 				<input id="inputRue" type="text" data-th-field="*{rue}" />
+				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('rue')}"></ul>
 			</li>
 			<li><label for="inputCP">Code Postal :</label>
 				<input id="inputCP" type="text" data-th-field="*{codePostal}" />
+				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('codePostal')}"></ul>
 			</li>
 			<li><label for="inputVille">Ville :</label>
 				<input id="inputVille" type="text" data-th-field="*{ville}" />
+				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('ville')}"></ul>
 			</li>	
 			<li><label for="inputPassword">Mot de passe :</label>
 				<input id="inputPassword" type="password"  th:field="*{motDePasse}"/>
-				<div data-th-replace="~{/fragments/errors/error :: frag-error('motDePasse')}" ></div>
+				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('motDePasse')}"></ul>
 			</li>
 			<li><label for="inputPasswordConfirm">Confirmation :</label>
 				<input id="inputPasswordConfirm" type="password"  />

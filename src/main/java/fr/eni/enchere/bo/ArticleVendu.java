@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+<<<<<<< Updated upstream
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.Future;
@@ -14,6 +15,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+=======
+>>>>>>> Stashed changes
 
 public class ArticleVendu {
 	
@@ -43,6 +46,7 @@ public class ArticleVendu {
 	private Utilisateur acheteur;
 	private Utilisateur vendeur;
 	private List<Enchere> encheres;
+	private String photo;
 	
 
 	
@@ -67,7 +71,7 @@ public class ArticleVendu {
 	}
 	public ArticleVendu(int id, String nomArticle, String description, LocalDateTime dateDebutEnchere,
 			LocalDateTime dateFinEncheres, int prixInitial, int prixVente, String etatVente, Retrait lieuRetrait,
-			Categorie categorieArticle, Utilisateur acheteur, Utilisateur vendeur) {
+			Categorie categorieArticle, Utilisateur acheteur, Utilisateur vendeur, String photo) {
 		this.id = id;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -80,6 +84,7 @@ public class ArticleVendu {
 		CategorieArticle = categorieArticle;
 		this.acheteur = acheteur;
 		this.vendeur = vendeur;
+		this.photo = photo;
 		
 		this.encheres= new ArrayList<Enchere>();
 	}
@@ -201,6 +206,15 @@ public class ArticleVendu {
 	
 	public String getHeureFin() {
 		return this.dateFinEncheres.format(DateTimeFormatter.ofPattern("HH'h'mm"));
+	}
+	
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	@Override

@@ -1,18 +1,30 @@
 package fr.eni.enchere.controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+<<<<<<< Updated upstream
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+=======
+import org.springframework.util.StringUtils;
+>>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+<<<<<<< Updated upstream
+=======
+import org.springframework.web.multipart.MultipartFile;
+>>>>>>> Stashed changes
 
 import fr.eni.enchere.bll.ArticleService;
 import fr.eni.enchere.bll.UtilisateurService;
@@ -20,15 +32,20 @@ import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
+<<<<<<< Updated upstream
 import fr.eni.enchere.exceptions.BusinessException;
 import jakarta.validation.Valid;
+=======
+>>>>>>> Stashed changes
 
 @Controller
 @SessionAttributes({"categoriesSession"})
 public class EnchereController {
-
+	@Autowired
 	private ArticleService articleService;
 	private UtilisateurService utilisateurService;
+	
+	
 
 	public EnchereController(ArticleService articleService, UtilisateurService utilisateurService) {
 		super();
@@ -68,6 +85,7 @@ public class EnchereController {
 			Principal principal, 
 			@ModelAttribute("ville") String ville,
 			@ModelAttribute("rue") String rue,
+<<<<<<< Updated upstream
 			@ModelAttribute("codePostal") String cp
 			) {
 		
@@ -75,6 +93,9 @@ public class EnchereController {
 			return "creationVente";
 		}
 		
+=======
+			@ModelAttribute("codePostal") String cp){	
+>>>>>>> Stashed changes
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
 		try {
 			articleService.CreerArticle(article, ville, rue, cp);
@@ -84,10 +105,14 @@ public class EnchereController {
 				ObjectError error = new ObjectError("globalError", err);
 				bindingResult.addError(error);
 
+<<<<<<< Updated upstream
 			});
 			return "creationVente";
 			}
 		return "listeEnchere";
+=======
+		return "view-index";
+>>>>>>> Stashed changes
 	}
 
 //	@GetMapping("/encherir")

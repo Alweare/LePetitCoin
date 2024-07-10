@@ -83,8 +83,10 @@ public class UtilisateurController {
 	}
 
 	@PostMapping("/miseAJourProfil")
-	public String miseAJourProfil(@ModelAttribute("utilisateur") Utilisateur utilisateur,Model model, Principal principal) {
-		
+	public String miseAJourProfil(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult,Model model, Principal principal) throws BusinessException {
+		if(bindingResult.hasErrors()) {
+			return "monProfil";
+		}
 		try {
 			
 			Utilisateur utilisateurExist = utilisateurService.trouverUtilisateurParPseudo(principal.getName());
@@ -97,7 +99,12 @@ public class UtilisateurController {
 		        }
 		        return "redirect:/"; // Rediriger vers la page de connexion après déconnexion
 		} catch (BusinessException e) {
-			model.addAttribute("errorMessage", e.getMessage());
+			e.getErreurs().forEach(err -> {
+				ObjectError error = new ObjectError("globalError", err);
+				bindingResult.addError(error);
+				
+
+			});
 			return "monProfil";
 		}
 		
