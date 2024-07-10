@@ -10,7 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import fr.eni.enchere.bo.Enchere;
+import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
+import fr.eni.enchere.dal.RetraitDAO;
 import fr.eni.enchere.dal.UtilisateurDAO;
 import fr.eni.enchere.exceptions.BusinessException;
 
@@ -24,7 +26,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	
 
 	public UtilisateurServiceImpl(UtilisateurDAO utilisateurDAO, PasswordEncoder passwordEncoder) {
-		super();
+
 		this.utilisateurDAO = utilisateurDAO;
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -145,6 +147,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public void supprimerUtilisateur(int id) {
 		utilisateurDAO.supprimerUnUtilisateur(id);
 		
+	}
+
+	@Override
+	public Retrait ConsulterAdressePArId(int id) {
+		
+		return this.utilisateurDAO.trouveAdressParId(id);
 	}
 
 

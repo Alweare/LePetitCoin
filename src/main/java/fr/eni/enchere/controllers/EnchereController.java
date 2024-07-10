@@ -51,7 +51,7 @@ public class EnchereController {
 	}
 
 	@GetMapping("/")
-	public String acceuil(Model model, Principal principal) {
+	public String acceuil(Model model) {
 
 		model.addAttribute("listeEncheres", articleService.recupererEnchereEnCours());
 
@@ -61,9 +61,10 @@ public class EnchereController {
 
 
 	@GetMapping("/creationVente")
-	public String creationVente(Model model) {
+	public String creationVente(Model model, Principal principal) {
 
 		ArticleVendu articleVendu = new ArticleVendu();
+		articleVendu.setLieuRetrait(this.utilisateurService.ConsulterAdressePArId(this.utilisateurService.trouverUtilisateurParPseudo(principal.getName()).getId()));
 		model.addAttribute("nouvelleEnchere", articleVendu);
 		return "creationVente";
 	}
