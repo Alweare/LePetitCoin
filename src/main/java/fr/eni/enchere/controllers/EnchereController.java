@@ -72,11 +72,7 @@ public class EnchereController {
 	public String creerVente(
 			@Valid @ModelAttribute("nouvelleEnchere") ArticleVendu article, 
 			BindingResult bindingResult,
-			Principal principal, 
-			@ModelAttribute("ville") String ville,
-			@ModelAttribute("rue") String rue,
-
-			@ModelAttribute("codePostal") String cp
+			Principal principal
 			) {
 		
 		if(bindingResult.hasErrors()) {
@@ -85,7 +81,7 @@ public class EnchereController {
 
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
 		try {
-			articleService.CreerArticle(article, ville, rue, cp);
+			articleService.CreerArticle(article);
 		} catch (BusinessException e) {
 			e.getErreurs().forEach(err -> {
 				

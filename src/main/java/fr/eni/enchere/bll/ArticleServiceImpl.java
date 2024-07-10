@@ -37,7 +37,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void CreerArticle(ArticleVendu article, String ville, String rue, String cp) throws BusinessException {
+	public void CreerArticle(ArticleVendu article) throws BusinessException {
 		BusinessException be = new BusinessException();
 		
 		if (article.getDateFinEncheres().isBefore(article.getDateDebutEnchere().plusHours(24))) {
@@ -46,12 +46,6 @@ public class ArticleServiceImpl implements ArticleService {
 			throw be;
 		}
 		
-		Retrait retrait = new Retrait(rue, cp, ville);
-		article.setLieuretrait(retrait);
-		
-		if (article.getLieuretrait().getRue().isEmpty()) {
-			article.setLieuRetrait(this.utilisateurDao.trouveAdressParId(article.getVendeur().getId()));
-		}
 		int idArticle = this.articleDao.creer(article);
 		this.retraitDao.creer(article.getLieuRetrait(), idArticle);
 	}
