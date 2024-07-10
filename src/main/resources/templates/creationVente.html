@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" data-th-href="@{/css/general.css}">
+<link rel="stylesheet" data-th-href="@{/css/enchere.css}">
+<link rel="stylesheet" data-th-href="@{/css/vente.css}">
+
+
 
 <title>Le Petit Coin</title>
 </head>
@@ -13,30 +17,36 @@
 	<h2>Nouvelle vente</h2>
 	
 		<img src="" alt="" />
-<<<<<<< Updated upstream
-		<form th:action="@{/creationVente}" method="POST" th:object="${nouvelleEnchere}">
+
 		
 			<div data-th-replace="~{/fragments/errors/fragment-errors :: frag-errors}" ></div>
-=======
-		
->>>>>>> Stashed changes
-				<label for="inputNom">Article :</label>
-				<input th:field="*{nomArticle}" id="inputNom" type="text"  /> 
+
+
+				<div><label for="inputNom">Article :</label>
+					<input th:field="*{nomArticle}" id="inputNom" type="text"  /> </div>
+
 				<div data-th-replace="~{/fragments/errors/error :: frag-error('nomArticle')}" ></div>
 				
-				<label for="inputDescription">Description :</label>
-				<textarea th:field="*{description}" id="inputDescription" cols="30" rows="10" ></textarea>
+				<div>
+					<label for="inputDescription">Description :</label>
+					<textarea th:field="*{description}" id="inputDescription" cols="80" rows="10" ></textarea>
+				</div>
 				<div data-th-replace="~{/fragments/errors/error :: frag-error('description')}" ></div>
 				
-				<label for="inputCategorie">Catégorie :</label>
-				<select id="categories" th:field="*{categorieArticle}">
-            		<option th:each="item : ${categoriesSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
-        		</select>				
+				<div>
+					<label for="inputCategorie">Catégorie :</label>
+					<select id="categories" th:field="*{categorieArticle}">
+					            		<option th:each="item : ${categoriesSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
+				</select>
+				</div>
+        						
         		<div data-th-replace="~{/fragments/errors/error :: frag-error('categorieArticle')}" ></div>
 				
-				<label for="inputFile">Photo de l'article :</label>
 
-				<input type="file" id="profile_pic" name="profile_pic" accept=".jpg, .jpeg, .png" />
+				<div>
+					<label for="inputFile">Photo de l'article :</label>
+					<input type="file" id="profile_pic" name="profile_pic" accept=".jpg, .jpeg, .png" />
+				</div>
 				<!-- div data-th-replace="~{/fragments/errors/error :: frag-error('profile_pic')}" ></div>-->
 
 				<label for="inputMAP">Mise à prix :</label>
@@ -71,11 +81,11 @@
 		
 		
 
-		
+		<div class="button-container">
 			<button type="submit">Enregistrer</button>
-			<input type="reset" value="Reset" />Annuler<br />
-			<input type="reset" value="Reset" />Annuler la vente<br />
-			
+			<button type="reset" >Annuler</button><br />
+			<button type="reset">Annuler la vente</button><br />
+		</div>	
 		</form>
 		
 		

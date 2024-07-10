@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" data-th-href="@{/css/general.css}">
-
+<link rel="stylesheet" data-th-href="@{/css/profil.css}">
 <title>Le Petit Coin</title>
 </head>
 <body>
@@ -11,58 +11,62 @@
 	<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
 	
 	<h2>Mon profil</h2>
+		<div class="form-grid">
 	
-	<form th:action="@{/miseAJourProfil}" method="POST" th:object="${utilisateur}">
+	<form id="profil" th:action="@{/miseAJourProfil}" method="POST" th:object="${utilisateur}">
 		<ul>
+
 			<li><label for="inputPseudo">Pseudo :</label>
 				<input id="inputPseudo" type="text" data-th-field="*{pseudo}"  />
-				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('pseudo')}"></ul>
+				<ul data-th-replace="~{fragments/errors/error :: frag-error('pseudo')}"></ul>
 			</li>
 			<li><label for="inputNom">Nom :</label>
 				<input id="inputNom" type="text" data-th-field="*{nom}" />
-				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('nom')}"></ul>
+				<ul data-th-replace="~{fragments/errors/error :: frag-error('nom')}"></ul>
 			</li>
 			<li><label for="inputPrenom">Prénom :</label>
 				<input id="inputPrenom" type="text" data-th-field="*{prenom}" />
-				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('prenom')}"></ul>
+				<ul data-th-replace="~{fragments/errors/error :: frag-error('prenom')}"></ul>
 			</li>
 			<li><label for="inputEmail">Email :</label>
 				<input id="inputEmail" type="email" data-th-field="*{email}" />
-				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('email')}"></ul>
+				<ul data-th-replace="~{fragments/errors/error :: frag-error('email')}"></ul>
 			</li>
 			<li><label for="inputTelephone">Téléphone :</label>
 				<input id="inputTelephone" type="text" data-th-field="*{telephone}" />
-				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('telephone')}"></ul>
+				<ul data-th-replace="~{fragments/errors/error :: frag-error('telephone')}"></ul>
 			</li>
 			<li><label for="inputRue">Rue :</label>
 				<input id="inputRue" type="text" data-th-field="*{rue}" />
-				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('rue')}"></ul>
+				<ul data-th-replace="~{fragments/errors/error :: frag-error('rue')}"></ul>
 			</li>
 			<li><label for="inputCP">Code Postal :</label>
 				<input id="inputCP" type="text" data-th-field="*{codePostal}" />
-				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('codePostal')}"></ul>
+				<ul data-th-replace="~{fragments/errors/error :: frag-error('codePostal')}"></ul>
 			</li>
 			<li><label for="inputVille">Ville :</label>
 				<input id="inputVille" type="text" data-th-field="*{ville}" />
-				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('ville')}"></ul>
+				<ul data-th-replace="~{fragments/errors/error :: frag-error('ville')}"></ul>
 			</li>	
 			<li><label for="inputPassword">Mot de passe :</label>
 				<input id="inputPassword" type="password"  th:field="*{motDePasse}"/>
-				<ul data-th-replace="~{fragments/errors/fragment-error :: frag-error('motDePasse')}"></ul>
+				<ul data-th-replace="~{fragments/errors/error :: frag-error('motDePasse')}"></ul>
 			</li>
 			<li><label for="inputPasswordConfirm">Confirmation :</label>
 				<input id="inputPasswordConfirm" type="password"  />
 			</li>			
-					
+
 		</ul>
-		<!-- boutons à activer -->
-			<button type="submit">Modifier mes information</button>
-	</form>
-		
-	<form th:action="@{/supprimerCompte}" method="POST" id="supprimerCompte">	
+		</form>
+		<div class="button-container">
+			<button type="submit">Modifier mes informations</button>
+		<div th:action="@{/supprimerCompte}" method="POST" id="supprimerCompte">	
 			<button type="submit">Supprimer mon compte</button><br />
-	</form>
-		
+	</div>
+	</div>	
+	
+	
+		</div>	
 		
 		
 		

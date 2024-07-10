@@ -46,23 +46,29 @@
 	</div>		
 			
 		<div class="checkbox-group" sec:authorize="isAuthenticated()">
-		<input type="checkbox" name="encheresOuvertes" value="enchèresOuvertes" /> 
-			<label for="enchèresOuvertes">enchères ouvertes</label> 
-		<input type="checkbox" name ="encheresEnCours" value="enchèresEnCours" /> 
-			<label for="enchèresEnCours">mes enchères en cours</label> 
-		<input type="checkbox" name="encheresRemportees" value="enchèresRemportees" /> 
-			<label for="enchèresRemportees">mes enchères remportées</label> 
+		<div>
+			<input type="checkbox" name="encheresOuvertes" value="enchèresOuvertes" /> 
+				<label for="enchèresOuvertes">enchères ouvertes</label>
+		</div> 
+		<div>
+			<input type="checkbox" name ="encheresEnCours" value="enchèresEnCours" /> 
+				<label for="enchèresEnCours">mes enchères en cours</label>
+		</div> 
+		<div><input type="checkbox" name="encheresRemportees" value="enchèresRemportees" /> 
+				<label for="enchèresRemportees">mes enchères remportées</label> </div>
 		</div>		
 		
 			
 		
 			<div class="checkbox-group" sec:authorize="isAuthenticated()">
-		<input type="checkbox" name="ventesEnCours" value="mes ventes en cours" /> 
-			<label for="ventesEnCours">mes ventes en cours</label> 
-		<input type="checkbox" name="ventesNonDebutees" value="ventes non débutées" />
-			<label for="ventesNonDebutees">mes ventes non débutées</label> 
-		<input type="checkbox" name="ventesTerminees" value="ventes terminées" /> 
-			<label for="ventesTerminees">mes ventes terminées</label>
+		<div><input type="checkbox" name="ventesEnCours" value="mes ventes en cours" /> 
+				<label for="ventesEnCours">mes ventes en cours</label> </div>
+		<div><input type="checkbox" name="ventesNonDebutees" value="ventes non débutées" />
+				<label for="ventesNonDebutees">mes ventes non débutées</label> </div>
+		<div>
+			<input type="checkbox" name="ventesTerminees" value="ventes terminées" /> 
+				<label for="ventesTerminees">mes ventes terminées</label>
+		</div>
 		</th:block>
 		</div>	
 	</div>
