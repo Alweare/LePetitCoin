@@ -68,15 +68,16 @@
 			<ul>
 			<li><label for="inputRue">Rue :</label>
 
-				<input id="inputRue" type="text" th:name="*{lieuRetrait.rue}" />
+				<input id="inputRue" type="text" th:field="*{lieuRetrait.rue}" />
+
 				<div data-th-replace="~{/fragments/errors/error :: frag-error('lieuRetrait.rue')}" ></div>
 			</li>
 			<li><label for="inputCP">Code Postal :</label>
-				<input id="inputCP" type="text" th:name="*{lieuRetrait.code_postal}"  />
+				<input id="inputCP" type="text" th:field="*{lieuRetrait.code_postal}"  />
 				<div data-th-replace="~{/fragments/errors/error :: frag-error('lieuRetrait.code_postal')}" ></div>
 			</li>
 			<li><label for="inputVille">Ville :</label>
-				<input id="inputVille" type="text" th:name="*{lieuRetrait.ville}"  />
+				<input id="inputVille" type="text" th:field="*{lieuRetrait.ville}"  />
 				<div data-th-replace="~{/fragments/errors/error :: frag-error('lieuRetrait.ville')}" ></div>
 
 				<input id="inputRue" type="text" th:name="rue" />

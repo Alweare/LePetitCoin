@@ -66,7 +66,6 @@ public class ArticleVendu {
 		this.encheres = encheres;
 	}
 	public ArticleVendu() {
-		this.lieuRetrait = new Retrait();
 	}
 	public ArticleVendu(int id, String nomArticle, String description, LocalDateTime dateDebutEnchere,
 			LocalDateTime dateFinEncheres, int prixInitial, int prixVente, String etatVente, Retrait lieuRetrait,
@@ -144,13 +143,6 @@ public class ArticleVendu {
 		this.etatVente = etatVente;
 	}
 
-	public Retrait getLieuretrait() {
-		return lieuRetrait;
-	}
-
-	public void setLieuretrait(Retrait lieuRetrait) {
-		this.lieuRetrait = lieuRetrait;
-	}
 
 	public Categorie getCategorieArticle() {
 		return CategorieArticle;
