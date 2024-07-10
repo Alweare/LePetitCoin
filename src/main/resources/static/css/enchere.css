@@ -52,6 +52,14 @@ form {
     
 }
 
+#profil{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	
+}
+
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -84,6 +92,7 @@ form {
 
 button {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	
 }
@@ -95,8 +104,7 @@ button {
     margin-left: -80px;
 }
 
-
-button[type="submit"] {
+button[type="submit"] {	
     padding: 10px 20px;
     font-size: 1.8em;
     background-color: #58a956; 
@@ -104,8 +112,10 @@ button[type="submit"] {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: transform 0.4s ease-out ;
 }
 
 button[type="submit"]:hover {
-    background-color: #36ba5e; 
+    background-color: #36ba5e;    
+    transform: scale(1.2); 
 }

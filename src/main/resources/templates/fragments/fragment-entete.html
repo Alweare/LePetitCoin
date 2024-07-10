@@ -1,9 +1,10 @@
 <header th:fragment="fragment-entete">
 <h1>
     <span sec:authorize="isAuthenticated()">
+    	<div id="logo">
         <a href="/">
-            <img src="/img/logo.png" id="logo" alt="Logo du site" />
-        </a>
+            <img src="/img/logo.png" alt="Logo du site" />
+        </a></div>
     </span>
     <span sec:authorize="!isAuthenticated()">
         <img src="/img/logo.png" id="logo" alt="Logo du site" />
