@@ -29,6 +29,9 @@ public class ArticleVendu {
 	@Size(min= 15, max = 500, message= "La description doit avoir entre 15 et 500 caractères")
 	private String description;
 	
+	//TODO IMPLEMENT IN FORM
+	private String cheminImage;
+
 	@NotNull
 	@FutureOrPresent
 	private LocalDateTime dateDebutEnchere;
@@ -103,6 +106,14 @@ public class ArticleVendu {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public String getCheminImage() {
+		return cheminImage;
+	}
+
+	public void setCheminImage(String cheminImage) {
+		this.cheminImage = cheminImage;
 	}
 
 	public LocalDateTime getDateDebutEnchere() {

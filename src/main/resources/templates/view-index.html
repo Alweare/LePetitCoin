@@ -70,7 +70,7 @@
 <<<<<<< Updated upstream
 	<fieldset  th:each="enchere: ${listeEncheres}">
 	<a th:href="@{/encherir(idArticle=${enchere.id})}" class="link-wrapper">
-		<img src="" alt="" />
+		<img th:src="${enchere.cheminImage}" alt="image de l'article" />
 		
 		<ul>
 			

@@ -4,8 +4,8 @@
 --DROP TABLE UTILISATEURS;
 --DROP TABLE CATEGORIES;
 
-USE master;
-go
+--USE master;
+--go
 DROP DATABASE ENIEncheres;
 
 CREATE DATABASE ENIEncheres;
@@ -69,6 +69,7 @@ CREATE TABLE ARTICLES_VENDUS (
     id                INTEGER IDENTITY(1,1) NOT NULL,
     nomArticle                   VARCHAR(30) NOT NULL,
     description                   VARCHAR(300) NOT NULL,
+	cheminImage					  VARCHAR(3000) NOT NULL,
 	dateDebutEncheres           DATETIME2 NOT NULL,
     dateFinEncheres             DATETIME2 NOT NULL,
     prixInitial                  INTEGER,
@@ -78,6 +79,12 @@ CREATE TABLE ARTICLES_VENDUS (
 );
 
 ALTER TABLE ARTICLES_VENDUS ADD constraint articles_vendus_pk PRIMARY KEY (id);
+ALTER TABLE ARRTICLES_VENDUS 
+	ADD 
+	CONSTRAINT df_articles_imgPath 
+	DEFAULT 'https://st2.depositphotos.com/9998432/48297/v/1600/depositphotos_482974586-stock-illustration-default-avatar-photo-placeholder-grey.jpg'
+	FOR cheminImage;
+
 
 ALTER TABLE ARTICLES_VENDUS
     ADD CONSTRAINT encheres_utilisateur_fk FOREIGN KEY ( idUtilisateur ) REFERENCES UTILISATEURS ( id )
