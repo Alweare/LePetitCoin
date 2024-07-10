@@ -20,20 +20,14 @@
 			<select  name="categories" id="categories" data-th-value="${categorie}"><br>
 			<option  value="0">Toutes</option><br>
 			<option th:each="item : ${categoriesSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
-<<<<<<< Updated upstream
+
 			</select><br>
 			<div class="button-container">
 			<button type="submit">Rechercher</button>
 		</div>
 	<div class="form-grid">
 	<div class="radio-section">
-=======
-			</select>
-			<button  type="submit">Rechercher</button>
-	<!-- sec:authorize="hasRole('1')"  -->
-	
 
->>>>>>> Stashed changes
 		<th:block sec:authorize="isAuthenticated()">
 		<input  type="radio" id="choix1" name="choixAchat" value="achats" /> 
 			<label for="choix1">Achats</label> 
@@ -67,29 +61,7 @@
 	<!-- insérer les annonces -->
 
 	
-<<<<<<< Updated upstream
-	<fieldset  th:each="enchere: ${listeEncheres}">
-	<a th:href="@{/encherir(idArticle=${enchere.id})}" class="link-wrapper">
-		<img th:src="${enchere.cheminImage}" alt="image de l'article" />
-		
-		<ul>
-			
-		
-			<li><label for="inputArticle"></label> <input id="inputArticle"
-				type="text" th:value="${enchere.nomArticle}" readonly /></li>
-			<li><label for="inputPrix">Prix :</label> <input id="inputPrix"
-				type="text" th:value="${enchere.prixVente}" readonly /></li>
-			<li><label for="inputFin">Fin de l'enchère :</label> <input
-				id="inputFin" type="text" th:value="${enchere.getDateFin()}"
-				readonly /> à <input type="text" th:value="${enchere.getHeureFin()}" readonly>
-			</li>
-			<li><label for="inputVendeur">Vendeur :</label> <input
-				id="inputVendeur" type="text" th:value="${enchere.vendeur.pseudo}"
-				readonly /></li>
-				
-	   </ul>
-	  </a>
-=======
+
 	<fieldset th:each="enchere: ${listeEncheres}">
 		
 
@@ -97,7 +69,7 @@
 	    <div class="enchere-details">
 	    <a th:href="@{/encherir(idArticle=${enchere.id})}" class="link-wrapper">
 		
-	        <img th:src="@{${enchere.photoPath}}" alt="Photo de l'article" />
+	        <img th:src="@{${enchere.cheminImage}}" alt="Photo de l'article" />
 	        <ul>
 	            <li><label for="inputArticle"></label> <input id="inputArticle"
 	                type="text" th:value="${enchere.nomArticle}" readonly /></li>
@@ -119,7 +91,6 @@
 	        </ul>
 	        </a>
 	    </div>
->>>>>>> Stashed changes
 	</fieldset>
 
 
