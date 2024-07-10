@@ -130,29 +130,37 @@ public void encherir(int idUtilisateur, int idArticle, int montantEnchere) throw
 	BusinessException be = new BusinessException();
 //	TODO : Si l'utilisateur en cours enchéri sur une enchère existante. Recredité l'encherisseur précédent 
 	//du montant de son enchere.
+	ArticleVendu article = articleDao.lire(idArticle);
 	
-	ArticleVendu enchere = articleDao.enchereArticle(idArticle);
+	
 	
 			if(!utilisateurExiste(idUtilisateur, be)) {
 				throw be;
 			}
-			if(!enchereExiste(idArticle) && creditSuffisant(idUtilisateur, montantEnchere, be)) {
+			if(enchereExistepas(idArticle) && creditSuffisant(idUtilisateur, montantEnchere, be)) {
 				int nouveauCreditAcheteur = utilisateurDao.lire(idUtilisateur).getCredit() - montantEnchere;
 				utilisateurDao.modifierCreditParId(idUtilisateur, nouveauCreditAcheteur);
 				int nouveauCreditVendeur = articleDao.lire(idArticle).getVendeur().getCredit() + montantEnchere;
-				utilisateurDao.modifierCreditParId(idUtilisateur, nouveauCreditVendeur);
+				utilisateurDao.modifierCreditParId(articleDao.lire(idArticle).getVendeur().getId(), nouveauCreditVendeur);
 				articleDao.creerEnchere(utilisateurDao.lire(idUtilisateur).getId(), articleDao.lire(idArticle).getId(), montantEnchere);
+
+				
 			}
-			if(enchereExiste(idArticle)) {
-				if(enchere.getEncheres().stream().anyMatch(e -> e.getMontantEnchere()< montantEnchere) && enchere.getDateFinEncheres().isAfter(LocalDateTime.now()) ) {
-					int nouveauCreditEncherisseur = enchere.getAcheteur().getCredit()+ enchere.getEncheres().stream()
-	                        .mapToInt(Enchere::getMontantEnchere)
-	                        .max()
-	                        .orElse(0)   ;
+			if(!enchereExistepas(idArticle) && articleDao.enchereArticle(idArticle)!=null) {
+				ArticleVendu enchere = articleDao.enchereArticle(idArticle);
+				
+				if(enchere.getPrixVente() < montantEnchere && enchere.getDateFinEncheres().isAfter(LocalDateTime.now()) ) {
+					Utilisateur ancienAcheteur = utilisateurDao.lire(enchere.getAcheteur().getId());
+					System.out.println(ancienAcheteur);
+					int nouveauCreditEncherisseur = ancienAcheteur.getCredit() + enchere.getPrixVente();
 					utilisateurDao.modifierCreditParId(enchere.getVendeur().getId(), nouveauCreditEncherisseur);
+					
+					
 					articleDao.creerEnchere(idUtilisateur, idArticle, montantEnchere);
 					int nouveauCreditAcheteur = utilisateurDao.lire(idUtilisateur).getCredit() - montantEnchere;
-					utilisateurDao.modifierCreditParId(idUtilisateur, nouveauCreditAcheteur);
+					
+					utilisateurDao.modifierCreditParId(utilisateurDao.lire(idUtilisateur).getId(), nouveauCreditAcheteur);
+
 				}
 			}
 }
@@ -169,10 +177,11 @@ private boolean creditSuffisant(int idUtilisateur,int montantEnchere,BusinessExc
 	return estValid;
 }
 // test enchere  existe
-private boolean enchereExiste(int idArticle) {
-	boolean estValid = true;
+private boolean enchereExistepas(int idArticle) {
+	
+	boolean estValid = false;
 	if(articleDao.nbEnchereArticle(idArticle) == 0) {
-		estValid = false;	
+		estValid = true;	
 	}
 	
 	return estValid;
