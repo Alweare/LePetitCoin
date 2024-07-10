@@ -6,12 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-<<<<<<< Updated upstream
-=======
 
-import org.springframework.format.annotation.DateTimeFormat;
-
->>>>>>> Stashed changes
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Min;

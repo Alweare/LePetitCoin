@@ -6,29 +6,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-<<<<<<< Updated upstream
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-=======
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
-import org.springframework.util.StringUtils;
-
->>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-<<<<<<< Updated upstream
-=======
 
-
-import org.springframework.web.multipart.MultipartFile;
-
->>>>>>> Stashed changes
 
 import fr.eni.enchere.bll.ArticleService;
 import fr.eni.enchere.bll.UtilisateurService;
@@ -36,15 +23,10 @@ import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
-<<<<<<< Updated upstream
-import fr.eni.enchere.exceptions.BusinessException;
-import jakarta.validation.Valid;
-=======
 
 import fr.eni.enchere.exceptions.BusinessException;
 import jakarta.validation.Valid;
 
->>>>>>> Stashed changes
 
 @Controller
 @SessionAttributes({"categoriesSession"})
@@ -93,21 +75,14 @@ public class EnchereController {
 			Principal principal, 
 			@ModelAttribute("ville") String ville,
 			@ModelAttribute("rue") String rue,
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 			@ModelAttribute("codePostal") String cp
 			) {
 		
 		if(bindingResult.hasErrors()) {
 			return "creationVente";
 		}
-<<<<<<< Updated upstream
 
-=======
-		
->>>>>>> Stashed changes
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
 		try {
 			articleService.CreerArticle(article, ville, rue, cp);
@@ -123,11 +98,6 @@ public class EnchereController {
 			}
 		return "listeEnchere";
 
-<<<<<<< Updated upstream
-=======
-	
-
->>>>>>> Stashed changes
 	}
 
 
