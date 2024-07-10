@@ -27,7 +27,17 @@
 		</div>
 	<div class="form-grid">
 	<div class="radio-section">
+<<<<<<< Updated upstream
 
+=======
+
+			</select>
+			<button  type="submit">Rechercher</button>
+	<!-- sec:authorize="hasRole('1')"  -->
+	
+
+
+>>>>>>> Stashed changes
 		<th:block sec:authorize="isAuthenticated()">
 		<input  type="radio" id="choix1" name="choixAchat" value="achats" /> 
 			<label for="choix1">Achats</label> 
@@ -62,6 +72,31 @@
 
 	
 
+<<<<<<< Updated upstream
+=======
+	<fieldset  th:each="enchere: ${listeEncheres}">
+	<a th:href="@{/encherir(idArticle=${enchere.id})}" class="link-wrapper">
+		<img src="" alt="" />
+		
+		<ul>
+			
+		
+			<li><label for="inputArticle"></label> <input id="inputArticle"
+				type="text" th:value="${enchere.nomArticle}" readonly /></li>
+			<li><label for="inputPrix">Prix :</label> <input id="inputPrix"
+				type="text" th:value="${enchere.prixVente}" readonly /></li>
+			<li><label for="inputFin">Fin de l'enchère :</label> <input
+				id="inputFin" type="text" th:value="${enchere.getDateFin()}"
+				readonly /> à <input type="text" th:value="${enchere.getHeureFin()}" readonly>
+			</li>
+			<li><label for="inputVendeur">Vendeur :</label> <input
+				id="inputVendeur" type="text" th:value="${enchere.vendeur.pseudo}"
+				readonly /></li>
+				
+	   </ul>
+	  </a>
+
+>>>>>>> Stashed changes
 	<fieldset th:each="enchere: ${listeEncheres}">
 		
 
@@ -69,7 +104,11 @@
 	    <div class="enchere-details">
 	    <a th:href="@{/encherir(idArticle=${enchere.id})}" class="link-wrapper">
 		
+<<<<<<< Updated upstream
 	        <img th:src="@{${enchere.cheminImage}}" alt="Photo de l'article" />
+=======
+	        <img  alt="Photo de l'article" />
+>>>>>>> Stashed changes
 	        <ul>
 	            <li><label for="inputArticle"></label> <input id="inputArticle"
 	                type="text" th:value="${enchere.nomArticle}" readonly /></li>
@@ -91,6 +130,10 @@
 	        </ul>
 	        </a>
 	    </div>
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 	</fieldset>
 
 

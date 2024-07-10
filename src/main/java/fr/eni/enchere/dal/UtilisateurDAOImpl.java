@@ -2,11 +2,17 @@ package fr.eni.enchere.dal;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import fr.eni.enchere.bo.Retrait;
@@ -26,14 +32,19 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private static final String SUPPRIMER_COMPTE = "DELETE FROM UTILISATEURS WHERE id = :id";
 	private static final String MODIF_CREDIT ="UPDATE UTILISATEURS SET credit = :credit WHERE id = :id";
 
+
 	
 	private NamedParameterJdbcTemplate jdbcTemplate;
+
 	
 	
 	
+	
+
 	public UtilisateurDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
+
 
 	@Override
 	public List<Utilisateur> trouveTout() {
@@ -142,5 +153,5 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		return this.jdbcTemplate.queryForObject(TROUVE_ADDRESSE_PAR_ID, map, new BeanPropertyRowMapper<Retrait>(Retrait.class));
 	}
 
-	
+
 }

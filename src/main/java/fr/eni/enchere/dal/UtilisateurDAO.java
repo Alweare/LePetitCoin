@@ -23,4 +23,6 @@ public interface UtilisateurDAO {
 	void supprimerUnUtilisateur(int id);
 	
 	Retrait trouveAdressParId(int idUtilistaueur);
+	
+	
 }
