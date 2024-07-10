@@ -19,12 +19,13 @@ go
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------ARTICLES_vendus-----------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)
-	VALUES ('une pelle', 'c''est une pelle', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 20, 30, 1, 1);
-
+INSERT INTO ARTICLES_VENDUS (nomArticle, description, cheminImage, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)
+	VALUES ('une pelle', 'c''est une pelle', DEFAULT, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 20, 30, 1, 1);
+	SELECT * FROM ARTICLES_VENDUS
 UPDATE ARTICLES_VENDUS SET 
 	nomArticle = 'un artichaud', 
-	description = 'c''est un artichaud', 
+	description = 'c''est un artichaud',
+	cheminImage = DEFAULT,
 	dateDebutEncheres = CURRENT_TIMESTAMP, 
 	dateFinEncheres = DATEADD(year, 1, CURRENT_TIMESTAMP), 
 	prixInitial = 12, 
@@ -49,13 +50,14 @@ UPDATE ARTICLES_VENDUS SET
 
 --SELECT id, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie FROM ARTICLES_VENDUS;
 
---SELECT * FROM ARTICLES_VENDUS
+--
 
 		--select in progress
 	SELECT 
 	AV.id,
 	AV.nomArticle, 
-	AV.description, 
+	AV.description,
+	AV.cheminImage,
 	AV.prixInitial, 
 	AV.prixVente,
 	AV.dateDebutEncheres, 
@@ -79,7 +81,7 @@ UPDATE ARTICLES_VENDUS SET
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------ENCHERE--------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO ENCHERES (idUtilisateur, idArticle, dateEnchere,montantEnchere) VALUES (1, 2, CURRENT_TIMESTAMP, 125);
+INSERT INTO ENCHERES (idUtilisateur, idArticle, dateEnchere,montantEnchere) VALUES (1, 1, CURRENT_TIMESTAMP, 125);
 --UPDATE ENCHERES SET dateEnchere = CURRENT_TIMESTAMP, montantEnchere= 150 WHERE idUtilisateur = 1 AND montantEnchere = 1;
 --DELETE ENCHERES WHERE idUtilisateur=1 AND idArticle = 1;
 

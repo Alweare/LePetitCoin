@@ -26,6 +26,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "	AV.id,"
 			+ "	AV.nomArticle, "
 			+ "	AV.description,"
+			+ " AV.cheminImage,"
 			+ "	AV.dateDebutEncheres,"
 			+ "	AV.dateFinEncheres,"
 			+ "	AV.prixVente,"
@@ -43,8 +44,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) "
 			+ "		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)";
 	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateDebutEncheres <= GETDATE() AND AV.dateFinEncheres > GETDate()";
-	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
-			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
+	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, cheminImage, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
+			+ "	VALUES (:nomArticle, :description, :cheminImage, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
 	private static final String TROUVE_ENCHERE ="SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES";
 	private static final String TROUVE_ENCHERE_PAR_ID=TROUVE_ENCHERE + " where idUtilisateur = :id";
 	private static final String CHANGER_ID_ENCHERES="ALTER TABLE ENCHERES DROP enchere_pk;"
@@ -163,6 +164,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 		//(:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :inCategoie);";
 		map.addValue("nomArticle", article.getNomArticle());
 		map.addValue("description", article.getDescription());
+		map.addValue("cheminImage", "DEFAULT");
 		map.addValue("dateDebut", article.getDateDebutEnchere());
 		map.addValue("dateFin", article.getDateFinEncheres());
 		map.addValue("prixInitial", article.getPrixInitial());
@@ -261,6 +263,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			article.setId(rs.getInt("id"));
 			article.setNomArticle(rs.getString("nomArticle"));
 			article.setDescription(rs.getString("description"));
+			article.setCheminImage(rs.getString("cheminImage"));
 			article.setDateDebutEnchere(rs.getTimestamp("dateDebutEncheres").toLocalDateTime());
 			article.setDateFinEncheres(rs.getTimestamp("dateFinEncheres").toLocalDateTime());
 			article.setPrixInitial(rs.getInt("prixInitial"));
