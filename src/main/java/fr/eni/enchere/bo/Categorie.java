@@ -32,8 +32,6 @@ public class Categorie {
 		this.libelle = libelle;
 	}
 
-	
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -55,11 +53,5 @@ public class Categorie {
 	public String toString() {
 		return String.format("Categorie [noCategorie=%s, libelle=%s]", id, libelle);
 	}
-	
-	
-	
-	
-	
-	
 	
 }

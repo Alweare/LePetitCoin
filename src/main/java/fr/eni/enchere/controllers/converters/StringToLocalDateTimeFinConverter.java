@@ -16,7 +16,4 @@ public class StringToLocalDateTimeFinConverter implements Converter<String, Loca
 		return LocalDateTime.parse(timeStamp);
 	}
 
-	
-	
-	
 }

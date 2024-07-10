@@ -18,7 +18,6 @@ public class ChaineVersCategorieConverter implements Converter<String, Categorie
 
 	@Override
 	public Categorie convert(String idCategorie) {
-
 		return this.as.consulterCategorieParId(Integer.parseInt(idCategorie));
 	}
 

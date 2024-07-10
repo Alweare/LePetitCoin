@@ -6,7 +6,6 @@ fieldset {
     margin: 1vw;
     box-sizing: border-box;    
 }
-
 #radio {
 	display: flex;
 	flex-direction: row;	
@@ -16,7 +15,6 @@ fieldset {
     flex-direction: column;
     gap: 10px;
 }
-
 .radio-section {
     display: flex;
     flex-direction: row;
@@ -78,11 +76,9 @@ form {
 	height: 100%;
 	max-height: 10em;
 }
-
 .article_img_wrapper >img {
 	max-height: 10em;
 }
-
 img {
 	width: 100%; 
     height: auto;

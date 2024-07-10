@@ -71,12 +71,10 @@ public class EnchereSecurityConfig {
 				.requestMatchers("/creationProfil").permitAll()
 				.requestMatchers("/nouveauMDP").permitAll()
 				.anyRequest().permitAll());
-
 		http.formLogin(form->{
 			form.loginPage("/connexion").permitAll();
 			form.defaultSuccessUrl("/").permitAll();//Changer plus tard au cas ou 
-		});
-		
+		});		
 		http.logout(logout->
 			logout
 				.invalidateHttpSession(true)
@@ -94,14 +92,11 @@ public class EnchereSecurityConfig {
             .sessionFixation().migrateSession()
             .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
             .invalidSessionUrl("/connexion?session=expired")
-        );
-
-		
-		
-		http.userDetailsService(UtilisateurPersonnaliseDetailsService);
-		
+        );		
+		http.userDetailsService(UtilisateurPersonnaliseDetailsService);		
 		return http.build();
 	}
+	
 	 @Bean
 	    public HttpSessionListener httpSessionListener() {
 	        return new HttpSessionListener() {

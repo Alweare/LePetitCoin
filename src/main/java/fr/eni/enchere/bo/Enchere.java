@@ -8,10 +8,7 @@ public class Enchere {
 	private int montantEnchere;
 	private  ArticleVendu articleVendu;
 	
-	public Enchere() {
-		
-		
-		
+	public Enchere() {		
 	}
 	
 	public Enchere(LocalDate dateEnchere, int montantEnchere) {

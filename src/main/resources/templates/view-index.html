@@ -20,7 +20,6 @@
 			<select  name="categories" id="categories" data-th-value="${categorie}"><br>
 			<option  value="0">Toutes</option><br>
 			<option th:each="item : ${categoriesSession}" th:text="${item.libelle}" th:value="${item.id}"></option>
-
 			</select><br>
 			<div class="button-container">
 			<button type="submit">Rechercher</button>
@@ -46,9 +45,7 @@
 		</div> 
 		<div><input type="checkbox" name="encheresRemportees" value="enchèresRemportees" /> 
 				<label for="enchèresRemportees">mes enchères remportées</label> </div>
-		</div>		
-		
-			
+		</div>				
 		
 			<div class="checkbox-group" sec:authorize="isAuthenticated()">
 		<div><input type="checkbox" name="ventesEnCours" value="mes ventes en cours" /> 
@@ -64,16 +61,11 @@
 	</div>
 	</form>
 
-
 	<fieldset th:each="enchere: ${listeEncheres}">
-		
-
 		
 	    <div class="enchere-details">
 	   
-	     	 <a th:href="@{/encherir(idArticle=${enchere.id})}" class="link-wrapper">
-	    
-		
+	     	 <a th:href="@{/encherir(idArticle=${enchere.id})}" class="link-wrapper">   		
 
 	        <div class="articleContainer">
 	       		 <div class="article_img_wrapper">
@@ -96,15 +88,14 @@
 	        	            <input type="file" name="file" th:value="${enchere.id}" />
 	        	           
 	        	  		</form>
-	        </div>
-	            </li>
-	        </ul>
+	        	  	</li> 
+	        	  </ul>
+	       		 </div>	           
+	        	
 	        </a>
 	    </div>
 
-
 	</fieldset>
-
 
 
 	<div class="footer"

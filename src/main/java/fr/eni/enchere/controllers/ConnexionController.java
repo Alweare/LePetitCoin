@@ -1,20 +1,16 @@
 	package fr.eni.enchere.controllers;
 
 
-import java.lang.ProcessBuilder.Redirect;
 import java.security.Principal;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fr.eni.enchere.bll.UtilisateurService;
 import fr.eni.enchere.bll.contexte.ContexteService;
 import fr.eni.enchere.bo.Utilisateur;
-import fr.eni.enchere.dal.UtilisateurDAO;
 
 @Controller
 @SessionAttributes({"utilisateurSession"})
@@ -31,27 +27,26 @@ public class ConnexionController {
 		this.contexteService = contexteService;
 	}
 
+	@GetMapping("/nouveauMDP")
+	public String modifierMDP() {
+		return "/nouveauMDP";
+	}
 
 	@GetMapping("/index")
-	public String acceuil() {
-		
+	public String acceuil() {		
 		return "view-index";
 	}
 	
-
-		 @GetMapping("/connexion")
-		    public String connexion() {
-		        return "connexion";
-		    }
-		 
+	 @GetMapping("/connexion")
+	    public String connexion() {
+	        return "connexion";
+	    }		 
 	
-	 
-	 
-
 	@ModelAttribute("utilisateurSession")
 	public Utilisateur ajouteUtilisateurEnSession() {
 		return new Utilisateur();
 	}
+	
 	@GetMapping("/session")
 	public String connexionSession(@ModelAttribute("utilisateurSession") Utilisateur utilisateurEnSession, Principal principal) {
 		String pseudo = principal.getName();
@@ -79,15 +74,10 @@ public class ConnexionController {
 			utilisateurEnSession.setCodePostal(null);
 			utilisateurEnSession.setVille(null);
 			utilisateurEnSession.setCredit(0);
-			utilisateurEnSession.setAdministrateur(false);
-			
+			utilisateurEnSession.setAdministrateur(false);			
 		}
-
 		return "redirect:/";
-
 	}
-
-	 
 
 	 
 }

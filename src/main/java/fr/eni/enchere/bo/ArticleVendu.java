@@ -152,9 +152,6 @@ public class ArticleVendu {
 		CategorieArticle = categorieArticle;
 	}
 
-
-	
-
 	public int getId() {
 		return id;
 	}
@@ -242,22 +239,4 @@ public class ArticleVendu {
 	}
 
 	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

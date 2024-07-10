@@ -36,7 +36,6 @@ public class EnchereController {
 	private UtilisateurService utilisateurService;
 	
 	
-
 	public EnchereController(ArticleService articleService, UtilisateurService utilisateurService) {
 		super();
 		this.articleService = articleService;
@@ -46,23 +45,18 @@ public class EnchereController {
 	@GetMapping("/listeEnchere")
 	public String listeEnchere(Model model, Principal principal) {
 		model.addAttribute("listeEncheresEncours", articleService.recupererEnchereEnCours());
-
 		return "listeEnchere";
 	}
 
 	@GetMapping("/")
 	public String acceuil(Model model) {
-
 		model.addAttribute("listeEncheres", articleService.recupererEnchereEnCours());
-
 		return "view-index";
 	}
 
 
-
 	@GetMapping("/creationVente")
 	public String creationVente(Model model, Principal principal) {
-
 		ArticleVendu articleVendu = new ArticleVendu();
 		articleVendu.setLieuRetrait(this.utilisateurService.ConsulterAdressePArId(this.utilisateurService.trouverUtilisateurParPseudo(principal.getName()).getId()));
 		model.addAttribute("nouvelleEnchere", articleVendu);
@@ -74,39 +68,31 @@ public class EnchereController {
 			@Valid @ModelAttribute("nouvelleEnchere") ArticleVendu article, 
 			BindingResult bindingResult,
 			Principal principal
-			) {
-		
+			) {		
 		if(bindingResult.hasErrors()) {
 			return "creationVente";
 		}
-
 		article.setVendeur(utilisateurService.trouverUtilisateurParPseudo(principal.getName()));
 		try {
 			articleService.CreerArticle(article);
 		} catch (BusinessException e) {
-			e.getErreurs().forEach(err -> {
-				
+			e.getErreurs().forEach(err -> {				
 				ObjectError error = new ObjectError("globalError", err);
 				bindingResult.addError(error);
-
-
 			});
 			return "creationVente";
 			}
 		return "listeEnchere";
-
 	}
 
 
 	@PostMapping("/enchere")
 	public String Encherir() {
-
 		return "encherir";
 	}
 
 	@ModelAttribute("encherir")
 		public String enchere() {
-
 		    return "encherir";
 		}
 
@@ -118,14 +104,10 @@ public class EnchereController {
 	}
 
 
-	
-
-
 	@ModelAttribute("categoriesSession")
 	public List<Categorie> chargerCategorieSession(){
 		return articleService.consulterCategorie();
 	}
-
 
 	@PostMapping("/categories")
 	public String afficherCategorieFiltrer(@RequestParam("categories") int id,
@@ -139,12 +121,10 @@ public class EnchereController {
 										@RequestParam(name="ventesNonDebutees",required=false)String ventesNonDebutees,
 										@RequestParam(name="ventesTerminees", required=false)String ventesTerminees,
 										Principal principal,
-										Model model){
-		
+										Model model){		
 		String pseudo = principal.getName();
 		Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(pseudo);
-		int idUtilisateur = utilisateur.getId();
-		
+		int idUtilisateur = utilisateur.getId();		
 		if(id != 0) {
 			if(recherche !=null && !recherche.isEmpty()) {
 				model.addAttribute("listeEncheres", articleService.rechercherArticlesParCategorieEtNom(id, recherche));
@@ -167,10 +147,8 @@ public class EnchereController {
 				}
 				if(ventesTerminees != null) {
 					model.addAttribute("listeEncheres", articleService.recupereMesVentesTerminee(idUtilisateur));
-				}
-				
+				}				
 			}
-
 		}else {
 			if(encheresOuvertes !=null) {
 				model.addAttribute("listeEncheres", articleService.recupererEnchereEnCours());
@@ -199,16 +177,12 @@ public class EnchereController {
 	        ArticleVendu article = articleService.RecupererArticleParId(id);
 	        String currentUsername = principal != null ? principal.getName() : null;
 	        boolean isVendeur = false;
-System.out.println("username LAAAAAAA : "+article);
 	        if (currentUsername != null) {
 	            Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(currentUsername);
 	            isVendeur = article.getVendeur().getId() == utilisateur.getId();
-
-	        }
-	        
+	        }	        
 	        model.addAttribute("a", article);
 	        model.addAttribute("isVendeur", isVendeur);
-
 	        return "encherir";
 	    }
 }
