@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Min;
@@ -41,14 +41,13 @@ public class ArticleVendu {
 	private int prixVente;
 	private String etatVente;
 	
+	@Valid
 	private Retrait lieuRetrait;
 	private Categorie CategorieArticle;
 	private Utilisateur acheteur;
 	private Utilisateur vendeur;
 	private List<Enchere> encheres;
 	private String photo;
-	
-
 	
 
 	public Retrait getLieuRetrait() {
@@ -67,7 +66,7 @@ public class ArticleVendu {
 		this.encheres = encheres;
 	}
 	public ArticleVendu() {
-		
+		this.lieuRetrait = new Retrait();
 	}
 	public ArticleVendu(int id, String nomArticle, String description, LocalDateTime dateDebutEnchere,
 			LocalDateTime dateFinEncheres, int prixInitial, int prixVente, String etatVente, Retrait lieuRetrait,

@@ -65,16 +65,16 @@
 			<legend>Retrait </legend>
 			<ul>
 			<li><label for="inputRue">Rue :</label>
-				<input id="inputRue" type="text" th:name="rue" />
-				<div data-th-replace="~{/fragments/errors/error :: frag-error('rue')}" ></div>
+				<input id="inputRue" type="text" th:name="*{lieuRetrait.rue}" />
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('lieuRetrait.rue')}" ></div>
 			</li>
 			<li><label for="inputCP">Code Postal :</label>
-				<input id="inputCP" type="text" th:name="codePostal"  />
-				<div data-th-replace="~{/fragments/errors/error :: frag-error('codePostal')}" ></div>
+				<input id="inputCP" type="text" th:name="*{lieuRetrait.code_postal}"  />
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('lieuRetrait.code_postal')}" ></div>
 			</li>
 			<li><label for="inputVille">Ville :</label>
-				<input id="inputVille" type="text" th:name="ville"  />
-				<div data-th-replace="~{/fragments/errors/error :: frag-error('ville')}" ></div>
+				<input id="inputVille" type="text" th:name="*{lieuRetrait.ville}"  />
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('lieuRetrait.ville')}" ></div>
 			</li>
 			</ul>
 			</fieldset>
