@@ -79,7 +79,7 @@ CREATE TABLE ARTICLES_VENDUS (
 );
 
 ALTER TABLE ARTICLES_VENDUS ADD constraint articles_vendus_pk PRIMARY KEY (id);
-ALTER TABLE ARRTICLES_VENDUS 
+ALTER TABLE ARTICLES_VENDUS 
 	ADD 
 	CONSTRAINT df_articles_imgPath 
 	DEFAULT 'https://st2.depositphotos.com/9998432/48297/v/1600/depositphotos_482974586-stock-illustration-default-avatar-photo-placeholder-grey.jpg'
@@ -114,4 +114,39 @@ ALTER TABLE ARTICLES_VENDUS
         REFERENCES utilisateurs ( id )
 ON DELETE NO ACTION 
     ON UPDATE no action ;
+GO
 
+
+
+CREATE FUNCTION dbo.GetHighestBid(@idArticle INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @highestBid INT;
+
+    SELECT @highestBid = MAX(montantEnchere)
+    FROM Encheres
+    WHERE idArticle = @idArticle;
+
+    RETURN @highestBid;
+END;
+GO
+
+ --Étape 2 : Créer un trigger sur la table des enchères
+CREATE TRIGGER trg_UpdateCurrentPrice
+ON Encheres
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @idArticle INT;
+
+    -- Récupérer l'ID de l'article concerné
+    SELECT @idArticle = inserted.idArticle
+    FROM inserted;
+
+    -- Mettre à jour le prix actuel dans la table des ventes
+    UPDATE ARTICLES_VENDUS
+    SET prixVente = dbo.GetHighestBid(@idArticle)
+    WHERE id = @idArticle;
+END;
+GO
