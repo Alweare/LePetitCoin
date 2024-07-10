@@ -35,13 +35,10 @@
         		<div data-th-replace="~{/fragments/errors/error :: frag-error('categorieArticle')}" ></div>
 				
 				<label for="inputFile">Photo de l'article :</label>
-<<<<<<< Updated upstream
+
 				<input type="file" id="profile_pic" name="profile_pic" accept=".jpg, .jpeg, .png" />
 				<!-- div data-th-replace="~{/fragments/errors/error :: frag-error('profile_pic')}" ></div>-->
-				
-=======
-				<input type="file" id="photo" name="photo" accept="image/png, image/jpeg" />
->>>>>>> Stashed changes
+
 				<label for="inputMAP">Mise à prix :</label>
 				<input type="number" id="inputMAP" th:field="*{prixInitial}"/>
 				<div data-th-replace="~{/fragments/errors/error :: frag-error('prixInitial')}" ></div>
@@ -59,12 +56,15 @@
 			<ul>
 			<li><label for="inputRue">Rue :</label>
 				<input id="inputRue" type="text" th:name="rue" />
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('rue)}" ></div>
 			</li>
 			<li><label for="inputCP">Code Postal :</label>
 				<input id="inputCP" type="text" th:name="codePostal"  />
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('codePostal')}" ></div>
 			</li>
 			<li><label for="inputVille">Ville :</label>
 				<input id="inputVille" type="text" th:name="ville"  />
+				<div data-th-replace="~{/fragments/errors/error :: frag-error('ville')}" ></div>
 			</li>
 			</ul>
 			</fieldset>

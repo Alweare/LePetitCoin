@@ -18,19 +18,19 @@ public class Utilisateur implements Serializable{
 	private int id;
 	@NotBlank(message ="Saisir pseudo")
 	@NotNull
-	@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Le pseudo ne doit contenir que des caractères alphanumériques")
+	@Pattern(regexp = "^[a-zA-Z0-9À-ÖØ-öø-ÿ-]*$", message = "Le pseudo ne doit contenir que des caractères alphanumériques")
 	private String pseudo;
 	@NotBlank(message ="saisir nom")
 	@NotNull
-	@Pattern(regexp = "^[a-zA-Z]*$", message="Le nom ne doit contenir que des lettres")
+	@Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ -]*$", message="Le nom ne doit contenir que des lettres")
 	private String nom;
 	@NotBlank(message ="saisir prenom")
 	@NotNull
-	@Pattern(regexp = "^[a-zA-Z]*$", message="Le prenom ne doit contenir que des lettres")
+	@Pattern(regexp = "^[a-zA-ZÀ-ÖØ-öø-ÿ -]*$", message="Le prenom ne doit contenir que des lettres")
 	private String prenom;
 	@NotBlank(message ="saisir email")
 	@NotNull
-	@Pattern(regexp = "^[a-zA-Z]*$", message="Email non valide")
+	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message="Email non valide")
 	@Email
 	private String email;
 	@NotBlank(message ="saisir telephone")
@@ -48,11 +48,11 @@ public class Utilisateur implements Serializable{
 	private String codePostal;
 	@NotBlank(message ="saisir ville")
 	@NotNull
-	@Pattern(regexp = "^[a-zA-Z]*$", message="La ville ne doit contenir que des caractères alphanumériques")
+	@Pattern(regexp = "^^[a-zA-ZÀ-ÖØ-öø-ÿ -]*$", message="La ville ne doit contenir que des caractères alphanumériques")
 	private String ville;
 	@NotBlank(message ="saisir mot de passe")
 	@NotNull
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$",message = "Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial")
+	//@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$",message = "Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial")
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
