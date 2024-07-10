@@ -20,7 +20,7 @@ go
 ------------------------------------------------------------------ARTICLES_vendus-----------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO ARTICLES_VENDUS (nomArticle, description, cheminImage, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)
-	VALUES ('une pelle', 'c''est une pelle', DEFAULT, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 20, 30, 1, 1);
+	VALUES ('une pelle', 'c''est une pelle', DEFAULT, CURRENT_TIMESTAMP, DATEADD(year, 1, CURRENT_TIMESTAMP), 20, 30, 1, 1);
 	SELECT * FROM ARTICLES_VENDUS
 UPDATE ARTICLES_VENDUS SET 
 	nomArticle = 'un artichaud', 
@@ -32,7 +32,7 @@ UPDATE ARTICLES_VENDUS SET
 	prixVente = 200000, 
 	idUtilisateur = 1, 
 	idCategorie = 1
-	WHERE id=3
+	WHERE id=1
 	;
 
 	UPDATE ARTICLES_VENDUS SET 
@@ -81,7 +81,7 @@ UPDATE ARTICLES_VENDUS SET
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------ENCHERE--------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO ENCHERES (idUtilisateur, idArticle, dateEnchere,montantEnchere) VALUES (1, 1, CURRENT_TIMESTAMP, 125);
+INSERT INTO ENCHERES (idUtilisateur, idArticle, dateEnchere,montantEnchere) VALUES (1, 1, CURRENT_TIMESTAMP, 250);
 --UPDATE ENCHERES SET dateEnchere = CURRENT_TIMESTAMP, montantEnchere= 150 WHERE idUtilisateur = 1 AND montantEnchere = 1;
 --DELETE ENCHERES WHERE idUtilisateur=1 AND idArticle = 1;
 
