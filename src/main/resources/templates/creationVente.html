@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" data-th-href="@{/css/general.css}">
 <link rel="stylesheet" data-th-href="@{/css/enchere.css}">
+<link rel="stylesheet" data-th-href="@{/css/profil.css}">
 <link rel="stylesheet" data-th-href="@{/css/vente.css}">
 
 
@@ -16,7 +17,8 @@
 	<form th:action="@{/creationVente}" method="POST" th:object="${nouvelleEnchere}" enctype="multipart/form-data">
 	<h2>Nouvelle vente</h2>
 	
-		<img src="" alt="" />
+			        		<img src="img/apercu.jpg" alt="Photo de l'article" />
+
 
 		
 			<div data-th-replace="~{/fragments/errors/fragment-errors :: frag-errors}" ></div>
@@ -65,6 +67,7 @@
 			<legend>Retrait </legend>
 			<ul>
 			<li><label for="inputRue">Rue :</label>
+
 				<input id="inputRue" type="text" th:name="*{lieuRetrait.rue}" />
 				<div data-th-replace="~{/fragments/errors/error :: frag-error('lieuRetrait.rue')}" ></div>
 			</li>
@@ -75,6 +78,18 @@
 			<li><label for="inputVille">Ville :</label>
 				<input id="inputVille" type="text" th:name="*{lieuRetrait.ville}"  />
 				<div data-th-replace="~{/fragments/errors/error :: frag-error('lieuRetrait.ville')}" ></div>
+
+				<input id="inputRue" type="text" th:name="rue" />
+<!-- 				<div data-th-replace="~{/fragments/errors/error :: frag-error('rue')}" ></div> -->
+			</li>
+			<li><label for="inputCP">Code Postal :</label>
+				<input id="inputCP" type="text" th:name="codePostal"  />
+<!-- 				<div data-th-replace="~{/fragments/errors/error :: frag-error('codePostal')}" ></div> -->
+			</li>
+			<li><label for="inputVille">Ville :</label>
+				<input id="inputVille" type="text" th:name="ville"  />
+<!-- 				<div data-th-replace="~{/fragments/errors/error :: frag-error('ville')}" ></div> -->
+
 			</li>
 			</ul>
 			</fieldset>
