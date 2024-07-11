@@ -78,6 +78,7 @@ form {
 }
 .article_img_wrapper >img {
 	max-height: 10em;
+	width: auto;
 }
 img {
 	width: 100%; 
