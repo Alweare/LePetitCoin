@@ -62,30 +62,6 @@
 	</div>
 	</form>
 
-	<fieldset  th:each="enchere: ${listeEncheres}">
-	<a th:href="@{/encherir(idArticle=${enchere.id})}" class="link-wrapper">
-		<img src="" alt="" />
-		
-		<ul>
-			
-		
-			<li><label for="inputArticle"></label> <input id="inputArticle"
-				type="text" th:value="${enchere.nomArticle}" readonly /></li>
-			<li><label for="inputPrix">Prix :</label> <input id="inputPrix"
-				type="text" th:value="${enchere.prixVente}" readonly /></li>
-			<li><label for="inputFin">Fin de l'enchère :</label> <input
-				id="inputFin" type="text" th:value="${enchere.getDateFin()}"
-				readonly /> à <input type="text" th:value="${enchere.getHeureFin()}" readonly>
-			</li>
-			<li><label for="inputVendeur">Vendeur :</label> <input
-				id="inputVendeur" type="text" th:value="${enchere.vendeur.pseudo}"
-				readonly /></li>
-				
-	   </ul>
-	  </a>
-
-
-
 	<fieldset th:each="enchere: ${listeEncheres}">
 		
 	    <div class="enchere-details">

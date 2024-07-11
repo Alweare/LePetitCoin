@@ -41,42 +41,37 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)";
 	private static final String TROUVE_ACTIVES = TROUVE_TOUT + " WHERE AV.dateDebutEncheres <= GETDATE() AND AV.dateFinEncheres > GETDate()";
 	private static final String CREER = "INSERT INTO ARTICLES_VENDUS (nomArticle, description, cheminImage, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, idUtilisateur, idCategorie)"
-			+ "	VALUES (:nomArticle, :description, :cheminImage, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
+			+ "	VALUES (:nomArticle, :description, DEFAULT, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
 	private static final String TROUVE_ENCHERE ="SELECT idUtilisateur, idArticle, dateEnchere, montantEnchere FROM ENCHERES";
 	private static final String TROUVE_ENCHERE_PAR_ID_UTILISATEUR=TROUVE_ENCHERE + " where idUtilisateur = :id";
-	private static final String CHANGER_ID_ENCHERES="ALTER TABLE ENCHERES DROP enchere_pk;"
-			+ "UPDATE ENCHERES SET idUtilisateur=:nouveauId WHERE idUtilisateur=:ancienId;"
-			+ "ALTER TABLE ENCHERES ADD CONSTRAINT enchere_pk PRIMARY KEY (idUtilisateur,idArticle)"
-			+ "	VALUES (:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idUtilisateur, :idCategorie);";
 	private static final String TROUVE_CATEGORIES = "SELECT id, libelle FROM CATEGORIES";
-	private static final String CHERCHE_TOUT_CATEGORIE="SELECT id,libelle FROM CATEGORIES";
 	private static final String TROUVE_CATEGORIE_PAR_ID= TROUVE_CATEGORIES + " WHERE id = :id";
 	private static final String TROUVE_ARTICLE_FILTRER=TROUVE_ACTIVES + " AND c.id = :idCategorie";
 	private static final String TROUVE_ARTICLE_FILTRER_AVEC_NOM=TROUVE_ARTICLE_FILTRER + " AND av.nomArticle = :nomArticle";
 	private static final String TROUVE_ENCHERE_PAR_ID_ARTICLE=TROUVE_TOUT + " WHERE AV.id = :id";
 	private static final String TROUVE_MES_VENTES_EN_COURS = TROUVE_ACTIVES +" AND av.idUtilisateur =:id";
-	private static final String TROUVE_ENCHERES = "SELECT\r\n"
-			+ "	AV.id,\r\n"
-			+ "	AV.nomArticle, \r\n"
-			+ "	AV.description, \r\n"
-			+ "	AV.dateDebutEncheres, \r\n"
-			+ "	AV.dateFinEncheres,\r\n"
-			+ "	AV.prixVente,\r\n"
-			+ "	AV.prixInitial,\r\n"
-			+ "	AV.idUtilisateur AS idVendeur,\r\n"
-			+ "	C.id AS idCategorie, \r\n"
-			+ "	C.libelle, \r\n"
-			+ "	R.rue,\r\n"
-			+ "	R.code_postal,\r\n"
-			+ "	R.ville,\r\n"
-			+ "	UV.id AS idVendeur,\r\n"
-			+ "	UV.pseudo AS vendeurPseudo,\r\n"
-			+ "	E.montantEnchere\r\n"
-			+ "		FROM ARTICLES_VENDUS as AV\r\n"
-			+ "		INNER JOIN UTILISATEURS as UV ON (UV.id = AV.idUtilisateur)\r\n"
-			+ "		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) \r\n"
-			+ "		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)\r\n"
-			+ "		INNER JOIN ENCHERES as E on (AV.idUtilisateur = E.idUtilisateur)\r\n";
+	private static final String TROUVE_ENCHERES = "SELECT"
+			+ "	AV.id,"
+			+ "	AV.nomArticle,"
+			+ "	AV.description, "
+			+ "	AV.dateDebutEncheres, "
+			+ "	AV.dateFinEncheres,"
+			+ "	AV.prixVente,"
+			+ "	AV.prixInitial,"
+			+ "	AV.idUtilisateur AS idVendeur,"
+			+ "	C.id AS idCategorie, "
+			+ "	C.libelle, "
+			+ "	R.rue,"
+			+ "	R.code_postal,"
+			+ "	R.ville,"
+			+ "	UV.id AS idVendeur,"
+			+ "	UV.pseudo AS vendeurPseudo,"
+			+ "	E.montantEnchere"
+			+ "		FROM ARTICLES_VENDUS as AV"
+			+ "		INNER JOIN UTILISATEURS as UV ON (UV.id = AV.idUtilisateur)"
+			+ "		INNER JOIN CATEGORIES AS C ON (AV.idCategorie = C.id) "
+			+ "		INNER JOIN RETRAITS as R ON (AV.id = R.idArticle)"
+			+ "		INNER JOIN ENCHERES as E on (AV.idUtilisateur = E.idUtilisateur)";
 	private static final String TROUVE_ENCHERES_EN_COURS = TROUVE_ENCHERES 
 			+ "	WHERE AV.dateFinEncheres <= CURRENT_TIMESTAMP AND E.idUtilisateur=:id";
 	private static final String TROUVE_ENCHERES_REMPORTER=TROUVE_ENCHERES_EN_COURS+ " AND E.montantEnchere = (SELECT MAX(montantEnchere) FROM ENCHERES WHERE idArticle = AV.id);";
@@ -85,32 +80,29 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String CREER_ENCHERE ="INSERT INTO ENCHERES( idUtilisateur, idArticle,dateEnchere,montantEnchere) VALUES (:idUtilisateur,:idArticle,CURRENT_TIMESTAMP , :montantEnchere)";
 	private static final String COUNT_ENCHERE_ARTICLE = "SELECT COUNT(*) FROM ENCHERES WHERE idArticle = :idArticle";
 
-	private static final String ENCHERE_PAR_ARTICLE_PAR_DATE = "SELECT TOP 1\r\n"
-			+ "	         AV.id,\r\n"
-			+ "	         AV.nomArticle,\r\n"
-			+ "	        AV.description,\r\n"
-			+ "	       AV.dateDebutEncheres,\r\n"
-			+ "	       AV.dateFinEncheres,\r\n"
-			+ "	       AV.prixVente,\r\n"
-			+ "	        AV.prixInitial,\r\n"
-			+ "	       AV.idUtilisateur AS idVendeur,\r\n"
-			+ "		   E.idUtilisateur AS idAcheteur,\r\n"
-			+ "		   E.montantEnchere,\r\n"
-			+ "	      E.dateEnchere,\r\n"
-			+ "	     UV.id AS vendeurId,\r\n"
-			+ "	      UV.pseudo AS vendeurPseudo\r\n"
-			+ "	       FROM \r\n"
-			+ "	      ARTICLES_VENDUS AS AV\r\n"
-			+ "	      INNER JOIN UTILISATEURS AS UV ON UV.id = AV.idUtilisateur\r\n"
-			+ "	      INNER JOIN ENCHERES AS E ON AV.id = E.idArticle\r\n"
-			+ "	      WHERE\r\n"
-			+ "	        AV.id = 26 \r\n"
-			+ "	        ORDER BY \r\n"
+	private static final String ENCHERE_PAR_ARTICLE_PAR_DATE = "SELECT TOP 1"
+			+ "	         AV.id,"
+			+ "	         AV.nomArticle,"
+			+ "	        AV.description,"
+			+ "	       AV.dateDebutEncheres,"
+			+ "	       AV.dateFinEncheres,"
+			+ "	       AV.prixVente,"
+			+ "	        AV.prixInitial,"
+			+ "	       AV.idUtilisateur AS idVendeur,"
+			+ "		   E.idUtilisateur AS idAcheteur,"
+			+ "		   E.montantEnchere,"
+			+ "	      E.dateEnchere,"
+			+ "	     UV.id AS vendeurId,"
+			+ "	      UV.pseudo AS vendeurPseudo"
+			+ "	       FROM "
+			+ "	      ARTICLES_VENDUS AS AV"
+			+ "	      INNER JOIN UTILISATEURS AS UV ON UV.id = AV.idUtilisateur"
+			+ "	      INNER JOIN ENCHERES AS E ON AV.id = E.idArticle"
+			+ "	      WHERE"
+			+ "	        AV.id = :id "
+			+ "	        ORDER BY "
 			+ "	        E.dateEnchere DESC";
-	private static final String MISE_A_JOUR_PRIX_ARTICLE = "UPDATE ARTICLES_VENDUS SET prixVente = :prixVente WHERE id = :id";
-
 	private static final String UPDATE_ARTICLE_VENDU = "UPDATE ARTICLES_VENDUS SET nomArticle = :nomArticle, description = :description, dateFinEncheres = :dateFin, prixVente = :prixVente WHERE id = :id";
-
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
@@ -153,10 +145,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 	public int creer(ArticleVendu article) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		MapSqlParameterSource map = new MapSqlParameterSource();
-		//(:nomArticle, :description, :dateDebut, :dateFin, :prixInitial, :prixVente, :idutilisateur, :inCategoie);";
 		map.addValue("nomArticle", article.getNomArticle());
 		map.addValue("description", article.getDescription());
-		map.addValue("cheminImage", "DEFAULT");
 		map.addValue("dateDebut", article.getDateDebutEnchere());
 		map.addValue("dateFin", article.getDateFinEncheres());
 		map.addValue("prixInitial", article.getPrixInitial());
@@ -177,27 +167,19 @@ public class ArticleDAOImpl implements ArticleDAO {
 		return jdbc.queryForObject(TROUVE_ENCHERE_PAR_ID_UTILISATEUR, mapSqlParameterSource, new BeanPropertyRowMapper<>(Enchere.class));
 	}
 
-	@Override
-	public void changerIdDansEnchere(int ancienId, int nouveauId) {
-		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-		mapSqlParameterSource.addValue("ancienId",ancienId);
-		mapSqlParameterSource.addValue("nouveauId", nouveauId);
-		jdbc.update(CHANGER_ID_ENCHERES, mapSqlParameterSource);
-	}	
-
 	public List<Categorie> trouverCategories() {		
 		return this.jdbc.query(TROUVE_CATEGORIES, new BeanPropertyRowMapper<Categorie>(Categorie.class));
 	}
 
 	@Override
 	public List<Categorie> chercheTout() {
-		return jdbc.query(CHERCHE_TOUT_CATEGORIE, new BeanPropertyRowMapper<>(Categorie.class));
+		return jdbc.query(TROUVE_CATEGORIES, new BeanPropertyRowMapper<>(Categorie.class));
 	}
-
 	
 	@Override
 	public Categorie trouveCategorieParIdint(int id) {
-		MapSqlParameterSource map = new MapSqlParameterSource();		
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		
 		map.addValue("id", id);
 		return this.jdbc.queryForObject(TROUVE_CATEGORIE_PAR_ID, map, new BeanPropertyRowMapper<Categorie>(Categorie.class));
 	}
@@ -205,6 +187,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	@Override
 	public List<ArticleVendu> filtrerArticle(int idUtilisateur) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		
 		mapSqlParameterSource.addValue("idCategorie", idUtilisateur);
 		return jdbc.query(TROUVE_ARTICLE_FILTRER, mapSqlParameterSource, new ArticleRowMapper());
 	}
@@ -212,59 +195,38 @@ public class ArticleDAOImpl implements ArticleDAO {
 	@Override
 	public List<ArticleVendu> rechercherArticlesParCategorieEtNom(int id, String recherche) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		
 		mapSqlParameterSource.addValue("idCategorie", id);
 		mapSqlParameterSource.addValue("nomArticle", recherche);
+		
 		return jdbc.query(TROUVE_ARTICLE_FILTRER_AVEC_NOM, mapSqlParameterSource,new ArticleRowMapper());
 	}
 	
 	@Override
 	public List<ArticleVendu> trouveMesEncheresRemporter(int id) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		
 		mapSqlParameterSource.addValue("id", id);
+		
 		return jdbc.query(TROUVE_ENCHERES_REMPORTER,mapSqlParameterSource, new ArticleRowMapper());
 	}
 	
 	@Override
 	public List<ArticleVendu> trouveMesVentesNonDebutées(int id) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		
 		mapSqlParameterSource.addValue("id", id);
-		return jdbc.query(TROUVE_MES_VENTES_NON_DEBUTER,mapSqlParameterSource, new ArticleRowMapper());
+		
+		return jdbc.query(TROUVE_MES_VENTES_NON_DEBUTER, mapSqlParameterSource, new ArticleRowMapper());
 	}
 
 	@Override
 	public List<ArticleVendu> trouveMesVentesTerminer(int id) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		
 		mapSqlParameterSource.addValue("id", id);
-		return jdbc.query(TROUVE_MES_VENTES_TERMINER,mapSqlParameterSource, new ArticleRowMapper());
-	}
-	
-	public class ArticleRowMapper implements RowMapper<ArticleVendu> {	
-		@Override
-		public ArticleVendu mapRow(ResultSet rs, int rowNum) throws SQLException {
-			ArticleVendu article = new ArticleVendu();
-			Categorie categorie = new Categorie();
-			Retrait retrait = new Retrait();
-			Utilisateur vendeur = new Utilisateur();			
-			article.setId(rs.getInt("id"));
-			article.setNomArticle(rs.getString("nomArticle"));
-			article.setDescription(rs.getString("description"));
-			article.setCheminImage(rs.getString("cheminImage"));
-			article.setDateDebutEnchere(rs.getTimestamp("dateDebutEncheres").toLocalDateTime());
-			article.setDateFinEncheres(rs.getTimestamp("dateFinEncheres").toLocalDateTime());
-			article.setPrixInitial(rs.getInt("prixInitial"));
-			article.setPrixVente(rs.getInt("prixVente"));			
-			categorie.setId(rs.getInt("idCategorie"));
-			categorie.setLibelle(rs.getString("libelle"));			
-			retrait.setCode_postal(rs.getString("code_postal"));
-			retrait.setRue(rs.getString("rue"));
-			retrait.setVille(rs.getString("ville"));			
-			vendeur.setId(rs.getInt("idVendeur"));
-			vendeur.setPseudo(rs.getString("vendeurPseudo"));
-			article.setVendeur(vendeur);
-			article.setLieuRetrait(retrait);
-			article.setCategorieArticle(categorie);			
-			return article;
-		}
+		
+		return jdbc.query(TROUVE_MES_VENTES_TERMINER, mapSqlParameterSource, new ArticleRowMapper());
 	}
 
 	@Override
@@ -275,24 +237,24 @@ public class ArticleDAOImpl implements ArticleDAO {
 		mapSqlParameterSource.addValue("montantEnchere", montantEnchere);		
 
 		jdbc.update(CREER_ENCHERE, mapSqlParameterSource);
-
-
 	}
 
 	@Override
 	public int nbEnchereArticle(int idArticle) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-		mapSqlParameterSource.addValue("idArticle", idArticle);		
+		
+		mapSqlParameterSource.addValue("idArticle", idArticle);
+		
 		return jdbc.queryForObject(COUNT_ENCHERE_ARTICLE,mapSqlParameterSource, Integer.class);
 	}
 
 	@Override
 	public ArticleVendu enchereArticle(int idArticle) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-		mapSqlParameterSource.addValue("idArticle", idArticle);		
+		
+		mapSqlParameterSource.addValue("id", idArticle);		
 
 		return jdbc.queryForObject(ENCHERE_PAR_ARTICLE_PAR_DATE, mapSqlParameterSource, new ArticleRowMapperEnchere());
-
 	}
 
 	@Override
@@ -302,11 +264,10 @@ public class ArticleDAOImpl implements ArticleDAO {
 		mapSqlParameterSource.addValue("nomArticle", article.getNomArticle());
 		mapSqlParameterSource.addValue("description", article.getDescription());
 		mapSqlParameterSource.addValue("prixVente", article.getPrixVente());
-		mapSqlParameterSource.addValue("dateFin", article.getDateFin());
+		mapSqlParameterSource.addValue("dateFin", article.getDateFinEncheres());
 		
 		jdbc.update(UPDATE_ARTICLE_VENDU, mapSqlParameterSource);
 	}
-
 
 	public class ArticleRowMapperEnchere implements RowMapper<ArticleVendu> {
 
@@ -344,6 +305,34 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 	
 
-
+	public class ArticleRowMapper implements RowMapper<ArticleVendu> {	
+			
+			@Override
+			public ArticleVendu mapRow(ResultSet rs, int rowNum) throws SQLException {
+				ArticleVendu article = new ArticleVendu();
+				Categorie categorie = new Categorie();
+				Retrait retrait = new Retrait();
+				Utilisateur vendeur = new Utilisateur();			
+				article.setId(rs.getInt("id"));
+				article.setNomArticle(rs.getString("nomArticle"));
+				article.setDescription(rs.getString("description"));
+				article.setCheminImage(rs.getString("cheminImage"));
+				article.setDateDebutEnchere(rs.getTimestamp("dateDebutEncheres").toLocalDateTime());
+				article.setDateFinEncheres(rs.getTimestamp("dateFinEncheres").toLocalDateTime());
+				article.setPrixInitial(rs.getInt("prixInitial"));
+				article.setPrixVente(rs.getInt("prixVente"));			
+				categorie.setId(rs.getInt("idCategorie"));
+				categorie.setLibelle(rs.getString("libelle"));			
+				retrait.setCode_postal(rs.getString("code_postal"));
+				retrait.setRue(rs.getString("rue"));
+				retrait.setVille(rs.getString("ville"));			
+				vendeur.setId(rs.getInt("idVendeur"));
+				vendeur.setPseudo(rs.getString("vendeurPseudo"));
+				article.setVendeur(vendeur);
+				article.setLieuRetrait(retrait);
+				article.setCategorieArticle(categorie);			
+				return article;
+			}
+		}
 }
 	

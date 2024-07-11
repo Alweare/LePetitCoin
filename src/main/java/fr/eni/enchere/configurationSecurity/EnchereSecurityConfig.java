@@ -61,11 +61,10 @@ public class EnchereSecurityConfig {
 			
 				.requestMatchers("/connexion").permitAll()
 				.requestMatchers("/").permitAll()
-				.requestMatchers("/session").permitAll()
 				.requestMatchers("/creationProfil").permitAll()
-				.requestMatchers("/creationVente").permitAll()
+				.requestMatchers("/creationVente").authenticated()
 				.requestMatchers("/listeEnchere").permitAll()
-				.requestMatchers("/monProfil").permitAll()
+				.requestMatchers("/monProfil").authenticated()
 				.requestMatchers("/css/*").permitAll()
 				.requestMatchers("/images/*").permitAll()
 				.requestMatchers("/creationProfil").permitAll()

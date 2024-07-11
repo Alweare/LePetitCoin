@@ -1,8 +1,6 @@
 package fr.eni.enchere.dal;
 
-import java.sql.ResultSet;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,17 +14,18 @@ public class RetraitDaoImpl implements RetraitDAO{
 	private NamedParameterJdbcTemplate jdbc;	
 	
 	public RetraitDaoImpl(NamedParameterJdbcTemplate jdbc) {
-		super();
 		this.jdbc = jdbc;
 	}
 
 	@Override
 	public void creer(Retrait retrait, int idArticle) {
-		MapSqlParameterSource map = new MapSqlParameterSource();		
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		
 		map.addValue("idArticle", idArticle);
 		map.addValue("rue", retrait.getRue());
 		map.addValue("codePostal", retrait.getCode_postal());
-		map.addValue("ville", retrait.getVille());		
+		map.addValue("ville", retrait.getVille());
+		
 		this.jdbc.update(CREER_RETRAIT, map);		
 	}
 
@@ -36,5 +35,4 @@ public class RetraitDaoImpl implements RetraitDAO{
 		map.addValue("idArticle", idArticle);
 		this.jdbc.queryForObject(TROUVE_PAR_ID_ARTICLE, map, new BeanPropertyRowMapper<Retrait>(Retrait.class));		
 	}
-
 }
