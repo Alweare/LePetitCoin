@@ -29,7 +29,8 @@ public interface ArticleDAO {
 	
 	void creerEnchere(int idUtilisateur,int idArticle, int montantEnchere);
 	int nbEnchereArticle(int idArticle);
-	ArticleVendu enchereArticle (int idArticle);
+	ArticleVendu enchereArticle (int idArticle); 
+	void save(int id, ArticleVendu article);
 
 
 }

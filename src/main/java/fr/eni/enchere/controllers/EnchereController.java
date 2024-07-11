@@ -1,6 +1,10 @@
 package fr.eni.enchere.controllers;
 
+import java.math.BigDecimal;
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.ui.Model;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.util.StringUtils;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,12 +21,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import org.springframework.web.multipart.MultipartFile;
+
+
+
 
 import fr.eni.enchere.bll.ArticleService;
 import fr.eni.enchere.bll.UtilisateurService;
 import fr.eni.enchere.bo.ArticleVendu;
 import fr.eni.enchere.bo.Categorie;
 import fr.eni.enchere.bo.Enchere;
+import fr.eni.enchere.bo.Retrait;
 import fr.eni.enchere.bo.Utilisateur;
 
 import fr.eni.enchere.exceptions.BusinessException;
@@ -83,6 +93,10 @@ public class EnchereController {
 			return "creationVente";
 			}
 		return "listeEnchere";
+
+
+
+
 	}
 
 	@PostMapping("/enchere")
@@ -193,12 +207,56 @@ public class EnchereController {
 	        ArticleVendu article = articleService.RecupererArticleParId(id);
 	        String currentUsername = principal != null ? principal.getName() : null;
 	        boolean isVendeur = false;
+
 	        if (currentUsername != null) {
 	            Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(currentUsername);
 	            isVendeur = article.getVendeur().getId() == utilisateur.getId();
 	        }	        
 	        model.addAttribute("a", article);
 	        model.addAttribute("isVendeur", isVendeur);
+
+	        System.out.println("username LAAAAAAA : "+article);
+	        if (currentUsername != null) {
+	            Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(currentUsername);
+	            isVendeur = article.getVendeur().getId() == utilisateur.getId();
+
+	        }
+	        LocalDateTime currentDate = LocalDateTime.now();
+	        
+	        model.addAttribute("a", article);
+	        model.addAttribute("isVendeur", isVendeur);
+	        model.addAttribute("currentDate", currentDate);
+
+
 	        return "encherir";
 	    }
+	 @PostMapping("/encherir/modifier")
+	 public String modifierArticle(
+			 @RequestParam("idArticle") int id,
+			 @RequestParam("monArticle") String monArticle,
+			 @RequestParam("description") String description,
+			 @RequestParam("prixVente") int prixVente,
+			 @RequestParam("dateFinEncheres") LocalDateTime dateFinEncheres,
+			  Principal principal ) {
+		 
+		 ArticleVendu article = articleService.RecupererArticleParId(id);
+		 String utilisateurActuel = principal != null ? principal.getName() : null;
+		 
+		 
+		 if(utilisateurActuel != null) {
+			 Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(utilisateurActuel);
+			 if(article.getVendeur().getId() == utilisateur.getId()) {
+				 article.setNomArticle(monArticle);
+				 article.setDescription(description);
+				 article.setPrixVente(prixVente);
+				 article.setDateFinEncheres(dateFinEncheres);
+				 
+				
+				 
+				 articleService.sauvegarderArticle(id,article); // faire la methode sauvegarderArticle
+				
+			 }
+		 }
+		 return "redirect:/encherir?idArticle=" + id; 
+ 	 }
 }

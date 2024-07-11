@@ -84,6 +84,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String TROUVE_MES_VENTES_TERMINER = TROUVE_TOUT + "WHERE AV.dateFinEncheres < CURRENT_TIMESTAMP AND AV.idUtilisateur =:id";
 	private static final String CREER_ENCHERE ="INSERT INTO ENCHERES( idUtilisateur, idArticle,dateEnchere,montantEnchere) VALUES (:idUtilisateur,:idArticle,CURRENT_TIMESTAMP , :montantEnchere)";
 	private static final String COUNT_ENCHERE_ARTICLE = "SELECT COUNT(*) FROM ENCHERES WHERE idArticle = :idArticle";
+
 	private static final String ENCHERE_PAR_ARTICLE_PAR_DATE = "SELECT TOP 1\r\n"
 			+ "	         AV.id,\r\n"
 			+ "	         AV.nomArticle,\r\n"
@@ -107,6 +108,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ "	        ORDER BY \r\n"
 			+ "	        E.dateEnchere DESC";
 	private static final String MISE_A_JOUR_PRIX_ARTICLE = "UPDATE ARTICLES_VENDUS SET prixVente = :prixVente WHERE id = :id";
+
+	private static final String UPDATE_ARTICLE_VENDU = "UPDATE ARTICLES_VENDUS SET nomArticle = :nomArticle, description = :description, dateFinEncheres = :dateFin, prixVente = :prixVente WHERE id = :id";
+
 	
 	private NamedParameterJdbcTemplate jdbc;
 	
@@ -289,13 +293,23 @@ public class ArticleDAOImpl implements ArticleDAO {
 	public ArticleVendu enchereArticle(int id) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 
-		mapSqlParameterSource.addValue("idArticle", idArticle);		
-		return jdbc.queryForObject(ENCHERE_PAR_ARTICLE_PAR_DATE, mapSqlParameterSource, new BeanPropertyRowMapper<>(ArticleVendu.class));
-
-		mapSqlParameterSource.addValue("id", id);
+		mapSqlParameterSource.addValue("idArticle", id);		
 		
+
 		return jdbc.queryForObject(ENCHERE_PAR_ARTICLE_PAR_DATE, mapSqlParameterSource, new ArticleRowMapperEnchere());
 
+	}
+
+	@Override
+	public void save(int id,ArticleVendu article) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id); 
+		mapSqlParameterSource.addValue("nomArticle", article.getNomArticle());
+		mapSqlParameterSource.addValue("description", article.getDescription());
+		mapSqlParameterSource.addValue("prixVente", article.getPrixVente());
+		mapSqlParameterSource.addValue("dateFin", article.getDateFin());
+		
+		jdbc.update(UPDATE_ARTICLE_VENDU, mapSqlParameterSource);
 	}
 
 
