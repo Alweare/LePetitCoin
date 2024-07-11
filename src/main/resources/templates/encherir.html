@@ -13,80 +13,74 @@
 
 	<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
 
+	<form th:action="@{/enchere}" method="POST">
 
 
-	
-		
+		<div class="enchere-details">
 
-		<form th:action="@{/enchere}" method="POST">
-
-
-	<div class="enchere-details">
-		
-	       		 <div class="article_img_wrapper">
-			<img th:src="@{${a.cheminImage}}" alt="Photo de l'article" />
-		</div></div>
+			<div class="article_img_wrapper">
+				<img th:src="@{${a.cheminImage}}" alt="Photo de l'article" />
+			</div>
+		</div>
 
 
-		<ul >
-			<input type="hidden" name="idArticle" th:value="${a.id}"/>
-			<li th:each="a : ${a}" ><label for="inputNom">Article :</label>
-				<input th:value="${a.nomArticle}" id="inputNom" type="text" name="monArticle" />
+		<ul>
+			<input type="hidden" name="idArticle" th:value="${a.id}" />
+			<li th:each="a : ${a}"><label for="inputNom">Article :</label>
+				<input th:value="${a.nomArticle}" id="inputNom" type="text"
+				name="monArticle" /></li>
+			<li><label for="inputDescription">Description :</label> <textarea
+					th:text="${a.description}" id="inputDescription" cols="30"
+					rows="10" name="description"></textarea></li>
+			<li><label for="inputCategorie">Catégories :</label> <input
+				th:value="${a.categorieArticle.libelle}" id="inputCategorie"
+				type="text"></li>
+			<li><label for="inputPrix">Meilleure offre :</label> <input
+				type="number" id="inputPrix" min="1" th:value="${a.prixVente}"
+				readonly="readonly" /></li>
+			<li><label for="inputMAP">Mise à prix :</label> <input
+				type="number" id="inputMAP" min="1" name="prixVente"
+				th:value="${a.prixInitial}" /></li>
+
+			<li><label for="inputFin">Fin de l'enchère :</label> <input
+				id="inputFin" type="text"
+				th:value="|${a.getDateFin()} ${a.getHeureFin()}|" /></li>
+
+			<li><label for="inputRetrait">Retrait</label> <textarea
+					th:text="${a.lieuRetrait}" id="lieuRetrait" cols="30" rows="10"></textarea>
+			</li>
+
+			<li><label for="inputVendeur">Vendeur :</label> <input
+				id="inputVendeur" type="text" th:value="${a.vendeur.pseudo}" /></li>
+			<li><label for="inputTelephone">Téléphone :</label> <input
+				id="inputTelephone" type="text" th:value="${a.vendeur.telephone}" />
+			</li>
+			<li>
+				<form th:action="@{/encherir/modifier}" method="post"
+					th:each="a : ${a}" sec:authorize="isAuthenticated()"
+					th:if="${isVendeur} and ${a.dateDebutEnchere > currentDate}">
+					<li>
+						<button>Modifier mon article</button>
+					</li>
+				</form>
 
 			</li>
-			<li><label for="inputDescription">Description :</label>
-				<textarea th:text="${a.description}" id="inputDescription" cols="30" rows="10" name="description" ></textarea>
-			</li>
-			<li><label for="inputCategorie">Catégories :</label>
-				<input th:value="${a.categorieArticle.libelle}" id="inputCategorie" type="text">
-										
-			</li>
-			<li><label for="inputPrix">Meilleure offre :</label>
-				<input type="number" id="inputPrix"  min="1"  th:value="${a.prixVente}" readonly="readonly"/>
-			</li>
-			<li><label for="inputMAP">Mise à prix :</label>
 
-				<input type="number" id="inputMAP"  min="1" name="prixVente" th:value="${a.prixInitial}"/>
+			<li sec:authorize="isAuthenticated()" th:if="${!isVendeur}"><label
+				for="inputEnchere">Ma proposition</label> <input type="number"
+				th:attr="min=${a.prixVente + 1}" name="proposition" /> <input
+				type="hidden" name="id" th:value="${a.id}" /></li>
+			<li sec:authorize="isAuthenticated()" th:if="${!isVendeur}"><button
+					type="submit">Enchérir</button></li>
+			<li><button type="reset" />Back
+				</button> <br /></li>
+			<li th:if="${isVendeur}"><button type="submit">Retrait
+					effectué</button></li>
+		</ul>
+	</form>
 
-			</li>
-			
-			<li><label for="inputFin">Fin de l'enchère :</label>
-				<input id="inputFin" type="text"  name="dateFinEncheres" th:value="${a.dateFinEncheres}"/>
-			</li>
-			
-			<li>	
-			<label for="inputRetrait">Retrait</label>
-			<textarea  th:text="${a.lieuRetrait}" id="lieuRetrait" cols="30" rows="10"></textarea>
-			</li>
-			
-			<li><label for="inputVendeur">Vendeur :</label>
-				<input id="inputVendeur" type="text"   th:value="${a.vendeur.pseudo}"/>
-			</li>
-			<li><label for="inputTelephone">Téléphone :</label>
-				<input id="inputTelephone" type="text"   th:value="${a.vendeur.telephone}"/>
-			</li>
-			
-			<form th:action="@{/encherir/modifier}" method="post" th:each="a : ${a}" >
-				<li sec:authorize="isAuthenticated()" th:if="${isVendeur} and ${a.dateDebutEnchere > currentDate}">
-				<button>Modifier mon article</button>
-				</li>
-			</form>
-			<li sec:authorize="isAuthenticated()" th:if="${!isVendeur}"><label for="inputEnchere">Ma proposition</label>
-			<input type="number" th:attr="min=${a.prixVente + 1}" name="proposition"/>
-			<input type="hidden" name="id" th:value="${a.id}" />
-			</li>
-			<li sec:authorize="isAuthenticated()" th:if="${!isVendeur}"><button type="submit">Enchérir</button>
-			</li>
-			<li><button type="reset"  />Back</button>
-			<br />
-			</li>
-			<li th:if="${isVendeur}"><button type="submit" >Retrait effectué</button>
-			</li>
-			</ul>
-		</form>
-		
-		
-		<div class="footer"
+
+	<div class="footer"
 		th:replace="~{/fragments/fragment-piedpage :: fragment-piedpage}"></div>
 </body>
 </html>
