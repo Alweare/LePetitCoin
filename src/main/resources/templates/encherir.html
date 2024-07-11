@@ -13,13 +13,17 @@
 
 	
 		<img src="" alt="" />
+
 		<form th:action="@{/enchere}" method="POST">
-		<ul>
+
+		<ul >
+			<input type="hidden" name="idArticle" th:value="${a.id}"/>
 			<li th:each="a : ${a}" ><label for="inputNom">Article :</label>
-				<input th:value="${a.nomArticle}" id="inputNom" type="text"  />
+				<input th:value="${a.nomArticle}" id="inputNom" type="text" name="monArticle" />
+
 			</li>
 			<li><label for="inputDescription">Description :</label>
-				<textarea th:text="${a.description}" id="inputDescription" cols="30" rows="10" ></textarea>
+				<textarea th:text="${a.description}" id="inputDescription" cols="30" rows="10" name="description" ></textarea>
 			</li>
 			<li><label for="inputCategorie">Catégories :</label>
 				<input th:value="${a.categorieArticle.libelle}" id="inputCategorie" type="text">
@@ -29,11 +33,13 @@
 				<input type="number" id="inputPrix"  min="1"  th:value="${a.prixVente}" readonly="readonly"/>
 			</li>
 			<li><label for="inputMAP">Mise à prix :</label>
-				<input type="number" id="inputMAP"  min="1"  th:value="${a.prixInitial}"/>
+
+				<input type="number" id="inputMAP"  min="1" name="prixVente" th:value="${a.prixInitial}"/>
+
 			</li>
 			
 			<li><label for="inputFin">Fin de l'enchère :</label>
-				<input id="inputFin" type="text"   th:value="${a.dateFinEncheres}"/>
+				<input id="inputFin" type="text"  name="dateFinEncheres" th:value="${a.dateFinEncheres}"/>
 			</li>
 			
 			<li>	
@@ -47,6 +53,12 @@
 			<li><label for="inputTelephone">Téléphone :</label>
 				<input id="inputTelephone" type="text"   th:value="${a.vendeur.telephone}"/>
 			</li>
+			
+			<form th:action="@{/encherir/modifier}" method="post" th:each="a : ${a}" >
+				<li sec:authorize="isAuthenticated()" th:if="${isVendeur} and ${a.dateDebutEnchere > currentDate}">
+				<button>Modifier mon article</button>
+				</li>
+			</form>
 			<li sec:authorize="isAuthenticated()" th:if="${!isVendeur}"><label for="inputEnchere">Ma proposition</label>
 			<input type="number" th:attr="min=${a.prixVente + 1}" name="proposition"/>
 			<input type="hidden" name="id" th:value="${a.id}" />

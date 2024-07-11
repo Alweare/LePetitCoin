@@ -91,9 +91,19 @@ public class EnchereSecurityConfig {
             .and()
             .sessionFixation().migrateSession()
             .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-            .invalidSessionUrl("/connexion?session=expired")
-        );		
-		http.userDetailsService(UtilisateurPersonnaliseDetailsService);		
+
+        );
+        //Configuration de Remember me
+        http.rememberMe(rememberMe -> rememberMe
+        		.key("uniqueAndSecret")
+        		.tokenValiditySeconds(300)
+        		.rememberMeParameter("remember-me")
+        		.userDetailsService(UtilisateurPersonnaliseDetailsService)
+        		); 
+		
+		
+		http.userDetailsService(UtilisateurPersonnaliseDetailsService);
+		
 		return http.build();
 	}
 	

@@ -200,5 +200,12 @@ private boolean utilisateurExiste(int idUtilisateur,BusinessException be) {
 }
 //private boolean 
 
+@Override
+public void sauvegarderArticle(int id,ArticleVendu article) {
+	articleDao.save(id,article);
+	
+	
+}
+
 
 }
