@@ -273,10 +273,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 		mapSqlParameterSource.addValue("idUtilisateur", idUtilisateur);
 		mapSqlParameterSource.addValue("idArticle", idArticle);
 		mapSqlParameterSource.addValue("montantEnchere", montantEnchere);		
-		jdbc.queryForObject(CREER_ENCHERE, mapSqlParameterSource, new BeanPropertyRowMapper<>(Enchere.class));		
 
-		mapSqlParameterSource.addValue("montantEnchere", montantEnchere);
-		
 		jdbc.update(CREER_ENCHERE, mapSqlParameterSource);
 
 
@@ -290,11 +287,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 
 	@Override
-	public ArticleVendu enchereArticle(int id) {
+	public ArticleVendu enchereArticle(int idArticle) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-
-		mapSqlParameterSource.addValue("idArticle", id);		
-		
+		mapSqlParameterSource.addValue("idArticle", idArticle);		
 
 		return jdbc.queryForObject(ENCHERE_PAR_ARTICLE_PAR_DATE, mapSqlParameterSource, new ArticleRowMapperEnchere());
 
