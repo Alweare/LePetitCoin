@@ -57,7 +57,9 @@ public class EnchereController {
 	@GetMapping("/creationVente")
 	public String creationVente(Model model, Principal principal) {
 		ArticleVendu articleVendu = new ArticleVendu();
-		articleVendu.setLieuRetrait(this.utilisateurService.ConsulterAdressePArId(this.utilisateurService.trouverUtilisateurParPseudo(principal.getName()).getId()));
+		articleVendu.setLieuRetrait(
+				this.utilisateurService.ConsulterAdressePArId(
+				this.utilisateurService.trouverUtilisateurParPseudo(principal.getName()).getId()));
 		model.addAttribute("nouvelleEnchere", articleVendu);
 		return "creationVente";
 	}
@@ -81,7 +83,7 @@ public class EnchereController {
 			});
 			return "creationVente";
 		}
-		return "listeEnchere";
+		return "redirect:/";
 
 
 
@@ -116,6 +118,7 @@ public class EnchereController {
 		} catch (BusinessException e) {
 
 			e.printStackTrace();
+			return "redirect:/encherir";
 		}
 		String currentUsername = principal != null ? principal.getName() : null;
 		boolean isVendeur = false;
@@ -139,11 +142,8 @@ public class EnchereController {
 			@RequestParam("prixVente") int prixVente,
 			@RequestParam("dateFinEncheres") LocalDateTime dateFinEncheres,
 			Principal principal ) {
-
 		ArticleVendu article = articleService.RecupererArticleParId(id);
 		String utilisateurActuel = principal != null ? principal.getName() : null;
-
-
 		if(utilisateurActuel != null) {
 			Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(utilisateurActuel);
 			if(article.getVendeur().getId() == utilisateur.getId()) {
@@ -151,11 +151,7 @@ public class EnchereController {
 				article.setDescription(description);
 				article.setPrixVente(prixVente);
 				article.setDateFinEncheres(dateFinEncheres);
-
-
-
-				articleService.sauvegarderArticle(id,article); // faire la methode sauvegarderArticle
-
+				articleService.sauvegarderArticle(id,article); 
 			}
 		}
 		return "redirect:/encherir?idArticle=" + id; 

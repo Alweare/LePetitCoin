@@ -49,6 +49,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur) {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		
 		mapSqlParameterSource.addValue("pseudo", utilisateur.getPseudo());
 		mapSqlParameterSource.addValue("nom", utilisateur.getNom());
 		mapSqlParameterSource.addValue("prenom", utilisateur.getPrenom());
@@ -59,6 +60,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		mapSqlParameterSource.addValue("ville", utilisateur.getVille());
 		mapSqlParameterSource.addValue("mot_de_passe", utilisateur.getMotDePasse());
 		mapSqlParameterSource.addValue("credit", utilisateur.getCredit());
+		
 		jdbcTemplate.update(INSERT_UTILISATEUR, mapSqlParameterSource);
 	}
 	
@@ -83,7 +85,38 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		jdbcTemplate.update(MODIF_CREDIT, mapSqlParameterSource);		
 	}
 	
-	class UtilisateurRowMapper implements org.springframework.jdbc.core.RowMapper<Utilisateur>{
+	@Override
+	public void miseAjourUtilisateur(Utilisateur utilisateur) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		
+		mapSqlParameterSource.addValue("id", utilisateur.getId());
+		mapSqlParameterSource.addValue("pseudo", utilisateur.getPseudo());
+		mapSqlParameterSource.addValue("nom", utilisateur.getNom());
+		mapSqlParameterSource.addValue("prenom", utilisateur.getPrenom());
+		mapSqlParameterSource.addValue("email", utilisateur.getEmail());
+		mapSqlParameterSource.addValue("telephone", utilisateur.getTelephone());
+		mapSqlParameterSource.addValue("rue", utilisateur.getRue());
+		mapSqlParameterSource.addValue("code_postal", utilisateur.getCodePostal());
+		mapSqlParameterSource.addValue("ville", utilisateur.getVille());
+		
+		jdbcTemplate.update(UPDATE_UTILISATEUR, mapSqlParameterSource);
+	}
+
+	@Override
+	public void supprimerUnUtilisateur(int id) {
+		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+		mapSqlParameterSource.addValue("id", id);
+		jdbcTemplate.update(SUPPRIMER_COMPTE, mapSqlParameterSource);
+	}
+
+	@Override
+	public Retrait trouveAdressParId(int idUtilisateur) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("id", idUtilisateur);
+		return this.jdbcTemplate.queryForObject(TROUVE_ADDRESSE_PAR_ID, map, new BeanPropertyRowMapper<Retrait>(Retrait.class));
+	}
+	
+	class UtilisateurRowMapper implements RowMapper<Utilisateur>{
 		@Override
 		public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Utilisateur utilisateur = new Utilisateur();
@@ -102,35 +135,5 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 			return utilisateur;
 		}			
 	}
-	
-	@Override
-	public void miseAjourUtilisateur(Utilisateur utilisateur) {
-		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-		mapSqlParameterSource.addValue("id", utilisateur.getId());
-		mapSqlParameterSource.addValue("pseudo", utilisateur.getPseudo());
-		mapSqlParameterSource.addValue("nom", utilisateur.getNom());
-		mapSqlParameterSource.addValue("prenom", utilisateur.getPrenom());
-		mapSqlParameterSource.addValue("email", utilisateur.getEmail());
-		mapSqlParameterSource.addValue("telephone", utilisateur.getTelephone());
-		mapSqlParameterSource.addValue("rue", utilisateur.getRue());
-		mapSqlParameterSource.addValue("code_postal", utilisateur.getCodePostal());
-		mapSqlParameterSource.addValue("ville", utilisateur.getVille());		
-		jdbcTemplate.update(UPDATE_UTILISATEUR, mapSqlParameterSource);
-	}
-
-	@Override
-	public void supprimerUnUtilisateur(int id) {
-		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-		mapSqlParameterSource.addValue("id", id);
-		jdbcTemplate.update(SUPPRIMER_COMPTE, mapSqlParameterSource);
-	}
-
-	@Override
-	public Retrait trouveAdressParId(int idUtilisateur) {
-		MapSqlParameterSource map = new MapSqlParameterSource();
-		map.addValue("id", idUtilisateur);
-		return this.jdbcTemplate.queryForObject(TROUVE_ADDRESSE_PAR_ID, map, new BeanPropertyRowMapper<Retrait>(Retrait.class));
-	}
-
 
 }

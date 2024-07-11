@@ -11,30 +11,19 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
-import fr.eni.enchere.bll.ArticleService;
 import fr.eni.enchere.bll.UtilisateurService;
-import fr.eni.enchere.bll.UtilisateurServiceImpl;
-import fr.eni.enchere.bo.Enchere;
 import fr.eni.enchere.bo.Utilisateur;
 import fr.eni.enchere.exceptions.BusinessException;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.AssertFalse.List;
 
 @Controller
-@SessionAttributes({"utilisateurSession"})
 public class UtilisateurController {
 
 	
 	private UtilisateurService utilisateurService;
-	private ArticleService articleService;
 
-	public UtilisateurController(UtilisateurService utilisateurService, ArticleService articleService) {
+	public UtilisateurController(UtilisateurService utilisateurService) {
 		this.utilisateurService = utilisateurService;
-		this.articleService = articleService;
 	}
 
 	@GetMapping("/creationProfil")
@@ -45,7 +34,8 @@ public class UtilisateurController {
 	}
 
 	@PostMapping("/creationProfil")
-	public String inscriptionUtilisateur (@Valid  @ModelAttribute("newUtilisateur") Utilisateur utilisateur, BindingResult bindingResult)throws BusinessException {
+	public String inscriptionUtilisateur (@Valid  @ModelAttribute("newUtilisateur") Utilisateur utilisateur,
+											BindingResult bindingResult)throws BusinessException {
 		if(bindingResult.hasErrors()) {
 			return "creationProfil";
 		}
@@ -76,7 +66,8 @@ public class UtilisateurController {
 	}
 
 	@PostMapping("/miseAJourProfil")
-	public String miseAJourProfil(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, BindingResult bindingResult,Model model, Principal principal) throws BusinessException {
+	public String miseAJourProfil(@Valid @ModelAttribute("utilisateur") Utilisateur utilisateur, 
+								BindingResult bindingResult,Model model, Principal principal) throws BusinessException {
 		if(bindingResult.hasErrors()) {
 			return "monProfil";
 		}
@@ -89,7 +80,7 @@ public class UtilisateurController {
 		        if (auth != null) {
 		        	 SecurityContextHolder.getContext().setAuthentication(null);
 		        }
-		        return "redirect:/"; // Rediriger vers la page de connexion après déconnexion
+		        return "redirect:/"; 
 		} catch (BusinessException e) {
 			e.getErreurs().forEach(err -> {
 				ObjectError error = new ObjectError("globalError", err);
@@ -100,17 +91,11 @@ public class UtilisateurController {
 	}
 
 	
-	@PostMapping("/supprimerCompte")
+	@GetMapping("/supprimerCompte")
 	public String supprimerCompte(Principal principal) {
 		Utilisateur utilisateur = utilisateurService.trouverUtilisateurParPseudo(principal.getName());
 		int idUtilisateur = utilisateur.getId();
-		Enchere enchere = articleService.trouverEnchereParID(idUtilisateur);		
-		if(enchere == null) {
 			utilisateurService.supprimerUtilisateur(idUtilisateur);
-		}else {
-			articleService.changerID(idUtilisateur,100);
-			utilisateurService.supprimerUtilisateur(idUtilisateur);
-		}		
 		return "/view-index";
 	}
 	
