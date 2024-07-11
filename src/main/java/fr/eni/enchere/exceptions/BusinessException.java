@@ -10,7 +10,6 @@ public class BusinessException extends Exception {
 	private List<String> erreurs;
 
 	public BusinessException() {
-		super();
 		erreurs = new ArrayList<String>();
 	}
 	

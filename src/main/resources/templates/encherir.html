@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" data-th-href="@{/css/general.css}">
+<link rel="stylesheet" data-th-href="@{/css/enchere.css}">
+<link rel="stylesheet" data-th-href="@{/css/profil.css}">
+<link rel="stylesheet" data-th-href="@{/css/vente.css}">
 
 <title>Le Petit Coin</title>
 </head>
@@ -11,10 +14,19 @@
 	<div th:replace="~{/fragments/fragment-entete :: fragment-entete}"></div>
 
 
+
 	
-		<img src="" alt="" />
+		
 
 		<form th:action="@{/enchere}" method="POST">
+
+
+	<div class="enchere-details">
+		
+	       		 <div class="article_img_wrapper">
+			<img th:src="@{${a.cheminImage}}" alt="Photo de l'article" />
+		</div></div>
+
 
 		<ul >
 			<input type="hidden" name="idArticle" th:value="${a.id}"/>
@@ -65,7 +77,8 @@
 			</li>
 			<li sec:authorize="isAuthenticated()" th:if="${!isVendeur}"><button type="submit">Enchérir</button>
 			</li>
-			<li><input type="reset" value="Back" /><br />
+			<li><button type="reset"  />Back</button>
+			<br />
 			</li>
 			<li th:if="${isVendeur}"><button type="submit" >Retrait effectué</button>
 			</li>

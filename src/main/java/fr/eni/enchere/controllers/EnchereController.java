@@ -126,7 +126,6 @@ public class EnchereController {
 		return "encherir";
 	}
 
-
 	@ModelAttribute("creationVente")
 	public String ajouteEnchere(Model model) {
 		model.addAttribute("ajoutVente", new Enchere());
